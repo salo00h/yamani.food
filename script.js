@@ -51,10 +51,10 @@ function makeSvgDataUri(svg){
 }
 
 const DRINK_IMAGES = {
-  cola: "assets/images/coca.webp",
+  cola: "assets/images/coca.png",
   "cola-zero": "assets/images/colazero.png",
-  "ice-tea": "assets/images/icetea.jpg",
-  oasis: "assets/images/oasis.jpg"
+  "ice-tea": "assets/images/icetea.png",
+  oasis: "assets/images/oasis.png"
 };
 
 const DRINKS = [
@@ -710,106 +710,3 @@ Merci !`;
 
 renderCart();
 
-// ===== DEV EDIT MODE =====
-let editMode = false;
-let currentEl = null;
-
-document.addEventListener("keydown", (e) => {
-  if (e.key.toLowerCase() === "d") {
-    editMode = !editMode;
-    alert("Edit mode: " + (editMode ? "ON" : "OFF"));
-  }
-});
-
-document.addEventListener("click", (e) => {
-  if (!editMode) return;
-
-  const target = e.target.closest(".choice-thumb, .hotspot");
-  if (!target) return;
-
-  currentEl = target;
-  currentEl.style.outline = "2px solid red";
-});
-
-document.addEventListener("mousemove", (e) => {
-  if (!editMode || !currentEl || e.buttons !== 1) return;
-
-  let w = currentEl.offsetWidth + e.movementX;
-  let h = currentEl.offsetHeight + e.movementY;
-
-  currentEl.style.width = w + "px";
-  currentEl.style.height = h + "px";
-});
-
-document.addEventListener("contextmenu", (e) => {
-  if (!editMode || !currentEl) return;
-  e.preventDefault();
-
-  console.log("width:", currentEl.style.width);
-  console.log("height:", currentEl.style.height);
-
-  alert(`Copied:\nwidth:${currentEl.style.width}\nheight:${currentEl.style.height}`);
-});
-
-
-// ===== التحكم بالصورة الداخلية =====
-let imageOffsetX = 50;
-let imageOffsetY = 50;
-let imageZoom = 100;
-
-function applyInnerImageControl(el){
-  if (!el || !el.classList.contains("choice-thumb")) return;
-
-  el.style.objectFit = "cover";
-  el.style.objectPosition = `${imageOffsetX}% ${imageOffsetY}%`;
-  el.style.transform = `scale(${imageZoom / 100})`;
-  el.style.transformOrigin = "center";
-}
-
-document.addEventListener("keydown", (e) => {
-  if (!editMode || !currentEl || !currentEl.classList.contains("choice-thumb")) return;
-
-  const move = 2;
-  const zoom = 5;
-
-  if (e.key === "ArrowLeft") {
-    imageOffsetX -= move;
-    applyInnerImageControl(currentEl);
-  }
-
-  if (e.key === "ArrowRight") {
-    imageOffsetX += move;
-    applyInnerImageControl(currentEl);
-  }
-
-  if (e.key === "ArrowUp") {
-    imageOffsetY -= move;
-    applyInnerImageControl(currentEl);
-  }
-
-  if (e.key === "ArrowDown") {
-    imageOffsetY += move;
-    applyInnerImageControl(currentEl);
-  }
-
-  if (e.key === "w") {
-    imageZoom += zoom;
-    applyInnerImageControl(currentEl);
-  }
-
-  if (e.key === "s") {
-    imageZoom -= zoom;
-    applyInnerImageControl(currentEl);
-  }
-
-  if (e.key === "r") {
-    imageOffsetX = 50;
-    imageOffsetY = 50;
-    imageZoom = 100;
-    applyInnerImageControl(currentEl);
-  }
-
-  if (e.key === "c") {
-    alert(`object-position: ${imageOffsetX}% ${imageOffsetY}%;\nscale: ${imageZoom}`);
-  }
-});
