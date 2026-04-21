@@ -57,6 +57,11 @@ const DRINK_IMAGES = {
   oasis: "assets/images/oasis.png"
 };
 
+const BOX_PREVIEW_IMAGES = {
+  "box-simple": "assets/images/BOXSIMPLE.jpeg",
+  "box-max": "assets/images/BOXMAX.jpeg"
+};
+
 const DRINKS = [
   { id: "cola", name: "Cola", image: DRINK_IMAGES["cola"] },
   { id: "cola-zero", name: "Cola Zero", image: DRINK_IMAGES["cola-zero"] },
@@ -89,6 +94,10 @@ const cartItems = document.getElementById("cartItems");
 const whatsappBtn = document.getElementById("whatsappBtn");
 const imageFrame = document.getElementById("imageFrame");
 const hotspots = document.querySelectorAll(".hotspot");
+const previewModal = document.getElementById("previewModal");
+const previewImage = document.getElementById("previewImage");
+const previewCloseBtn = document.getElementById("previewCloseBtn");
+const previewContinueBtn = document.getElementById("previewContinueBtn");
 
 let selectedDish = null;
 let selectedConfig = null;
@@ -537,6 +546,32 @@ window.addEventListener("load", () => {
   setTimeout(syncHotspotArtwork, 900);
 });
 
+function openPreview(id, triggerEl){
+  const image = BOX_PREVIEW_IMAGES[id];
+  if (!image) {
+    openModal(id, triggerEl);
+    return;
+  }
+
+  selectedDish = id;
+  selectedConfig = getDefaultConfig(id);
+
+  hotspots.forEach(el => el.classList.remove("active"));
+  if (triggerEl) triggerEl.classList.add("active");
+
+  previewImage.src = image;
+  previewImage.alt = DISHES[id]?.name || "Box preview";
+
+  previewModal.classList.add("open");
+  previewModal.setAttribute("aria-hidden", "false");
+}
+
+function closePreview(){
+  previewModal.classList.remove("open");
+  previewModal.setAttribute("aria-hidden", "true");
+  previewImage.src = "";
+}
+
 function openModal(id, triggerEl){
   const item = DISHES[id];
   if (!item) return;
@@ -568,7 +603,15 @@ function closeModal(){
 }
 
 hotspots.forEach(btn => {
-  btn.addEventListener("click", () => openModal(btn.dataset.id, btn));
+  btn.addEventListener("click", () => {
+    const id = btn.dataset.id;
+
+    if (id === "box-simple" || id === "box-max") {
+      openPreview(id, btn);
+    } else {
+      openModal(id, btn);
+    }
+  });
 
   btn.addEventListener("touchstart", () => {
     btn.classList.add("active");
@@ -599,12 +642,27 @@ modalOptions.addEventListener("change", () => {
 
 closeModalBtn.addEventListener("click", closeModal);
 
+previewCloseBtn.addEventListener("click", closePreview);
+
+previewContinueBtn.addEventListener("click", () => {
+  const currentDish = selectedDish;
+  closePreview();
+  openModal(currentDish);
+});
+
 modal.addEventListener("click", (e) => {
   if (e.target === modal) closeModal();
 });
 
+previewModal.addEventListener("click", (e) => {
+  if (e.target === previewModal) closePreview();
+});
+
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closeModal();
+  if (e.key === "Escape") {
+    closePreview();
+    closeModal();
+  }
 });
 
 function renderCart(){
