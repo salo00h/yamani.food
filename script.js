@@ -709,3 +709,44 @@ Merci !`;
 });
 
 renderCart();
+
+// ===== DEV EDIT MODE =====
+let editMode = false;
+let currentEl = null;
+
+document.addEventListener("keydown", (e) => {
+  if (e.key.toLowerCase() === "d") {
+    editMode = !editMode;
+    alert("Edit mode: " + (editMode ? "ON" : "OFF"));
+  }
+});
+
+document.addEventListener("click", (e) => {
+  if (!editMode) return;
+
+  const target = e.target.closest(".choice-thumb, .hotspot");
+  if (!target) return;
+
+  currentEl = target;
+  currentEl.style.outline = "2px solid red";
+});
+
+document.addEventListener("mousemove", (e) => {
+  if (!editMode || !currentEl || e.buttons !== 1) return;
+
+  let w = currentEl.offsetWidth + e.movementX;
+  let h = currentEl.offsetHeight + e.movementY;
+
+  currentEl.style.width = w + "px";
+  currentEl.style.height = h + "px";
+});
+
+document.addEventListener("contextmenu", (e) => {
+  if (!editMode || !currentEl) return;
+  e.preventDefault();
+
+  console.log("width:", currentEl.style.width);
+  console.log("height:", currentEl.style.height);
+
+  alert(`Copied:\nwidth:${currentEl.style.width}\nheight:${currentEl.style.height}`);
+});
