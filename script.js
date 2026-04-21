@@ -51,64 +51,10 @@ function makeSvgDataUri(svg){
 }
 
 const DRINK_IMAGES = {
-  cola: makeSvgDataUri(`
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-      <defs>
-        <linearGradient id="g-cola" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#f44336"/>
-          <stop offset="1" stop-color="#b71c1c"/>
-        </linearGradient>
-      </defs>
-      <rect width="64" height="64" rx="14" fill="#1d1026"/>
-      <rect x="22" y="8" width="20" height="48" rx="8" fill="url(#g-cola)" stroke="#ffd9d9" stroke-width="2"/>
-      <rect x="26" y="4" width="12" height="8" rx="3" fill="#d7d7d7"/>
-      <text x="32" y="37" font-size="12" text-anchor="middle" fill="white" font-family="Arial" font-weight="700">COLA</text>
-    </svg>
-  `),
-  "cola-zero": makeSvgDataUri(`
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-      <defs>
-        <linearGradient id="g-zero" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#333333"/>
-          <stop offset="1" stop-color="#000000"/>
-        </linearGradient>
-      </defs>
-      <rect width="64" height="64" rx="14" fill="#101822"/>
-      <rect x="22" y="8" width="20" height="48" rx="8" fill="url(#g-zero)" stroke="#d7d7d7" stroke-width="2"/>
-      <rect x="26" y="4" width="12" height="8" rx="3" fill="#cfcfcf"/>
-      <text x="32" y="30" font-size="10" text-anchor="middle" fill="white" font-family="Arial" font-weight="700">ZERO</text>
-      <text x="32" y="41" font-size="9" text-anchor="middle" fill="#ff6b6b" font-family="Arial" font-weight="700">COLA</text>
-    </svg>
-  `),
-  "ice-tea": makeSvgDataUri(`
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-      <defs>
-        <linearGradient id="g-tea" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#ffcc80"/>
-          <stop offset="1" stop-color="#fb8c00"/>
-        </linearGradient>
-      </defs>
-      <rect width="64" height="64" rx="14" fill="#141822"/>
-      <rect x="18" y="10" width="28" height="44" rx="8" fill="url(#g-tea)" stroke="#fff3d0" stroke-width="2"/>
-      <path d="M39 8 L48 16" stroke="#c7f0ff" stroke-width="3" stroke-linecap="round"/>
-      <circle cx="24" cy="18" r="4" fill="#fff59d"/>
-      <text x="32" y="38" font-size="11" text-anchor="middle" fill="#3b2400" font-family="Arial" font-weight="700">TEA</text>
-    </svg>
-  `),
-  oasis: makeSvgDataUri(`
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-      <defs>
-        <linearGradient id="g-oasis" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#fff176"/>
-          <stop offset="1" stop-color="#fbc02d"/>
-        </linearGradient>
-      </defs>
-      <rect width="64" height="64" rx="14" fill="#121b12"/>
-      <rect x="18" y="10" width="28" height="44" rx="8" fill="url(#g-oasis)" stroke="#fff9c4" stroke-width="2"/>
-      <path d="M32 12 C38 8, 41 8, 44 14" stroke="#4caf50" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <text x="32" y="38" font-size="11" text-anchor="middle" fill="#5b4300" font-family="Arial" font-weight="700">OASIS</text>
-    </svg>
-  `)
+  cola: "assets/images/coca.webp",
+  "cola-zero": "assets/images/colazero.png",
+  "ice-tea": "assets/images/icetea.jpg",
+  oasis: "assets/images/oasis.jpg"
 };
 
 const DRINKS = [
