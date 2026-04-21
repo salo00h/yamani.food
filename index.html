@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  />
+  <title>Yamani Food — Menu interactif</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- INTRO -->
+  <div class="intro" id="intro">
+    <div class="intro-card">
+      <h1 class="intro-title">Bienvenue chez Yamani Food</h1>
+      <div class="intro-sub">Préparation de votre menu interactif…</div>
+
+      <div class="runway" aria-hidden="true">
+        <div class="chef">
+          <div class="emoji">👨‍🍳</div>
+          <div class="steam">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="loading" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- APP -->
+  <main class="app" id="app">
+    <section class="stage">
+      <div class="menu-bg" aria-label="Menu Yamani Food"></div>
+      <div class="mobile-side-blend" aria-hidden="true"></div>
+      <div class="menu-safe-fade" aria-hidden="true"></div>
+
+      <div class="image-frame" id="imageFrame">
+        <button
+          class="hotspot hotspot--main"
+          data-id="zerbian-simple"
+          aria-label="Zerbian Simple"
+          style="left:4.89%; top:22.66%; width:48.02%; height:22.71%;"
+        ></button>
+
+        <button
+          class="hotspot hotspot--main"
+          data-id="zerbian-max"
+          aria-label="Zerbian Max"
+          style="left:50.16%; top:22.83%; width:46.91%; height:22.36%;"
+        ></button>
+
+        <button
+          class="hotspot hotspot--main"
+          data-id="box-simple"
+          aria-label="Box Simple"
+          style="left:1.95%; top:45.02%; width:47.15%; height:22.94%;"
+        ></button>
+
+        <button
+          class="hotspot hotspot--main"
+          data-id="box-max"
+          aria-label="Box Max"
+          style="left:50.29%; top:45.02%; width:47.40%; height:22.94%;"
+        ></button>
+
+        <button
+          class="hotspot hotspot--sauce"
+          data-id="daqoos"
+          aria-label="Daqoos"
+          style="left:10.91%; top:72.40%; width:25.39%; height:10.81%; border-radius:24px;"
+        ></button>
+
+        <button
+          class="hotspot hotspot--sauce"
+          data-id="labneh"
+          aria-label="Labneh"
+          style="left:37.51%; top:72.40%; width:24.49%; height:10.68%; border-radius:24px;"
+        ></button>
+
+        <button
+          class="hotspot hotspot--sauce"
+          data-id="sahawiq"
+          aria-label="Sahawiq"
+          style="left:64.27%; top:72.40%; width:24.82%; height:10.68%; border-radius:24px;"
+        ></button>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <h2 class="modal-title" id="modalTitle">Nom du plat</h2>
+        <div class="modal-price" id="modalPrice">0,00 €</div>
+      </div>
+
+      <p class="modal-desc" id="modalDesc">
+        Description courte du plat.
+      </p>
+
+      <div class="modal-options" id="modalOptions"></div>
+      <div class="modal-inline-alert" id="modalAlert"></div>
+
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="addToCartBtn">Ajouter au panier</button>
+        <button class="btn btn-ghost" id="closeModalBtn" aria-label="Fermer">✕</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM UI -->
+  <div class="bottom-ui">
+    <div class="cart">
+      <div class="cart-top">
+        <div class="cart-label">
+          <span>🛒 Panier</span>
+        </div>
+        <div class="cart-count" id="cartCount">0</div>
+      </div>
+
+      <div class="cart-items" id="cartItems">
+        <div class="cart-empty">Aucun article sélectionné.</div>
+      </div>
+    </div>
+
+    <button class="wa" id="whatsappBtn" type="button">
+      <span class="wa-icon">💬</span>
+      <span class="wa-text">
+        <span>Commander via WhatsApp</span>
+        <small>Envoyer votre commande complète</small>
+      </span>
+    </button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
