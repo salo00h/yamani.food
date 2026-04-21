@@ -750,3 +750,66 @@ document.addEventListener("contextmenu", (e) => {
 
   alert(`Copied:\nwidth:${currentEl.style.width}\nheight:${currentEl.style.height}`);
 });
+
+
+// ===== التحكم بالصورة الداخلية =====
+let imageOffsetX = 50;
+let imageOffsetY = 50;
+let imageZoom = 100;
+
+function applyInnerImageControl(el){
+  if (!el || !el.classList.contains("choice-thumb")) return;
+
+  el.style.objectFit = "cover";
+  el.style.objectPosition = `${imageOffsetX}% ${imageOffsetY}%`;
+  el.style.transform = `scale(${imageZoom / 100})`;
+  el.style.transformOrigin = "center";
+}
+
+document.addEventListener("keydown", (e) => {
+  if (!editMode || !currentEl || !currentEl.classList.contains("choice-thumb")) return;
+
+  const move = 2;
+  const zoom = 5;
+
+  if (e.key === "ArrowLeft") {
+    imageOffsetX -= move;
+    applyInnerImageControl(currentEl);
+  }
+
+  if (e.key === "ArrowRight") {
+    imageOffsetX += move;
+    applyInnerImageControl(currentEl);
+  }
+
+  if (e.key === "ArrowUp") {
+    imageOffsetY -= move;
+    applyInnerImageControl(currentEl);
+  }
+
+  if (e.key === "ArrowDown") {
+    imageOffsetY += move;
+    applyInnerImageControl(currentEl);
+  }
+
+  if (e.key === "w") {
+    imageZoom += zoom;
+    applyInnerImageControl(currentEl);
+  }
+
+  if (e.key === "s") {
+    imageZoom -= zoom;
+    applyInnerImageControl(currentEl);
+  }
+
+  if (e.key === "r") {
+    imageOffsetX = 50;
+    imageOffsetY = 50;
+    imageZoom = 100;
+    applyInnerImageControl(currentEl);
+  }
+
+  if (e.key === "c") {
+    alert(`object-position: ${imageOffsetX}% ${imageOffsetY}%;\nscale: ${imageZoom}`);
+  }
+});
