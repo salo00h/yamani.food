@@ -564,6 +564,9 @@ window.addEventListener("load", () => {
 
   setTimeout(syncHotspotArtwork, 300);
   setTimeout(syncHotspotArtwork, 900);
+  setTimeout(() => {
+   checkOpeningOnLoad();
+  }, 2700);
 });
 
 function openPreview(id, triggerEl){
@@ -998,5 +1001,25 @@ Merci !`;
   window.open(url, "_blank");
   closeCheckoutModal();
 });
+
+function checkOpeningOnLoad(){
+  if (isCurrentTimeInOrderWindow()) return;
+
+  orderStatusTitle.textContent = "Commandes fermées";
+  orderStatusText.innerHTML =
+`Nous sommes actuellement fermés.
+
+Heures de commande :
+- 7h à 11h
+- 12h à 17h
+
+Vous pouvez planifier votre commande pour plus tard.`;
+
+  continueNowBtn.style.display = "none";
+  planLaterBtn.textContent = "Planifier une commande";
+
+  orderStatusModal.classList.add("open");
+  orderStatusModal.setAttribute("aria-hidden", "false");
+}
 
 renderCart();
