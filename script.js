@@ -304,11 +304,11 @@ function renderDessertOptions(selectedDesserts = {}){
     <div class="option-group sauce-group">
       <div class="option-head">
         <div class="option-title">Dessert</div>
-        <div class="option-badge">Inclus</div>
+        <div class="option-badge">1 inclus</div>
       </div>
 
       <p class="option-note">
-        Choisissez la quantité de dessert souhaitée.
+        1 dessert inclus. Chaque dessert supplémentaire coûte +1,00 €.
       </p>
 
       <div class="sauce-list">
@@ -589,8 +589,8 @@ function renderDessertSummary(desserts = {}){
 
   if (!entries.length){
     summary.innerHTML = `
-      <div class="summary-pill">Aucun dessert choisi</div>
-      <div class="summary-pill accent">Supplément desserts: Inclus</div>
+      <div class="summary-pill">Aucun dessert sélectionné</div>
+      <div class="summary-pill accent">Desserts supplémentaires : +0,00 €</div>
     `;
     return;
   }
@@ -610,7 +610,7 @@ function renderDessertSummary(desserts = {}){
     }).join("")}
 
     <div class="summary-pill accent">
-      Supplément desserts: ${extraPrice > 0 ? "+" + formatEuro(extraPrice) : "Inclus"}
+      Supplément dessert : ${extraPrice > 0 ? "+" + formatEuro(extraPrice) : "0,00 €"}
     </div>
   `;
 }
