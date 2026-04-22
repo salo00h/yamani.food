@@ -207,7 +207,7 @@ function getDefaultConfig(id){
   if (category === "single"){
     return {
       drink: "",
-      dessert: "",
+      dessert: {},
       sauces: {}
     };
   }
@@ -215,14 +215,14 @@ function getDefaultConfig(id){
   if (category === "box"){
     return {
       drink: DRINKS[0].id,
-      dessert: DESSERTS[0].id,
+      dessert: {},
       sauces: {}
     };
   }
 
   return {
     drink: "",
-    dessert: "",
+    dessert: {},
     sauces: {}
   };
 }
@@ -298,39 +298,79 @@ function renderDrinkOptions(required = false, selected = ""){
   `;
 }
 
-function renderDessertOptions(selected = ""){
+function renderDessertOptions(selectedDesserts = {}){
   return `
-    <div class="option-group">
+    <div class="option-group sauce-group">
       <div class="option-head">
         <div class="option-title">Dessert</div>
         <div class="option-badge">Inclus</div>
       </div>
+
       <p class="option-note">
-        Le dessert est obligatoire pour la box, sans coût supplémentaire.
+        Choisissez la quantité de dessert souhaitée.
       </p>
-      <div class="choice-list">
-        ${DESSERTS.map(dessert => `
-          <label class="choice-item">
-            <input class="choice-input" type="radio" name="dessertChoice" value="${dessert.id}" ${selected === dessert.id ? "checked" : ""}>
-            <div class="choice-card">
-              <div class="choice-main">
-                <div class="choice-mark"></div>
-                <div class="choice-thumb" style="display:grid;place-items:center;font-size:18px;">🍰</div>
-                <div class="choice-text">
-                  <div class="choice-name">${escapeHtml(dessert.name)}</div>
-                  <div class="choice-sub">Dessert inclus dans la box</div>
-                </div>
+
+      <div class="sauce-list">
+        ${DESSERTS.map((dessert) => `
+          <div class="sauce-row">
+            <div class="sauce-info">
+              <div class="sauce-icon">🍰</div>
+
+              <div class="sauce-text">
+                <div class="sauce-name">${escapeHtml(dessert.name)}</div>
+                <div class="sauce-sub">Ajoutez la quantité souhaitée</div>
               </div>
-              <div class="choice-price">Inclus</div>
             </div>
-          </label>
+
+            <div class="qty-stepper">
+              <button
+                type="button"
+                class="qty-btn"
+                onclick="changeDessertQty('${dessert.id}', -1)"
+                aria-label="Diminuer ${escapeHtml(dessert.name)}"
+              >
+                −
+              </button>
+
+              <span
+                class="qty-value"
+                id="dessert-qty-${dessert.id}"
+              >${selectedDesserts[dessert.id] || 0}</span>
+
+              <button
+                type="button"
+                class="qty-btn qty-btn-plus"
+                onclick="changeDessertQty('${dessert.id}', 1)"
+                aria-label="Augmenter ${escapeHtml(dessert.name)}"
+              >
+                +
+              </button>
+            </div>
+          </div>
         `).join("")}
       </div>
+
+      <div class="inline-summary sauce-summary-wrap" id="dessertSummary"></div>
     </div>
   `;
 }
 
 const sauceQty = {};
+
+const dessertQty = {};
+
+function changeDessertQty(id, delta){
+  if (!dessertQty[id]) dessertQty[id] = 0;
+
+  dessertQty[id] += delta;
+
+  if (dessertQty[id] < 0) dessertQty[id] = 0;
+
+  const el = document.getElementById(`dessert-qty-${id}`);
+  if (el) el.textContent = dessertQty[id];
+
+  updateModalState();
+}
 
 function changeSauceQty(id, delta){
   if (!sauceQty[id]) sauceQty[id] = 0;
@@ -443,10 +483,9 @@ function readConfigFromModal(id){
 
   if (category === "box"){
     const drinkEl = modal.querySelector('input[name="drinkChoice"]:checked');
-    const dessertEl = modal.querySelector('input[name="dessertChoice"]:checked');
 
     config.drink = drinkEl ? drinkEl.value : "";
-    config.dessert = dessertEl ? dessertEl.value : "";
+    config.dessert = { ...dessertQty };
     config.sauces = { ...sauceQty };
 
     return config;
@@ -488,10 +527,14 @@ function isModalSelectionValid(id, config){
 
   if (category === "box"){
     const totalSauces = config.sauces
-      ? Object.values(config.sauces).reduce((a,b)=>a+b,0)
+      ? Object.values(config.sauces).reduce((a, b) => a + b, 0)
       : 0;
 
-    return Boolean(config.drink) && Boolean(config.dessert) && totalSauces > 0;
+    const totalDesserts = config.dessert
+      ? Object.values(config.dessert).reduce((a, b) => a + b, 0)
+      : 0;
+
+    return Boolean(config.drink) && totalDesserts > 0 && totalSauces > 0;
   }
 
   return true;
@@ -531,6 +574,32 @@ function renderSauceSummary(sauces = {}){
   `;
 }
 
+function renderDessertSummary(desserts = {}){
+  const summary = document.getElementById("dessertSummary");
+  if (!summary) return;
+
+  const entries = Object.entries(desserts).filter(([_, qty]) => qty > 0);
+
+  if (!entries.length){
+    summary.innerHTML = `
+      <div class="summary-pill">Aucun dessert choisi</div>
+    `;
+    return;
+  }
+
+  summary.innerHTML = `
+    ${entries.map(([id, qty]) => {
+      const dessert = getDessertById(id);
+      return `
+        <div class="summary-pill">
+          ${escapeHtml(dessert?.name || id)} ×${qty}
+        </div>
+      `;
+    }).join("")}
+  `;
+}
+
+
 function updateModalState(){
   if (!selectedDish) return;
 
@@ -544,29 +613,43 @@ function updateModalState(){
   addToCartBtn.disabled = !isValid;
 
   if (!isValid && getDishCategory(selectedDish) === "box"){
-    modalAlert.textContent = "Veuillez choisir une boisson, un dessert et au moins une sauce pour continuer.";
+    modalAlert.textContent = "Veuillez choisir une boisson, au moins un dessert et au moins une sauce pour continuer.";
     modalAlert.classList.add("show");
   } else {
     modalAlert.textContent = "";
     modalAlert.classList.remove("show");
   }
 
-  renderSauceSummary(selectedConfig.sauces || []);
+  renderSauceSummary(selectedConfig.sauces || {});
+  renderDessertSummary(selectedConfig.dessert || {});
 }
 
 function buildSelectionLabel(id, config){
   const parts = [];
 
+  if (config.dessert){
+    const desserts = Object.entries(config.dessert)
+      .filter(([_, qty]) => qty > 0)
+      .map(([id, qty]) => {
+        const d = getDessertById(id);
+        return `${d?.name} ×${qty}`;
+      });
+
+    if (desserts.length){
+      parts.push(`Desserts: ${desserts.join(", ")}`);
+    }
+  }
+
   if (config.sauces){
-    const names = Object.entries(config.sauces)
-      .filter(([_,qty]) => qty > 0)
-      .map(([id,qty]) => {
+    const sauces = Object.entries(config.sauces)
+      .filter(([_, qty]) => qty > 0)
+      .map(([id, qty]) => {
         const s = getSauceById(id);
         return `${s?.name} ×${qty}`;
       });
 
-    if (names.length){
-      parts.push(`Sauces: ${names.join(", ")}`);
+    if (sauces.length){
+      parts.push(`Sauces: ${sauces.join(", ")}`);
     }
   }
 
@@ -579,7 +662,12 @@ function buildCartKey(id, config){
     .sort()
     .join("+") || "none";
 
-  return `${id}__drink:${config.drink || "none"}__dessert:${config.dessert || "none"}__sauces:${sauces}`;
+  const desserts = Object.entries(config.dessert || {})
+    .map(([dessertId, qty]) => `${dessertId}x${qty}`)
+    .sort()
+    .join("+") || "none";
+
+  return `${id}__drink:${config.drink || "none"}__dessert:${desserts}__sauces:${sauces}`;
 }
 
 function cloneConfig(config){
@@ -649,6 +737,7 @@ function openModal(id, triggerEl){
   selectedDish = id;
   selectedConfig = getDefaultConfig(id);
   Object.keys(sauceQty).forEach((key) => delete sauceQty[key]);
+  Object.keys(dessertQty).forEach((key) => delete dessertQty[key]);
 
   hotspots.forEach(el => el.classList.remove("active"));
   if (triggerEl) triggerEl.classList.add("active");
