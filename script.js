@@ -694,14 +694,21 @@ document.addEventListener("keydown", (e) => {
 function renderCart(){
   const entries = Object.values(cart);
   const totalQty = entries.reduce((sum, entry) => sum + entry.qty, 0);
+
   cartCount.textContent = totalQty;
 
-  if (!entries.length){
-    cartItems.innerHTML = '<div class="cart-empty">Aucun article sélectionné.</div>';
+  if (!entries.length) {
+    cartItems.innerHTML = `
+      <div class="cart-empty">
+        🍽️ Découvrez notre menu<br>
+        👆 Appuyez sur un plat pour commencer<br>
+        📅 Vous pouvez aussi planifier votre commande
+      </div>
+    `;
     return;
   }
 
-  cartItems.innerHTML = entries.map(entry => {
+  cartItems.innerHTML = entries.map((entry) => {
     const item = DISHES[entry.id];
     const summary = buildSelectionLabel(entry.id, entry.config);
 
