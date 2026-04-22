@@ -714,8 +714,9 @@ function renderCart(){
     const key = buildCartKey(entry.id, entry.config);
 
     return `
-      <div class="cart-item" style="display:flex;align-items:center;gap:6px;">
-        <span>
+      <div class="cart-item" style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+        
+        <span style="flex:1;">
           ${item.name}
           ${summary ? ` — ${summary}` : ""}
           × ${entry.qty}
@@ -723,16 +724,24 @@ function renderCart(){
 
         <button 
           onclick="removeFromCart('${key}')"
+          aria-label="Supprimer"
+          title="Supprimer"
           style="
             border:none;
-            background:transparent;
-            color:#ff6b6b;
-            font-size:16px;
+            background:rgba(255,255,255,.08);
+            color:#fff;
+            font-size:18px;
             cursor:pointer;
+            padding:6px 8px;
+            border-radius:10px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
           "
         >
-          ❌
+          🗑️
         </button>
+
       </div>
     `;
   }).join("");
