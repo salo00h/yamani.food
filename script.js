@@ -121,6 +121,7 @@ const planLaterBtn = document.getElementById("planLaterBtn");
 
 let selectedDish = null;
 let selectedConfig = null;
+let hasShownOpeningStatusModal = false;
 const cart = {};
 
 function setAppHeight(){
@@ -807,17 +808,22 @@ function showInlineOrderStatusMessage(title, lines = []){
 
 function openOrderStatusModal(){
   const entries = Object.values(cart);
-  const orderHoursBox = orderStatusModal.querySelector(".option-group");
 
   if (!entries.length){
-    showInlineOrderStatusMessage("🛒 Panier vide", [
-      "Découvrez notre menu interactif 👇",
-      "",
-      "Ajoutez vos articles au panier",
-      "ou planifiez votre commande pour plus tard."
+    showInlineOrderStatusMessage("📅 Planifier une commande", [
+      "Bonne idée 😊",
+      "🍽️ Découvrez le menu et ajoutez ce qui vous fait envie",
+      "⏰ Choisissez ensuite le moment parfait… on s’occupe du reste 😉"
     ]);
     return;
   }
+
+  if (hasShownOpeningStatusModal){
+    openCheckoutModal(false);
+    return;
+  }
+
+  const orderHoursBox = orderStatusModal.querySelector(".option-group");
 
   if (orderHoursBox){
     orderHoursBox.style.display = "block";
@@ -896,6 +902,8 @@ function checkOpeningOnLoad(){
 
   orderStatusModal.classList.add("open");
   orderStatusModal.setAttribute("aria-hidden", "false");
+
+  hasShownOpeningStatusModal = true;
 }
 
 
