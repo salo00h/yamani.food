@@ -45,6 +45,7 @@ const DISHES = {
 
 const OPTIONAL_DRINK_EXTRA = 1.00; // سعر المشروب للسامبل والماكسي
 const EXTRA_SAUCE_PRICE = 0.50;    // كل صوص إضافي بعد أول واحد
+const EXTRA_DESSERT_PRICE = 1.00;  // أول حلا مجاني ثم كل قطعة إضافية 1€
 
 function makeSvgDataUri(svg){
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg.trim())}`;
@@ -505,9 +506,15 @@ function getExtrasTotal(id, config){
   }
 
   if (config.sauces){
-    const totalSauces = Object.values(config.sauces).reduce((a,b)=>a+b,0);
-    const extraCount = Math.max(totalSauces - 1, 0);
-    extras += extraCount * EXTRA_SAUCE_PRICE;
+    const totalSauces = Object.values(config.sauces).reduce((a, b) => a + b, 0);
+    const extraSauceCount = Math.max(totalSauces - 1, 0);
+    extras += extraSauceCount * EXTRA_SAUCE_PRICE;
+  }
+
+  if (category === "box" && config.dessert){
+    const totalDesserts = Object.values(config.dessert).reduce((a, b) => a + b, 0);
+    const extraDessertCount = Math.max(totalDesserts - 1, 0);
+    extras += extraDessertCount * EXTRA_DESSERT_PRICE;
   }
 
   return extras;
@@ -583,9 +590,14 @@ function renderDessertSummary(desserts = {}){
   if (!entries.length){
     summary.innerHTML = `
       <div class="summary-pill">Aucun dessert choisi</div>
+      <div class="summary-pill accent">Supplément desserts: Inclus</div>
     `;
     return;
   }
+
+  const total = entries.reduce((sum, [_, qty]) => sum + qty, 0);
+  const extraCount = Math.max(total - 1, 0);
+  const extraPrice = extraCount * EXTRA_DESSERT_PRICE;
 
   summary.innerHTML = `
     ${entries.map(([id, qty]) => {
@@ -596,6 +608,10 @@ function renderDessertSummary(desserts = {}){
         </div>
       `;
     }).join("")}
+
+    <div class="summary-pill accent">
+      Supplément desserts: ${extraPrice > 0 ? "+" + formatEuro(extraPrice) : "Inclus"}
+    </div>
   `;
 }
 
@@ -626,6 +642,7 @@ function updateModalState(){
 
 function buildSelectionLabel(id, config){
   const parts = [];
+  const category = getDishCategory(id);
 
   if (config.dessert){
     const desserts = Object.entries(config.dessert)
@@ -637,6 +654,15 @@ function buildSelectionLabel(id, config){
 
     if (desserts.length){
       parts.push(`Desserts: ${desserts.join(", ")}`);
+
+      if (category === "box") {
+        const totalDesserts = Object.values(config.dessert).reduce((a, b) => a + b, 0);
+        const extraDessertCount = Math.max(totalDesserts - 1, 0);
+
+        if (extraDessertCount > 0){
+          parts.push(`Supplément desserts: +${formatEuro(extraDessertCount * EXTRA_DESSERT_PRICE)}`);
+        }
+      }
     }
   }
 
@@ -650,11 +676,19 @@ function buildSelectionLabel(id, config){
 
     if (sauces.length){
       parts.push(`Sauces: ${sauces.join(", ")}`);
+
+      const totalSauces = Object.values(config.sauces).reduce((a, b) => a + b, 0);
+      const extraSauceCount = Math.max(totalSauces - 1, 0);
+
+      if (extraSauceCount > 0){
+        parts.push(`Supplément sauces: +${formatEuro(extraSauceCount * EXTRA_SAUCE_PRICE)}`);
+      }
     }
   }
 
   return parts.join(" • ");
 }
+
 
 function buildCartKey(id, config){
   const sauces = Object.entries(config.sauces || {})
