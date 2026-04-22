@@ -711,15 +711,36 @@ function renderCart(){
   cartItems.innerHTML = entries.map((entry) => {
     const item = DISHES[entry.id];
     const summary = buildSelectionLabel(entry.id, entry.config);
+    const key = buildCartKey(entry.id, entry.config);
 
     return `
-      <div class="cart-item">
-        ${item.name}
-        ${summary ? ` — ${summary}` : ""}
-        × ${entry.qty}
+      <div class="cart-item" style="display:flex;align-items:center;gap:6px;">
+        <span>
+          ${item.name}
+          ${summary ? ` — ${summary}` : ""}
+          × ${entry.qty}
+        </span>
+
+        <button 
+          onclick="removeFromCart('${key}')"
+          style="
+            border:none;
+            background:transparent;
+            color:#ff6b6b;
+            font-size:16px;
+            cursor:pointer;
+          "
+        >
+          ❌
+        </button>
       </div>
     `;
   }).join("");
+}
+
+function removeFromCart(key){
+  delete cart[key];
+  renderCart();
 }
 
 addToCartBtn.addEventListener("click", () => {
