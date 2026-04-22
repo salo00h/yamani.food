@@ -788,23 +788,39 @@ function isCurrentTimeInOrderWindow(){
 }
 
 function showInlineOrderStatusMessage(title, lines = []){
+  const orderHoursBox = orderStatusModal.querySelector(".option-group");
+
   orderStatusTitle.textContent = title;
   orderStatusText.innerHTML = lines.map(line => `<div>${line}</div>`).join("");
+
+  if (orderHoursBox){
+    orderHoursBox.style.display = "none";
+  }
+
   continueNowBtn.style.display = "none";
-  planLaterBtn.textContent = "OK";
+  planLaterBtn.textContent = "Compris";
+  planLaterBtn.dataset.action = "close";
+
   orderStatusModal.classList.add("open");
   orderStatusModal.setAttribute("aria-hidden", "false");
 }
 
 function openOrderStatusModal(){
   const entries = Object.values(cart);
+  const orderHoursBox = orderStatusModal.querySelector(".option-group");
 
   if (!entries.length){
     showInlineOrderStatusMessage("🛒 Panier vide", [
-      "Veuillez ajouter des articles",
-      "au panier avant de continuer."
+      "Découvrez notre menu interactif 👇",
+      "",
+      "Ajoutez vos articles au panier",
+      "ou planifiez votre commande pour plus tard."
     ]);
     return;
+  }
+
+  if (orderHoursBox){
+    orderHoursBox.style.display = "block";
   }
 
   if (isCurrentTimeInOrderWindow()){
@@ -820,6 +836,7 @@ function openOrderStatusModal(){
 
     continueNowBtn.style.display = "block";
     planLaterBtn.textContent = "📅 Planifier une commande";
+    planLaterBtn.dataset.action = "plan";
   } else {
     orderStatusTitle.textContent = "⏰ Commandes fermées pour le moment";
 
@@ -827,13 +844,17 @@ function openOrderStatusModal(){
 <div>Nous ne prenons pas</div>
 <div>de commandes maintenant.</div>
 <br>
-<div>💡 Bonne nouvelle :</div>
-<div>vous pouvez planifier</div>
+<div>📅 Vous pouvez planifier</div>
 <div>votre commande pour plus tard.</div>
+<br>
+<div>🛍️ Retrait :</div>
+<div>13h → 14h</div>
+<div>19h → 22h</div>
     `;
 
     continueNowBtn.style.display = "none";
     planLaterBtn.textContent = "📅 Planifier une commande";
+    planLaterBtn.dataset.action = "plan";
   }
 
   orderStatusModal.classList.add("open");
@@ -843,10 +864,17 @@ function openOrderStatusModal(){
 function closeOrderStatusModal(){
   orderStatusModal.classList.remove("open");
   orderStatusModal.setAttribute("aria-hidden", "true");
+  planLaterBtn.dataset.action = "";
 }
 
 function checkOpeningOnLoad(){
+  const orderHoursBox = orderStatusModal.querySelector(".option-group");
+
   if (isCurrentTimeInOrderWindow()) return;
+
+  if (orderHoursBox){
+    orderHoursBox.style.display = "block";
+  }
 
   orderStatusTitle.textContent = "⏰ Commandes fermées pour le moment";
 
@@ -854,13 +882,17 @@ function checkOpeningOnLoad(){
 <div>Nous ne prenons pas</div>
 <div>de commandes maintenant.</div>
 <br>
-<div>💡 Bonne nouvelle :</div>
-<div>vous pouvez planifier</div>
+<div>📅 Vous pouvez planifier</div>
 <div>votre commande pour plus tard.</div>
+<br>
+<div>🛍️ Retrait :</div>
+<div>13h → 14h</div>
+<div>19h → 22h</div>
   `;
 
   continueNowBtn.style.display = "none";
   planLaterBtn.textContent = "📅 Planifier une commande";
+  planLaterBtn.dataset.action = "plan";
 
   orderStatusModal.classList.add("open");
   orderStatusModal.setAttribute("aria-hidden", "false");
@@ -949,8 +981,13 @@ continueNowBtn.addEventListener("click", () => {
 });
 
 planLaterBtn.addEventListener("click", () => {
+  const action = planLaterBtn.dataset.action;
+
   closeOrderStatusModal();
-  openCheckoutModal(true);
+
+  if (action === "plan"){
+    openCheckoutModal(true);
+  }
 });
 
 orderStatusModal.addEventListener("click", (e) => {
