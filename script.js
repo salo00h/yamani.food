@@ -905,8 +905,8 @@ function openCheckoutModal(prefillTomorrow = false){
   if (!entries.length){
     showInlineOrderStatusMessage("📅 Planifier une commande", [
       "Bonne idée 😊",
-      "Commencez par choisir vos plats dans le menu",
-      "Puis sélectionnez la date et l’heure qui vous conviennent"
+      "🍽️ Découvrez le menu et ajoutez ce qui vous fait envie",
+      "⏰ Choisissez ensuite le moment parfait… on s’occupe du reste 😉"
     ]);
     return;
   }
