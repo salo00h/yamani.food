@@ -924,7 +924,9 @@ function openCheckoutModal(prefillTomorrow = false){
   const today = getTodayLocalDateString();
   dateCmd.min = today;
 
-  if (prefillTomorrow){
+  const mustPlanForLater = prefillTomorrow || !isCurrentTimeInOrderWindow();
+
+  if (mustPlanForLater){
     const d = new Date();
     d.setDate(d.getDate() + 1);
     const year = d.getFullYear();
