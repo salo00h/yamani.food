@@ -359,18 +359,89 @@ function renderSauceOptions(selectedSauces = {}, requiredAtLeastOne = false){
 
       <div class="choice-list">
         ${SAUCES.map(sauce => `
-          <div class="choice-card" style="display:flex;justify-content:space-between;align-items:center;">
-            
-            <div>
-              🥣 ${escapeHtml(sauce.name)}
+          <div
+            class="choice-card"
+            style="
+              display:flex;
+              align-items:center;
+              justify-content:space-between;
+              gap:12px;
+              min-height:64px;
+            "
+          >
+            <div class="choice-main" style="min-width:0;">
+              <div
+                class="choice-thumb"
+                style="
+                  display:grid;
+                  place-items:center;
+                  font-size:18px;
+                "
+              >
+                🥣
+              </div>
+
+              <div class="choice-text">
+                <div class="choice-name">${escapeHtml(sauce.name)}</div>
+                <div class="choice-sub">Ajoutez la quantité souhaitée</div>
+              </div>
             </div>
 
-            <div style="display:flex;align-items:center;gap:6px;">
-              <button onclick="changeSauceQty('${sauce.id}', -1)">➖</button>
-              <span id="qty-${sauce.id}">${selectedSauces[sauce.id] || 0}</span>
-              <button onclick="changeSauceQty('${sauce.id}', 1)">➕</button>
-            </div>
+            <div
+              style="
+                display:flex;
+                align-items:center;
+                gap:8px;
+                flex:0 0 auto;
+              "
+            >
+              <button
+                type="button"
+                onclick="changeSauceQty('${sauce.id}', -1)"
+                style="
+                  width:34px;
+                  height:34px;
+                  border:none;
+                  border-radius:999px;
+                  background:rgba(255,255,255,.12);
+                  color:#fff;
+                  font-size:20px;
+                  font-weight:900;
+                  cursor:pointer;
+                "
+              >
+                −
+              </button>
 
+              <span
+                id="qty-${sauce.id}"
+                style="
+                  min-width:22px;
+                  text-align:center;
+                  font-weight:900;
+                  font-size:1rem;
+                  color:#fff;
+                "
+              >${selectedSauces[sauce.id] || 0}</span>
+
+              <button
+                type="button"
+                onclick="changeSauceQty('${sauce.id}', 1)"
+                style="
+                  width:34px;
+                  height:34px;
+                  border:none;
+                  border-radius:999px;
+                  background:rgba(255,214,95,.18);
+                  color:#fff;
+                  font-size:20px;
+                  font-weight:900;
+                  cursor:pointer;
+                "
+              >
+                +
+              </button>
+            </div>
           </div>
         `).join("")}
       </div>
