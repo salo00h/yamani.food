@@ -903,9 +903,10 @@ function openCheckoutModal(prefillTomorrow = false){
   const entries = Object.values(cart);
 
   if (!entries.length){
-    showInlineOrderStatusMessage("🛒 Panier vide", [
-      "Veuillez ajouter des articles",
-      "au panier avant de continuer."
+    showInlineOrderStatusMessage("📅 Planifier une commande", [
+      "Bonne idée 😊",
+      "Commencez par choisir vos plats dans le menu",
+      "Puis sélectionnez la date et l’heure qui vous conviennent"
     ]);
     return;
   }
