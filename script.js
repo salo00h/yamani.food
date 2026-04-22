@@ -797,21 +797,36 @@ function openOrderStatusModal(){
 
   if (isCurrentTimeInOrderWindow()){
     orderStatusTitle.textContent = "Les commandes sont ouvertes";
-    orderStatusText.textContent = "Vous pouvez continuer maintenant ou planifier une commande pour plus tard.";
+
+    orderStatusText.innerHTML =
+`Vous pouvez commander maintenant 👇
+
+💡 Vous pouvez aussi planifier pour plus tard si vous le souhaitez.`;
+
     continueNowBtn.style.display = "block";
+    planLaterBtn.textContent = "Planifier une commande";
+
   } else {
-    orderStatusTitle.textContent = "Les commandes sont fermées maintenant";
-    orderStatusText.textContent = "Vous pouvez planifier une commande pour plus tard.";
+    orderStatusTitle.textContent = "Commandes fermées pour le moment";
+
+    orderStatusText.innerHTML =
+`Nous ne prenons pas de commandes maintenant.
+
+💡 Bonne nouvelle :
+Vous pouvez planifier votre commande pour plus tard 👇
+
+<div style="margin-top:10px;">
+<b>📅 Horaires de commande :</b><br>
+• 7h → 11h<br>
+• 12h → 17h
+</div>`;
+
     continueNowBtn.style.display = "none";
+    planLaterBtn.textContent = "Planifier une commande";
   }
 
   orderStatusModal.classList.add("open");
   orderStatusModal.setAttribute("aria-hidden", "false");
-}
-
-function closeOrderStatusModal(){
-  orderStatusModal.classList.remove("open");
-  orderStatusModal.setAttribute("aria-hidden", "true");
 }
 
 
@@ -1005,20 +1020,22 @@ Merci !`;
 function checkOpeningOnLoad(){
   if (isCurrentTimeInOrderWindow()) return;
 
-  orderStatusTitle.textContent = "Commandes fermées";
+  orderStatusTitle.textContent = "Commandes fermées pour le moment";
 
   orderStatusText.innerHTML =
-`Nous sommes actuellement fermés.
+`Nous ne prenons pas de commandes maintenant.
 
-📅 Heures de commande :
-• 7h à 11h  
-• 12h à 17h  
+💡 Bonne nouvelle :
+Vous pouvez planifier votre commande pour plus tard 👇
 
-Vous pouvez revenir pendant ces horaires  
-ou planifier votre commande.`;
+<div style="margin-top:10px;">
+<b>📅 Horaires de commande :</b><br>
+• 7h → 11h<br>
+• 12h → 17h
+</div>`;
 
   continueNowBtn.style.display = "none";
-  planLaterBtn.textContent = "OK";
+  planLaterBtn.textContent = "Planifier une commande";
 
   orderStatusModal.classList.add("open");
   orderStatusModal.setAttribute("aria-hidden", "false");
