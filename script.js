@@ -787,11 +787,23 @@ function isCurrentTimeInOrderWindow(){
   return (t >= 7 && t < 11) || (t >= 12 && t < 17);
 }
 
+function showInlineOrderStatusMessage(title, lines = []){
+  orderStatusTitle.textContent = title;
+  orderStatusText.innerHTML = lines.map(line => `<div>${line}</div>`).join("");
+  continueNowBtn.style.display = "none";
+  planLaterBtn.textContent = "OK";
+  orderStatusModal.classList.add("open");
+  orderStatusModal.setAttribute("aria-hidden", "false");
+}
+
 function openOrderStatusModal(){
   const entries = Object.values(cart);
 
   if (!entries.length){
-    alert("Veuillez ajouter des articles au panier.");
+    showInlineOrderStatusMessage("🛒 Panier vide", [
+      "Veuillez ajouter des articles",
+      "au panier avant de continuer."
+    ]);
     return;
   }
 
@@ -859,7 +871,10 @@ function openCheckoutModal(prefillTomorrow = false){
   const entries = Object.values(cart);
 
   if (!entries.length){
-    alert("Veuillez ajouter des articles au panier.");
+    showInlineOrderStatusMessage("🛒 Panier vide", [
+      "Veuillez ajouter des articles",
+      "au panier avant de continuer."
+    ]);
     return;
   }
 
