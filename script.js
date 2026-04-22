@@ -330,35 +330,51 @@ function renderDessertOptions(selected = ""){
   `;
 }
 
-function renderSauceOptions(selectedSauces = [], requiredAtLeastOne = false){
+const sauceQty = {};
+
+function changeSauceQty(id, delta){
+  if (!sauceQty[id]) sauceQty[id] = 0;
+
+  sauceQty[id] += delta;
+
+  if (sauceQty[id] < 0) sauceQty[id] = 0;
+
+  const el = document.getElementById(`qty-${id}`);
+  if (el) el.textContent = sauceQty[id];
+
+  updateModalState();
+}
+
+function renderSauceOptions(selectedSauces = {}, requiredAtLeastOne = false){
   return `
     <div class="option-group">
       <div class="option-head">
         <div class="option-title">Sauces</div>
         <div class="option-badge">1 gratuite</div>
       </div>
+
       <p class="option-note">
         Une sauce est gratuite. Chaque sauce supplémentaire coûte +${formatEuro(EXTRA_SAUCE_PRICE)}.
-        ${requiredAtLeastOne ? " Pour la box, choisissez au moins une sauce." : " Pour le simple et le max, vous pouvez aussi choisir vos sauces ici."}
       </p>
+
       <div class="choice-list">
         ${SAUCES.map(sauce => `
-          <label class="choice-item">
-            <input class="choice-input" type="checkbox" name="sauceChoice" value="${sauce.id}" ${selectedSauces.includes(sauce.id) ? "checked" : ""}>
-            <div class="choice-card">
-              <div class="choice-main">
-                <div class="choice-mark checkbox"></div>
-                <div class="choice-thumb" style="display:grid;place-items:center;font-size:17px;">🥣</div>
-                <div class="choice-text">
-                  <div class="choice-name">${escapeHtml(sauce.name)}</div>
-                  <div class="choice-sub">1 gratuite, puis supplément</div>
-                </div>
-              </div>
-              <div class="choice-price">+0 / +0,50 €</div>
+          <div class="choice-card" style="display:flex;justify-content:space-between;align-items:center;">
+            
+            <div>
+              🥣 ${escapeHtml(sauce.name)}
             </div>
-          </label>
+
+            <div style="display:flex;align-items:center;gap:6px;">
+              <button onclick="changeSauceQty('${sauce.id}', -1)">➖</button>
+              <span id="qty-${sauce.id}">${selectedSauces[sauce.id] || 0}</span>
+              <button onclick="changeSauceQty('${sauce.id}', 1)">➕</button>
+            </div>
+
+          </div>
         `).join("")}
       </div>
+
       <div class="inline-summary" id="sauceSummary"></div>
     </div>
   `;
@@ -396,20 +412,20 @@ function readConfigFromModal(id){
 
   if (category === "single"){
     const drinkEl = modal.querySelector('input[name="drinkChoice"]:checked');
-    const sauceEls = [...modal.querySelectorAll('input[name="sauceChoice"]:checked')];
+
     config.drink = drinkEl ? drinkEl.value : "";
-    config.sauces = sauceEls.map(el => el.value);
+    config.sauces = { ...sauceQty };
+
     return config;
   }
 
   if (category === "box"){
     const drinkEl = modal.querySelector('input[name="drinkChoice"]:checked');
     const dessertEl = modal.querySelector('input[name="dessertChoice"]:checked');
-    const sauceEls = [...modal.querySelectorAll('input[name="sauceChoice"]:checked')];
 
     config.drink = drinkEl ? drinkEl.value : "";
     config.dessert = dessertEl ? dessertEl.value : "";
-    config.sauces = sauceEls.map(el => el.value);
+    config.sauces = { ...sauceQty };
 
     return config;
   }
@@ -427,9 +443,10 @@ function getExtrasTotal(id, config){
     }
   }
 
-  if (category === "single" || category === "box"){
-    const extraSauceCount = Math.max((config.sauces || []).length - 1, 0);
-    extras += extraSauceCount * EXTRA_SAUCE_PRICE;
+  if (config.sauces){
+    const totalSauces = Object.values(config.sauces).reduce((a,b)=>a+b,0);
+    const extraCount = Math.max(totalSauces - 1, 0);
+    extras += extraCount * EXTRA_SAUCE_PRICE;
   }
 
   return extras;
@@ -448,27 +465,40 @@ function isModalSelectionValid(id, config){
   }
 
   if (category === "box"){
-    return Boolean(config.drink) && Boolean(config.dessert) && Array.isArray(config.sauces) && config.sauces.length > 0;
+    const totalSauces = config.sauces
+      ? Object.values(config.sauces).reduce((a,b)=>a+b,0)
+      : 0;
+
+    return Boolean(config.drink) && Boolean(config.dessert) && totalSauces > 0;
   }
 
   return true;
 }
 
-function renderSauceSummary(sauces = []){
+function renderSauceSummary(sauces = {}){
   const summary = document.getElementById("sauceSummary");
   if (!summary) return;
 
-  if (!sauces.length){
-    summary.innerHTML = `<div class="summary-pill">Aucune sauce choisie</div><div class="summary-pill accent">Supplément sauces: Inclus</div>`;
+  const entries = Object.entries(sauces).filter(([_,qty]) => qty > 0);
+
+  if (!entries.length){
+    summary.innerHTML = `
+      <div class="summary-pill">Aucune sauce choisie</div>
+      <div class="summary-pill accent">Supplément sauces: Inclus</div>
+    `;
     return;
   }
 
-  const extraCount = Math.max(sauces.length - 1, 0);
+  const total = entries.reduce((sum,[_,qty]) => sum + qty, 0);
+  const extraCount = Math.max(total - 1, 0);
   const extraPrice = extraCount * EXTRA_SAUCE_PRICE;
-  const names = sauces.map(id => getSauceById(id)?.name).filter(Boolean);
 
   summary.innerHTML = `
-    ${names.map(name => `<div class="summary-pill">${escapeHtml(name)}</div>`).join("")}
+    ${entries.map(([id,qty]) => {
+      const s = getSauceById(id);
+      return `<div class="summary-pill">${s?.name} ×${qty}</div>`;
+    }).join("")}
+
     <div class="summary-pill accent">
       Supplément sauces: ${extraPrice > 0 ? "+" + formatEuro(extraPrice) : "Inclus"}
     </div>
@@ -499,40 +529,30 @@ function updateModalState(){
 }
 
 function buildSelectionLabel(id, config){
-  const category = getDishCategory(id);
   const parts = [];
 
-  if (config.drink){
-    const drink = getDrinkById(config.drink);
-    if (drink) {
-      const extra = category === "single" ? ` (+${formatEuro(OPTIONAL_DRINK_EXTRA)})` : "";
-      parts.push(`Boisson: ${drink.name}${extra}`);
+  if (config.sauces){
+    const names = Object.entries(config.sauces)
+      .filter(([_,qty]) => qty > 0)
+      .map(([id,qty]) => {
+        const s = getSauceById(id);
+        return `${s?.name} ×${qty}`;
+      });
+
+    if (names.length){
+      parts.push(`Sauces: ${names.join(", ")}`);
     }
-  }
-
-  if (category === "box"){
-    const dessert = getDessertById(config.dessert);
-    if (dessert) parts.push(`Dessert: ${dessert.name}`);
-  }
-
-  if (config.sauces?.length){
-    const sauceNames = config.sauces
-      .map(sauceId => getSauceById(sauceId)?.name)
-      .filter(Boolean)
-      .join(", ");
-    if (sauceNames) parts.push(`Sauces: ${sauceNames}`);
-  }
-
-  const extraSauceCount = Math.max((config.sauces || []).length - 1, 0);
-  if (extraSauceCount > 0){
-    parts.push(`Supplément sauces: +${formatEuro(extraSauceCount * EXTRA_SAUCE_PRICE)}`);
   }
 
   return parts.join(" • ");
 }
 
 function buildCartKey(id, config){
-  const sauces = [...(config.sauces || [])].sort().join("+") || "none";
+  const sauces = Object.entries(config.sauces || {})
+    .map(([sauceId, qty]) => `${sauceId}x${qty}`)
+    .sort()
+    .join("+") || "none";
+
   return `${id}__drink:${config.drink || "none"}__dessert:${config.dessert || "none"}__sauces:${sauces}`;
 }
 
