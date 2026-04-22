@@ -110,6 +110,14 @@ const timeCmd = document.getElementById("timeCmd");
 const addr = document.getElementById("addr");
 const zip = document.getElementById("zip");
 const city = document.getElementById("city");
+const planningGroup = document.getElementById("planningGroup");
+const todayTimeGroup = document.getElementById("todayTimeGroup");
+const timeNowCmd = document.getElementById("timeNowCmd");
+const orderStatusModal = document.getElementById("orderStatusModal");
+const orderStatusTitle = document.getElementById("orderStatusTitle");
+const orderStatusText = document.getElementById("orderStatusText");
+const continueNowBtn = document.getElementById("continueNowBtn");
+const planLaterBtn = document.getElementById("planLaterBtn");
 
 let selectedDish = null;
 let selectedConfig = null;
@@ -675,6 +683,7 @@ document.addEventListener("keydown", (e) => {
     closePreview();
     closeModal();
     closeCheckoutModal();
+    closeOrderStatusModal();
   }
 });
 
@@ -754,12 +763,12 @@ function updatePlanningVisibility(){
   const today = getTodayLocalDateString();
   const selectedDate = dateCmd.value;
 
-  const planningGroup = dateCmd.closest(".option-group");
-
   if (!selectedDate || selectedDate === today){
     planningGroup.style.display = "none";
+    todayTimeGroup.style.display = "block";
   } else {
     planningGroup.style.display = "block";
+    todayTimeGroup.style.display = "none";
   }
 }
 
@@ -769,7 +778,41 @@ function getCartGrandTotal(){
   }, 0);
 }
 
-function openCheckoutModal(){
+function isCurrentTimeInOrderWindow(){
+  const now = new Date();
+  const t = now.getHours() + (now.getMinutes() / 60);
+  return (t >= 7 && t < 11) || (t >= 12 && t < 17);
+}
+
+function openOrderStatusModal(){
+  const entries = Object.values(cart);
+
+  if (!entries.length){
+    alert("Veuillez ajouter des articles au panier.");
+    return;
+  }
+
+  if (isCurrentTimeInOrderWindow()){
+    orderStatusTitle.textContent = "Les commandes sont ouvertes";
+    orderStatusText.textContent = "Vous pouvez continuer maintenant ou planifier une commande pour plus tard.";
+    continueNowBtn.style.display = "block";
+  } else {
+    orderStatusTitle.textContent = "Les commandes sont fermées maintenant";
+    orderStatusText.textContent = "Vous pouvez planifier une commande pour plus tard.";
+    continueNowBtn.style.display = "none";
+  }
+
+  orderStatusModal.classList.add("open");
+  orderStatusModal.setAttribute("aria-hidden", "false");
+}
+
+function closeOrderStatusModal(){
+  orderStatusModal.classList.remove("open");
+  orderStatusModal.setAttribute("aria-hidden", "true");
+}
+
+
+function openCheckoutModal(prefillTomorrow = false){
   const entries = Object.values(cart);
 
   if (!entries.length){
@@ -778,12 +821,27 @@ function openCheckoutModal(){
   }
 
   checkoutTotal.textContent = formatEuro(getCartGrandTotal());
+
   const today = getTodayLocalDateString();
   dateCmd.min = today;
-  dateCmd.value = today;
-  updatePlanningVisibility();
+
+  if (prefillTomorrow){
+    const d = new Date();
+    d.setDate(d.getDate() + 1);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    dateCmd.value = `${year}-${month}-${day}`;
+  } else {
+    dateCmd.value = today;
+  }
+
+  timeCmd.value = "";
+  timeNowCmd.value = "";
   checkoutAlert.textContent = "";
   checkoutAlert.classList.remove("show");
+
+  updatePlanningVisibility();
 
   checkoutModal.classList.add("open");
   checkoutModal.setAttribute("aria-hidden", "false");
@@ -824,8 +882,22 @@ orderTypeInputs.forEach(input => {
 
 
 dateCmd.addEventListener("change", updatePlanningVisibility);
-whatsappBtn.addEventListener("click", openCheckoutModal);
+whatsappBtn.addEventListener("click", openOrderStatusModal);
 closeCheckoutBtn.addEventListener("click", closeCheckoutModal);
+
+continueNowBtn.addEventListener("click", () => {
+  closeOrderStatusModal();
+  openCheckoutModal(false);
+});
+
+planLaterBtn.addEventListener("click", () => {
+  closeOrderStatusModal();
+  openCheckoutModal(true);
+});
+
+orderStatusModal.addEventListener("click", (e) => {
+  if (e.target === orderStatusModal) closeOrderStatusModal();
+});
 
 checkoutModal.addEventListener("click", (e) => {
   if (e.target === checkoutModal) closeCheckoutModal();
@@ -842,7 +914,8 @@ confirmOrderBtn.addEventListener("click", () => {
 
   const today = getTodayLocalDateString();
   const selectedDate = dateCmd.value || today;
-  const selectedTime = timeCmd.value;
+  const isTodayOrder = selectedDate === today;
+  const selectedTime = isTodayOrder ? timeNowCmd.value : timeCmd.value;
 
   if (!selectedTime){
     checkoutAlert.textContent = "Veuillez choisir une heure.";

@@ -167,18 +167,14 @@
 
         <p class="modal-desc">
           Choisissez le mode de réception, puis indiquez l’heure souhaitée.
-          Pour aujourd’hui, sélectionnez uniquement l’heure.
-          Pour un autre jour, utilisez la planification.
         </p>
 
         <div class="option-group">
           <div class="option-title">Informations importantes</div>
           <p class="option-note">
-            Aujourd’hui : choisissez seulement l’heure et le mode de
-            réception.<br>
-            Planification : uniquement pour les jours suivants.<br>
             Retrait disponible de 13h à 14h et de 19h à 22h.<br>
-            Livraison à domicile disponible uniquement à Lyon.
+            Livraison à domicile disponible uniquement à Lyon.<br>
+            Pour un autre jour, vous pouvez planifier votre commande.
           </p>
         </div>
 
@@ -241,10 +237,15 @@
             </div>
           </div>
 
-          <div class="option-group">
+          <div class="option-group" id="planningGroup">
             <div class="option-title">Planifier la commande</div>
             <input type="date" id="dateCmd" class="input" />
             <input type="time" id="timeCmd" class="input" />
+          </div>
+
+          <div class="option-group" id="todayTimeGroup">
+            <div class="option-title">Commander pour maintenant</div>
+            <input type="time" id="timeNowCmd" class="input" />
           </div>
 
           <div class="modal-inline-alert" id="checkoutAlert"></div>
@@ -265,6 +266,31 @@
       </div>
     </div>
 
+    <div class="modal" id="orderStatusModal" aria-hidden="true">
+      <div class="modal-card">
+        <div class="modal-head">
+          <h2 class="modal-title" id="orderStatusTitle">Commande</h2>
+        </div>
+
+        <p class="modal-desc" id="orderStatusText">
+          Vérification des horaires...
+        </p>
+
+        <div class="option-group">
+          <div class="option-title">Horaires de commande</div>
+          <p class="option-note">
+            Commande entre 7h et 11h<br>
+            Commande entre 12h et 17h
+          </p>
+        </div>
+
+        <div class="modal-actions" id="orderStatusActions">
+          <button class="btn btn-primary" id="continueNowBtn">Continuer</button>
+          <button class="btn btn-ghost" id="planLaterBtn">Planifier</button>
+        </div>
+      </div>
+    </div>
+
     <!-- BOTTOM UI -->
     <div class="bottom-ui">
       <div class="cart">
@@ -278,14 +304,6 @@
         <div class="cart-items" id="cartItems">
           <div class="cart-empty">Aucun article sélectionné.</div>
         </div>
-      </div>
-
-      <div
-        class="cart-empty"
-        style="padding:6px 4px 0; color:rgba(255,255,255,.82);"
-      >
-        Aujourd’hui : choisissez l’heure seulement. Planification uniquement
-        pour les jours suivants.
       </div>
 
       <button class="wa" id="whatsappBtn" type="button">

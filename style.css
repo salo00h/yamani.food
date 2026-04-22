@@ -1298,3 +1298,12 @@ button,input,textarea,select{
   background:rgba(255,255,255,.08);
   color:white;
 }
+
+#orderStatusActions{
+  grid-template-columns:1fr 1fr;
+}
+
+#planningGroup,
+#todayTimeGroup{
+  display:none;
+}
