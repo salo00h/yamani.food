@@ -208,7 +208,7 @@ function getDefaultConfig(id){
     return {
       drink: "",
       dessert: "",
-      sauces: []
+      sauces: {}
     };
   }
 
@@ -216,14 +216,14 @@ function getDefaultConfig(id){
     return {
       drink: DRINKS[0].id,
       dessert: DESSERTS[0].id,
-      sauces: [SAUCES[0].id]
+      sauces: {}
     };
   }
 
   return {
     drink: "",
     dessert: "",
-    sauces: []
+    sauces: {}
   };
 }
 
@@ -347,7 +347,7 @@ function changeSauceQty(id, delta){
 
 function renderSauceOptions(selectedSauces = {}, requiredAtLeastOne = false){
   return `
-    <div class="option-group">
+    <div class="option-group sauce-group">
       <div class="option-head">
         <div class="option-title">Sauces</div>
         <div class="option-badge">1 gratuite</div>
@@ -357,87 +357,38 @@ function renderSauceOptions(selectedSauces = {}, requiredAtLeastOne = false){
         Une sauce est gratuite. Chaque sauce supplémentaire coûte +${formatEuro(EXTRA_SAUCE_PRICE)}.
       </p>
 
-      <div class="choice-list">
-        ${SAUCES.map(sauce => `
-          <div
-            class="choice-card"
-            style="
-              display:flex;
-              align-items:center;
-              justify-content:space-between;
-              gap:12px;
-              min-height:64px;
-            "
-          >
-            <div class="choice-main" style="min-width:0;">
-              <div
-                class="choice-thumb"
-                style="
-                  display:grid;
-                  place-items:center;
-                  font-size:18px;
-                "
-              >
-                🥣
-              </div>
+      <div class="sauce-list">
+        ${SAUCES.map((sauce) => `
+          <div class="sauce-row">
+            <div class="sauce-info">
+              <div class="sauce-icon">🥣</div>
 
-              <div class="choice-text">
-                <div class="choice-name">${escapeHtml(sauce.name)}</div>
-                <div class="choice-sub">Ajoutez la quantité souhaitée</div>
+              <div class="sauce-text">
+                <div class="sauce-name">${escapeHtml(sauce.name)}</div>
+                <div class="sauce-sub">Ajoutez la quantité souhaitée</div>
               </div>
             </div>
 
-            <div
-              style="
-                display:flex;
-                align-items:center;
-                gap:8px;
-                flex:0 0 auto;
-              "
-            >
+            <div class="qty-stepper">
               <button
                 type="button"
+                class="qty-btn"
                 onclick="changeSauceQty('${sauce.id}', -1)"
-                style="
-                  width:34px;
-                  height:34px;
-                  border:none;
-                  border-radius:999px;
-                  background:rgba(255,255,255,.12);
-                  color:#fff;
-                  font-size:20px;
-                  font-weight:900;
-                  cursor:pointer;
-                "
+                aria-label="Diminuer ${escapeHtml(sauce.name)}"
               >
                 −
               </button>
 
               <span
+                class="qty-value"
                 id="qty-${sauce.id}"
-                style="
-                  min-width:22px;
-                  text-align:center;
-                  font-weight:900;
-                  font-size:1rem;
-                  color:#fff;
-                "
               >${selectedSauces[sauce.id] || 0}</span>
 
               <button
                 type="button"
+                class="qty-btn qty-btn-plus"
                 onclick="changeSauceQty('${sauce.id}', 1)"
-                style="
-                  width:34px;
-                  height:34px;
-                  border:none;
-                  border-radius:999px;
-                  background:rgba(255,214,95,.18);
-                  color:#fff;
-                  font-size:20px;
-                  font-weight:900;
-                  cursor:pointer;
-                "
+                aria-label="Augmenter ${escapeHtml(sauce.name)}"
               >
                 +
               </button>
@@ -446,7 +397,7 @@ function renderSauceOptions(selectedSauces = {}, requiredAtLeastOne = false){
         `).join("")}
       </div>
 
-      <div class="inline-summary" id="sauceSummary"></div>
+      <div class="inline-summary sauce-summary-wrap" id="sauceSummary"></div>
     </div>
   `;
 }
@@ -550,7 +501,7 @@ function renderSauceSummary(sauces = {}){
   const summary = document.getElementById("sauceSummary");
   if (!summary) return;
 
-  const entries = Object.entries(sauces).filter(([_,qty]) => qty > 0);
+  const entries = Object.entries(sauces).filter(([_, qty]) => qty > 0);
 
   if (!entries.length){
     summary.innerHTML = `
@@ -560,14 +511,18 @@ function renderSauceSummary(sauces = {}){
     return;
   }
 
-  const total = entries.reduce((sum,[_,qty]) => sum + qty, 0);
+  const total = entries.reduce((sum, [_, qty]) => sum + qty, 0);
   const extraCount = Math.max(total - 1, 0);
   const extraPrice = extraCount * EXTRA_SAUCE_PRICE;
 
   summary.innerHTML = `
-    ${entries.map(([id,qty]) => {
-      const s = getSauceById(id);
-      return `<div class="summary-pill">${s?.name} ×${qty}</div>`;
+    ${entries.map(([id, qty]) => {
+      const sauce = getSauceById(id);
+      return `
+        <div class="summary-pill">
+          ${escapeHtml(sauce?.name || id)} ×${qty}
+        </div>
+      `;
     }).join("")}
 
     <div class="summary-pill accent">
@@ -693,6 +648,7 @@ function openModal(id, triggerEl){
 
   selectedDish = id;
   selectedConfig = getDefaultConfig(id);
+  Object.keys(sauceQty).forEach((key) => delete sauceQty[key]);
 
   hotspots.forEach(el => el.classList.remove("active"));
   if (triggerEl) triggerEl.classList.add("active");
