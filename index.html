@@ -1,162 +1,302 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  />
-  <title>Yamani Food — Menu interactif</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <!-- INTRO -->
-  <div class="intro" id="intro">
-    <div class="intro-card">
-      <h1 class="intro-title">Bienvenue chez Yamani Food</h1>
-      <div class="intro-sub">Préparation de votre menu interactif…</div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <title>Yamani Food — Menu interactif</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-      <div class="runway" aria-hidden="true">
-        <div class="chef">
-          <div class="emoji">👨‍🍳</div>
-          <div class="steam">
-            <span></span><span></span><span></span>
+  <body>
+    <!-- INTRO -->
+    <div class="intro" id="intro">
+      <div class="intro-card">
+        <h1 class="intro-title">Bienvenue chez Yamani Food</h1>
+        <div class="intro-sub">Préparation de votre menu interactif…</div>
+
+        <div class="runway" aria-hidden="true">
+          <div class="chef">
+            <div class="emoji">👨‍🍳</div>
+            <div class="steam">
+              <span></span><span></span><span></span>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="loading" aria-hidden="true">
-        <span></span><span></span><span></span>
+        <div class="loading" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- APP -->
-  <main class="app" id="app">
-    <section class="stage">
-      <div class="menu-bg" aria-label="Menu Yamani Food"></div>
-      <div class="mobile-side-blend" aria-hidden="true"></div>
-      <div class="menu-safe-fade" aria-hidden="true"></div>
+    <!-- APP -->
+    <main class="app" id="app">
+      <section class="stage">
+        <div class="menu-bg" aria-label="Menu Yamani Food"></div>
+        <div class="mobile-side-blend" aria-hidden="true"></div>
+        <div class="menu-safe-fade" aria-hidden="true"></div>
 
-      <div class="image-frame" id="imageFrame">
-        <button
-          class="hotspot hotspot--main"
-          data-id="zerbian-simple"
-          aria-label="Zerbian Simple"
-          style="left:4.89%; top:22.66%; width:48.02%; height:22.71%;"
-        ></button>
+        <div class="image-frame" id="imageFrame">
+          <button
+            class="hotspot hotspot--main"
+            data-id="zerbian-simple"
+            aria-label="Zerbian Simple"
+            style="left:4.89%; top:22.66%; width:48.02%; height:22.71%;"
+          ></button>
 
-        <button
-          class="hotspot hotspot--main"
-          data-id="zerbian-max"
-          aria-label="Zerbian Max"
-          style="left:50.16%; top:22.83%; width:46.91%; height:22.36%;"
-        ></button>
+          <button
+            class="hotspot hotspot--main"
+            data-id="zerbian-max"
+            aria-label="Zerbian Max"
+            style="left:50.16%; top:22.83%; width:46.91%; height:22.36%;"
+          ></button>
 
-        <button
-          class="hotspot hotspot--main"
-          data-id="box-simple"
-          aria-label="Box Simple"
-          style="left:1.95%; top:45.02%; width:47.15%; height:22.94%;"
-        ></button>
+          <button
+            class="hotspot hotspot--main"
+            data-id="box-simple"
+            aria-label="Box Simple"
+            style="left:1.95%; top:45.02%; width:47.15%; height:22.94%;"
+          ></button>
 
-        <button
-          class="hotspot hotspot--main"
-          data-id="box-max"
-          aria-label="Box Max"
-          style="left:50.29%; top:45.02%; width:47.40%; height:22.94%;"
-        ></button>
+          <button
+            class="hotspot hotspot--main"
+            data-id="box-max"
+            aria-label="Box Max"
+            style="left:50.29%; top:45.02%; width:47.40%; height:22.94%;"
+          ></button>
 
-        <button
-          class="hotspot hotspot--sauce"
-          data-id="daqoos"
-          aria-label="Daqoos"
-          style="left:10.91%; top:72.40%; width:25.39%; height:10.81%; border-radius:24px;"
-        ></button>
+          <button
+            class="hotspot hotspot--sauce"
+            data-id="daqoos"
+            aria-label="Daqoos"
+            style="left:10.91%; top:72.40%; width:25.39%; height:10.81%; border-radius:24px;"
+          ></button>
 
-        <button
-          class="hotspot hotspot--sauce"
-          data-id="labneh"
-          aria-label="Labneh"
-          style="left:37.51%; top:72.40%; width:24.49%; height:10.68%; border-radius:24px;"
-        ></button>
+          <button
+            class="hotspot hotspot--sauce"
+            data-id="labneh"
+            aria-label="Labneh"
+            style="left:37.51%; top:72.40%; width:24.49%; height:10.68%; border-radius:24px;"
+          ></button>
 
-        <button
-          class="hotspot hotspot--sauce"
-          data-id="sahawiq"
-          aria-label="Sahawiq"
-          style="left:64.27%; top:72.40%; width:24.82%; height:10.68%; border-radius:24px;"
-        ></button>
-      </div>
-    </section>
-  </main>
+          <button
+            class="hotspot hotspot--sauce"
+            data-id="sahawiq"
+            aria-label="Sahawiq"
+            style="left:64.27%; top:72.40%; width:24.82%; height:10.68%; border-radius:24px;"
+          ></button>
+        </div>
+      </section>
+    </main>
 
     <!-- BOX PREVIEW -->
-  <div class="preview-modal" id="previewModal" aria-hidden="true">
-    <div class="preview-card">
-      <button class="preview-close" id="previewCloseBtn" aria-label="Fermer">✕</button>
-
-      <img
-        id="previewImage"
-        class="preview-image"
-        src=""
-        alt="Aperçu box"
-      />
-
-      <div class="preview-actions">
-        <button class="btn btn-primary" id="previewContinueBtn">
-          Continuer
+    <div class="preview-modal" id="previewModal" aria-hidden="true">
+      <div class="preview-card">
+        <button
+          class="preview-close"
+          id="previewCloseBtn"
+          aria-label="Fermer"
+        >
+          ✕
         </button>
-      </div>
-    </div>
-  </div>
 
-  <!-- MODAL -->
-  <div class="modal" id="modal" aria-hidden="true">
-    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <div class="modal-head">
-        <h2 class="modal-title" id="modalTitle">Nom du plat</h2>
-        <div class="modal-price" id="modalPrice">0,00 €</div>
-      </div>
+        <img
+          id="previewImage"
+          class="preview-image"
+          src=""
+          alt="Aperçu box"
+        />
 
-      <p class="modal-desc" id="modalDesc">
-        Description courte du plat.
-      </p>
-
-      <div class="modal-options" id="modalOptions"></div>
-      <div class="modal-inline-alert" id="modalAlert"></div>
-
-      <div class="modal-actions">
-        <button class="btn btn-primary" id="addToCartBtn">Ajouter au panier</button>
-        <button class="btn btn-ghost" id="closeModalBtn" aria-label="Fermer">✕</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- BOTTOM UI -->
-  <div class="bottom-ui">
-    <div class="cart">
-      <div class="cart-top">
-        <div class="cart-label">
-          <span>🛒 Panier</span>
+        <div class="preview-actions">
+          <button class="btn btn-primary" id="previewContinueBtn">
+            Continuer
+          </button>
         </div>
-        <div class="cart-count" id="cartCount">0</div>
-      </div>
-
-      <div class="cart-items" id="cartItems">
-        <div class="cart-empty">Aucun article sélectionné.</div>
       </div>
     </div>
 
-    <button class="wa" id="whatsappBtn" type="button">
-      <span class="wa-icon">💬</span>
-      <span class="wa-text">
-        <span>Commander via WhatsApp</span>
-        <small>Envoyer votre commande complète</small>
-      </span>
-    </button>
-  </div>
+    <!-- MODAL -->
+    <div class="modal" id="modal" aria-hidden="true">
+      <div
+        class="modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle"
+      >
+        <div class="modal-head">
+          <h2 class="modal-title" id="modalTitle">Nom du plat</h2>
+          <div class="modal-price" id="modalPrice">0,00 €</div>
+        </div>
 
-  <script src="script.js"></script>
-</body>
+        <p class="modal-desc" id="modalDesc">
+          Description courte du plat.
+        </p>
+
+        <div class="modal-options" id="modalOptions"></div>
+        <div class="modal-inline-alert" id="modalAlert"></div>
+
+        <div class="modal-actions">
+          <button class="btn btn-primary" id="addToCartBtn">
+            Ajouter au panier
+          </button>
+          <button
+            class="btn btn-ghost"
+            id="closeModalBtn"
+            aria-label="Fermer"
+          >
+            ✕
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="checkoutModal" aria-hidden="true">
+      <div
+        class="modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="checkoutTitle"
+      >
+        <div class="modal-head">
+          <h2 class="modal-title" id="checkoutTitle">Finaliser la commande</h2>
+          <div class="modal-price" id="checkoutTotal">0,00 €</div>
+        </div>
+
+        <p class="modal-desc">
+          Choisissez le mode de réception, puis indiquez l’heure souhaitée.
+          Pour aujourd’hui, sélectionnez uniquement l’heure.
+          Pour un autre jour, utilisez la planification.
+        </p>
+
+        <div class="option-group">
+          <div class="option-title">Informations importantes</div>
+          <p class="option-note">
+            Aujourd’hui : choisissez seulement l’heure et le mode de
+            réception.<br>
+            Planification : uniquement pour les jours suivants.<br>
+            Retrait disponible de 13h à 14h et de 19h à 22h.<br>
+            Livraison à domicile disponible uniquement à Lyon.
+          </p>
+        </div>
+
+        <div class="modal-options">
+          <div class="option-group">
+            <div class="option-head">
+              <div class="option-title">Mode de réception</div>
+            </div>
+
+            <div class="choice-list">
+              <label class="choice-item">
+                <input
+                  class="choice-input"
+                  type="radio"
+                  name="orderType"
+                  value="pickup"
+                  checked
+                >
+                <div class="choice-card">
+                  <div class="choice-main">
+                    <div class="choice-mark"></div>
+                    <div class="choice-text">
+                      <div class="choice-name">À emporter</div>
+                      <div class="choice-sub">
+                        Le client vient récupérer la commande
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </label>
+
+              <label class="choice-item">
+                <input
+                  class="choice-input"
+                  type="radio"
+                  name="orderType"
+                  value="delivery"
+                >
+                <div class="choice-card">
+                  <div class="choice-main">
+                    <div class="choice-mark"></div>
+                    <div class="choice-text">
+                      <div class="choice-name">Livraison à domicile</div>
+                      <div class="choice-sub">
+                        Disponible uniquement à Lyon
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div id="deliveryFields" style="display:none;">
+            <div class="option-group">
+              <div class="option-title">Adresse de livraison</div>
+              <input placeholder="Adresse complète" id="addr" class="input" />
+              <input placeholder="Code postal" id="zip" class="input" />
+              <input placeholder="Ville" id="city" class="input" />
+            </div>
+          </div>
+
+          <div class="option-group">
+            <div class="option-title">Planifier la commande</div>
+            <input type="date" id="dateCmd" class="input" />
+            <input type="time" id="timeCmd" class="input" />
+          </div>
+
+          <div class="modal-inline-alert" id="checkoutAlert"></div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn btn-primary" id="confirmOrderBtn">
+            Envoyer sur WhatsApp
+          </button>
+          <button
+            class="btn btn-ghost"
+            id="closeCheckoutBtn"
+            aria-label="Fermer"
+          >
+            ✕
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM UI -->
+    <div class="bottom-ui">
+      <div class="cart">
+        <div class="cart-top">
+          <div class="cart-label">
+            <span>🛒 Panier</span>
+          </div>
+          <div class="cart-count" id="cartCount">0</div>
+        </div>
+
+        <div class="cart-items" id="cartItems">
+          <div class="cart-empty">Aucun article sélectionné.</div>
+        </div>
+      </div>
+
+      <div
+        class="cart-empty"
+        style="padding:6px 4px 0; color:rgba(255,255,255,.82);"
+      >
+        Aujourd’hui : choisissez l’heure seulement. Planification uniquement
+        pour les jours suivants.
+      </div>
+
+      <button class="wa" id="whatsappBtn" type="button">
+        <span class="wa-icon">💬</span>
+        <span class="wa-text">
+          <span>Commander via WhatsApp</span>
+          <small>Envoyer votre commande complète</small>
+        </span>
+      </button>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
 </html>

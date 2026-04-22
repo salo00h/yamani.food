@@ -98,6 +98,18 @@ const previewModal = document.getElementById("previewModal");
 const previewImage = document.getElementById("previewImage");
 const previewCloseBtn = document.getElementById("previewCloseBtn");
 const previewContinueBtn = document.getElementById("previewContinueBtn");
+const checkoutModal = document.getElementById("checkoutModal");
+const checkoutTotal = document.getElementById("checkoutTotal");
+const checkoutAlert = document.getElementById("checkoutAlert");
+const confirmOrderBtn = document.getElementById("confirmOrderBtn");
+const closeCheckoutBtn = document.getElementById("closeCheckoutBtn");
+const deliveryFields = document.getElementById("deliveryFields");
+const orderTypeInputs = document.querySelectorAll('input[name="orderType"]');
+const dateCmd = document.getElementById("dateCmd");
+const timeCmd = document.getElementById("timeCmd");
+const addr = document.getElementById("addr");
+const zip = document.getElementById("zip");
+const city = document.getElementById("city");
 
 let selectedDish = null;
 let selectedConfig = null;
@@ -662,6 +674,7 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     closePreview();
     closeModal();
+    closeCheckoutModal();
   }
 });
 
@@ -729,12 +742,149 @@ function pulseWhatsApp(){
   );
 }
 
-whatsappBtn.addEventListener("click", () => {
+function getTodayLocalDateString(){
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function updatePlanningVisibility(){
+  const today = getTodayLocalDateString();
+  const selectedDate = dateCmd.value;
+
+  const planningGroup = dateCmd.closest(".option-group");
+
+  if (!selectedDate || selectedDate === today){
+    planningGroup.style.display = "none";
+  } else {
+    planningGroup.style.display = "block";
+  }
+}
+
+function getCartGrandTotal(){
+  return Object.values(cart).reduce((sum, entry) => {
+    return sum + (entry.lineTotal * entry.qty);
+  }, 0);
+}
+
+function openCheckoutModal(){
   const entries = Object.values(cart);
 
   if (!entries.length){
-    alert("Veuillez d’abord ajouter au moins un article au panier.");
+    alert("Veuillez ajouter des articles au panier.");
     return;
+  }
+
+  checkoutTotal.textContent = formatEuro(getCartGrandTotal());
+  const today = getTodayLocalDateString();
+  dateCmd.min = today;
+  dateCmd.value = today;
+  updatePlanningVisibility();
+  checkoutAlert.textContent = "";
+  checkoutAlert.classList.remove("show");
+
+  checkoutModal.classList.add("open");
+  checkoutModal.setAttribute("aria-hidden", "false");
+}
+
+function closeCheckoutModal(){
+  checkoutModal.classList.remove("open");
+  checkoutModal.setAttribute("aria-hidden", "true");
+  checkoutAlert.textContent = "";
+  checkoutAlert.classList.remove("show");
+}
+
+function isPickupTimeValid(time){
+  if (!time) return false;
+  const [h, m] = time.split(":").map(Number);
+  const t = h + (m / 60);
+
+  return (t >= 13 && t <= 14) || (t >= 19 && t <= 22);
+}
+
+function isDeliveryTimeValid(time){
+  if (!time) return false;
+  const [h, m] = time.split(":").map(Number);
+  const t = h + (m / 60);
+
+  return (t >= 13 && t <= 14) || (t >= 19 && t <= 22);
+}
+
+orderTypeInputs.forEach(input => {
+  input.addEventListener("change", () => {
+    if (input.value === "delivery" && input.checked){
+      deliveryFields.style.display = "block";
+    } else if (input.checked) {
+      deliveryFields.style.display = "none";
+    }
+  });
+});
+
+
+dateCmd.addEventListener("change", updatePlanningVisibility);
+whatsappBtn.addEventListener("click", openCheckoutModal);
+closeCheckoutBtn.addEventListener("click", closeCheckoutModal);
+
+checkoutModal.addEventListener("click", (e) => {
+  if (e.target === checkoutModal) closeCheckoutModal();
+});
+
+confirmOrderBtn.addEventListener("click", () => {
+  const entries = Object.values(cart);
+  if (!entries.length){
+    closeCheckoutModal();
+    return;
+  }
+
+  const orderType = document.querySelector('input[name="orderType"]:checked')?.value || "pickup";
+
+  const today = getTodayLocalDateString();
+  const selectedDate = dateCmd.value || today;
+  const selectedTime = timeCmd.value;
+
+  if (!selectedTime){
+    checkoutAlert.textContent = "Veuillez choisir une heure.";
+    checkoutAlert.classList.add("show");
+  return;
+  }
+
+  if (orderType === "pickup" && !isPickupTimeValid(selectedTime)){
+    checkoutAlert.textContent = "Retrait disponible uniquement de 13h à 14h ou de 19h à 22h.";
+    checkoutAlert.classList.add("show");
+    return;
+  }
+
+  if (orderType === "delivery" && !isDeliveryTimeValid(selectedTime)){
+    checkoutAlert.textContent = "Livraison disponible uniquement de 13h à 14h ou de 19h à 22h.";
+    checkoutAlert.classList.add("show");
+    return;
+  }
+
+  let addressBlock = "";
+  if (orderType === "delivery"){
+    const addrValue = addr.value.trim();
+    const zipValue = zip.value.trim();
+    const cityValue = city.value.trim();
+
+    if (!addrValue || !zipValue || !cityValue){
+      checkoutAlert.textContent = "Veuillez remplir l’adresse complète de livraison.";
+      checkoutAlert.classList.add("show");
+      return;
+    }
+
+    if (cityValue.toLowerCase() !== "lyon"){
+      checkoutAlert.textContent = "La livraison est disponible uniquement à Lyon.";
+      checkoutAlert.classList.add("show");
+      return;
+    }
+
+    addressBlock =
+`\nAdresse de livraison :
+- Adresse : ${addrValue}
+- Code postal : ${zipValue}
+- Ville : ${cityValue}`;
   }
 
   const lines = entries.map((entry, index) => {
@@ -749,22 +899,31 @@ whatsappBtn.addEventListener("click", () => {
     ].filter(Boolean).join("\n");
   });
 
-  const grandTotal = entries.reduce((sum, entry) => sum + (entry.lineTotal * entry.qty), 0);
+  const grandTotal = getCartGrandTotal();
+
+  const receptionLabel =
+    orderType === "delivery"
+      ? "Livraison à domicile"
+      : "À emporter";
 
   const message =
 `Bonjour Yamani Food,
+
 Je souhaite commander :
 
 ${lines.join("\n\n")}
+
+Mode de réception : ${receptionLabel}
+Date souhaitée : ${selectedDate}
+Heure souhaitée : ${selectedTime}${addressBlock}
 
 Total estimé : ${formatEuro(grandTotal)}
 
 Merci !`;
 
-  const phone = "33749773595";
-  const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+  const url = `https://wa.me/33749773595?text=${encodeURIComponent(message)}`;
   window.open(url, "_blank");
+  closeCheckoutModal();
 });
 
 renderCart();
-
