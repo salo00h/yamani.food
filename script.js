@@ -1002,7 +1002,7 @@ planLaterBtn.addEventListener("click", () => {
 });
 
 orderStatusModal.addEventListener("click", (e) => {
-  if (e.target === orderStatusModal) closeOrderStatusModal();
+  // منع الإغلاق عند الضغط خارج البوب
 });
 
 checkoutModal.addEventListener("click", (e) => {
