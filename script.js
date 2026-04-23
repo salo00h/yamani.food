@@ -1017,12 +1017,12 @@ function openOrderStatusModal(){
   const entries = Object.values(cart);
 
   if (!entries.length){
-    showInlineOrderStatusMessage("📅 Planifier une commande", [
-      "Bonne idée 😊",
-      "🍽️ Découvrez le menu et ajoutez ce qui vous fait envie",
-      "⏰ Choisissez ensuite le moment parfait… on s’occupe du reste 😉"
+    showInlineOrderStatusMessage("🛒 Votre panier est vide", [
+      "🍽️ Découvrez notre menu avant de commander",
+      "👆 Appuyez sur un plat pour l’ajouter au panier",
+      "💬 Une fois votre sélection prête, vous pourrez envoyer votre commande sur WhatsApp"
     ]);
-    return;
+     return;
   }
 
   if (hasShownOpeningStatusModal){
