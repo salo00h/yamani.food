@@ -239,13 +239,25 @@
 
           <div class="option-group" id="planningGroup">
             <div class="option-title">Planifier la commande</div>
-            <input type="date" id="dateCmd" class="input" />
-            <input type="time" id="timeCmd" class="input" />
+
+            <div class="datetime-box">
+              <label for="dateCmd">📅 Date</label>
+              <input type="date" id="dateCmd" class="input" />
+            </div>
+
+            <div class="datetime-box">
+              <label for="timeCmd">⏰ Heure</label>
+              <input type="time" id="timeCmd" class="input" />
+            </div>
           </div>
 
           <div class="option-group" id="todayTimeGroup">
             <div class="option-title">Commander pour maintenant</div>
-            <input type="time" id="timeNowCmd" class="input" />
+
+            <div class="datetime-box">
+              <label for="timeNowCmd">⏰ Heure</label>
+              <input type="time" id="timeNowCmd" class="input" />
+            </div>
           </div>
 
           <div class="modal-inline-alert" id="checkoutAlert"></div>

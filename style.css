@@ -1415,3 +1415,19 @@ button,input,textarea,select{
   margin-top:12px;
 }
 
+.datetime-box{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  padding:10px;
+  border-radius:12px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.12);
+  margin-top:10px;
+}
+
+.datetime-box label{
+  font-size:.78rem;
+  font-weight:800;
+  color:#ffe59c;
+}
