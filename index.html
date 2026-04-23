@@ -40,128 +40,22 @@
         <div class="menu-safe-fade" aria-hidden="true"></div>
 
         <div class="image-frame" id="imageFrame">
-          <button
-            class="hotspot hotspot--main"
-            data-id="zerbian-simple"
-            aria-label="Zerbian Simple"
-            style="left:4.89%; top:22.66%; width:48.02%; height:22.71%;"
-          ></button>
-
-          <button
-            class="hotspot hotspot--main"
-            data-id="zerbian-max"
-            aria-label="Zerbian Max"
-            style="left:50.16%; top:22.83%; width:46.91%; height:22.36%;"
-          ></button>
-
-          <button
-            class="hotspot hotspot--main"
-            data-id="box-simple"
-            aria-label="Box Simple"
-            style="left:1.95%; top:45.02%; width:47.15%; height:22.94%;"
-          ></button>
-
-          <button
-            class="hotspot hotspot--main"
-            data-id="box-max"
-            aria-label="Box Max"
-            style="left:50.29%; top:45.02%; width:47.40%; height:22.94%;"
-          ></button>
-
-          <button
-            class="hotspot hotspot--sauce"
-            data-id="daqoos"
-            aria-label="Daqoos"
-            style="left:10.91%; top:72.40%; width:25.39%; height:10.81%; border-radius:24px;"
-          ></button>
-
-          <button
-            class="hotspot hotspot--sauce"
-            data-id="labneh"
-            aria-label="Labneh"
-            style="left:37.51%; top:72.40%; width:24.49%; height:10.68%; border-radius:24px;"
-          ></button>
-
-          <button
-            class="hotspot hotspot--sauce"
-            data-id="sahawiq"
-            aria-label="Sahawiq"
-            style="left:64.27%; top:72.40%; width:24.82%; height:10.68%; border-radius:24px;"
-          ></button>
+          <button class="hotspot hotspot--main" data-id="zerbian-simple" aria-label="Zerbian Simple" style="left:4.89%; top:22.66%; width:48.02%; height:22.71%;"></button>
+          <button class="hotspot hotspot--main" data-id="zerbian-max" aria-label="Zerbian Max" style="left:50.16%; top:22.83%; width:46.91%; height:22.36%;"></button>
+          <button class="hotspot hotspot--main" data-id="box-simple" aria-label="Box Simple" style="left:1.95%; top:45.02%; width:47.15%; height:22.94%;"></button>
+          <button class="hotspot hotspot--main" data-id="box-max" aria-label="Box Max" style="left:50.29%; top:45.02%; width:47.40%; height:22.94%;"></button>
+          <button class="hotspot hotspot--sauce" data-id="daqoos" aria-label="Daqoos" style="left:10.91%; top:72.40%; width:25.39%; height:10.81%; border-radius:24px;"></button>
+          <button class="hotspot hotspot--sauce" data-id="labneh" aria-label="Labneh" style="left:37.51%; top:72.40%; width:24.49%; height:10.68%; border-radius:24px;"></button>
+          <button class="hotspot hotspot--sauce" data-id="sahawiq" aria-label="Sahawiq" style="left:64.27%; top:72.40%; width:24.82%; height:10.68%; border-radius:24px;"></button>
         </div>
       </section>
     </main>
 
-    <!-- BOX PREVIEW -->
-    <div class="preview-modal" id="previewModal" aria-hidden="true">
-      <div class="preview-card">
-        <button
-          class="preview-close"
-          id="previewCloseBtn"
-          aria-label="Fermer"
-        >
-          ✕
-        </button>
-
-        <img
-          id="previewImage"
-          class="preview-image"
-          src=""
-          alt="Aperçu box"
-        />
-
-        <div class="preview-actions">
-          <button class="btn btn-primary" id="previewContinueBtn">
-            Continuer
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- MODAL -->
-    <div class="modal" id="modal" aria-hidden="true">
-      <div
-        class="modal-card"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="modalTitle"
-      >
-        <div class="modal-head">
-          <h2 class="modal-title" id="modalTitle">Nom du plat</h2>
-          <div class="modal-price" id="modalPrice">0,00 €</div>
-        </div>
-
-        <p class="modal-desc" id="modalDesc">
-          Description courte du plat.
-        </p>
-
-        <div class="modal-options" id="modalOptions"></div>
-        <div class="modal-inline-alert" id="modalAlert"></div>
-
-        <div class="modal-actions">
-          <button class="btn btn-primary" id="addToCartBtn">
-            Ajouter au panier
-          </button>
-          <button
-            class="btn btn-ghost"
-            id="closeModalBtn"
-            aria-label="Fermer"
-          >
-            ✕
-          </button>
-        </div>
-      </div>
-    </div>
-
+    <!-- MODAL CHECKOUT -->
     <div class="modal" id="checkoutModal" aria-hidden="true">
-      <div
-        class="modal-card"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="checkoutTitle"
-      >
+      <div class="modal-card">
         <div class="modal-head">
-          <h2 class="modal-title" id="checkoutTitle">Finaliser la commande</h2>
+          <h2 class="modal-title">Finaliser la commande</h2>
           <div class="modal-price" id="checkoutTotal">0,00 €</div>
         </div>
 
@@ -179,55 +73,13 @@
         </div>
 
         <div class="modal-options">
+
+          <!-- MODE -->
           <div class="option-group">
-            <div class="option-head">
-              <div class="option-title">Mode de réception</div>
-            </div>
-
-            <div class="choice-list">
-              <label class="choice-item">
-                <input
-                  class="choice-input"
-                  type="radio"
-                  name="orderType"
-                  value="pickup"
-                  checked
-                >
-                <div class="choice-card">
-                  <div class="choice-main">
-                    <div class="choice-mark"></div>
-                    <div class="choice-text">
-                      <div class="choice-name">À emporter</div>
-                      <div class="choice-sub">
-                        Le client vient récupérer la commande
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </label>
-
-              <label class="choice-item">
-                <input
-                  class="choice-input"
-                  type="radio"
-                  name="orderType"
-                  value="delivery"
-                >
-                <div class="choice-card">
-                  <div class="choice-main">
-                    <div class="choice-mark"></div>
-                    <div class="choice-text">
-                      <div class="choice-name">Livraison à domicile</div>
-                      <div class="choice-sub">
-                        Disponible uniquement à Lyon
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </label>
-            </div>
+            <div class="option-title">Mode de réception</div>
           </div>
 
+          <!-- DELIVERY -->
           <div id="deliveryFields" style="display:none;">
             <div class="option-group">
               <div class="option-title">Adresse de livraison</div>
@@ -237,15 +89,29 @@
             </div>
           </div>
 
+          <!-- ✅ PLANNING (معدل) -->
           <div class="option-group" id="planningGroup">
             <div class="option-title">Planifier la commande</div>
-            <input type="date" id="dateCmd" class="input" />
-            <input type="time" id="timeCmd" class="input" />
+
+            <div class="datetime-box">
+              <label>📅 Date</label>
+              <input type="date" id="dateCmd" class="input" />
+            </div>
+
+            <div class="datetime-box">
+              <label>⏰ Heure</label>
+              <input type="time" id="timeCmd" class="input" />
+            </div>
           </div>
 
+          <!-- ✅ NOW (معدل) -->
           <div class="option-group" id="todayTimeGroup">
             <div class="option-title">Commander pour maintenant</div>
-            <input type="time" id="timeNowCmd" class="input" />
+
+            <div class="datetime-box">
+              <label>⏰ Heure</label>
+              <input type="time" id="timeNowCmd" class="input" />
+            </div>
           </div>
 
           <div class="modal-inline-alert" id="checkoutAlert"></div>
@@ -255,68 +121,8 @@
           <button class="btn btn-primary" id="confirmOrderBtn">
             Envoyer sur WhatsApp
           </button>
-          <button
-            class="btn btn-ghost"
-            id="closeCheckoutBtn"
-            aria-label="Fermer"
-          >
-            ✕
-          </button>
         </div>
       </div>
-    </div>
-
-    <div class="modal" id="orderStatusModal" aria-hidden="true">
-      <div class="modal-card">
-        <div class="modal-head">
-          <h2 class="modal-title" id="orderStatusTitle">Commande</h2>
-        </div>
-
-        <p class="modal-desc" id="orderStatusText">
-          Vérification des horaires...
-        </p>
-
-        <div class="option-group">
-          <div class="option-title">Horaires de commande</div>
-          <p class="option-note">
-            Commande entre 7h et 11h<br>
-            Commande entre 12h et 17h
-          </p>
-        </div>
-
-        <div class="modal-actions" id="orderStatusActions">
-          <button class="btn btn-primary" id="continueNowBtn">Continuer</button>
-          <button class="btn btn-ghost" id="planLaterBtn">Planifier</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- BOTTOM UI -->
-    <div class="bottom-ui">
-      <div class="cart">
-        <div class="cart-top">
-          <div class="cart-label">
-            <span>🛒 Panier</span>
-          </div>
-          <div class="cart-count" id="cartCount">0</div>
-        </div>
-
-        <div class="cart-items" id="cartItems">
-          <div class="cart-empty">
-           🍽️ Découvrez notre menu<br>
-           👆 Appuyez sur un plat pour commencer<br>
-           📅 Vous pouvez aussi planifier votre commande
-          </div>
-        </div>
-      </div>
-
-      <button class="wa" id="whatsappBtn" type="button">
-        <span class="wa-icon">💬</span>
-        <span class="wa-text">
-          <span>Commander via WhatsApp</span>
-          <small>Envoyer votre commande complète</small>
-        </span>
-      </button>
     </div>
 
     <script src="script.js"></script>
