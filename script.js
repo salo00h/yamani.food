@@ -24,7 +24,7 @@ const DISHES = {
     category: "box"
   },
   "daqoos": {
-    name: "Daqoos",
+    name: "Basbas",
     price: "1,00 €",
     description: "Sauce yéménite relevée à base de tomate et de piment, parfaite pour donner plus de caractère au plat.",
     category: "sauce-single"
@@ -76,7 +76,7 @@ const DESSERTS = [
 ];
 
 const SAUCES = [
-  { id: "daqoos", name: "Daqoos" },
+  { id: "daqoos", name: "Basbas" },
   { id: "labneh", name: "Tahina" },
   { id: "sahawiq", name: "Sahawiq" }
 ];
