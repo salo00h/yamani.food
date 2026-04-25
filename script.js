@@ -76,7 +76,7 @@ const DESSERTS = [
 
 const SAUCES = [
   { id: "daqoos", name: "Daqoos" },
-  { id: "labneh", name: "Labneh" },
+  { id: "labneh", name: "Tahina" },
   { id: "sahawiq", name: "Sahawiq" }
 ];
 
