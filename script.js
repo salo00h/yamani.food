@@ -30,7 +30,7 @@ const DISHES = {
     category: "sauce-single"
   },
   "labneh": {
-    name: "Labneh",
+    name: "Tahina",
     price: "1,00 €",
     description: "Crème onctueuse au yaourt, douce et fraîche, idéale pour une touche légère et équilibrée.",
     category: "sauce-single"
@@ -43,7 +43,7 @@ const DISHES = {
   }
 };
 
-const OPTIONAL_DRINK_EXTRA = 1.00; // سعر المشروب للسامبل والماكسي
+const OPTIONAL_DRINK_EXTRA = 1.50; // سعر المشروب للسامبل والماكسي
 const EXTRA_SAUCE_PRICE = 0.50;    // كل صوص إضافي بعد أول واحد
 const EXTRA_DESSERT_PRICE = 1.00;  // أول حلا مجاني ثم كل قطعة إضافية 1€
 
