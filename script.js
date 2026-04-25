@@ -46,6 +46,7 @@ const DISHES = {
 const OPTIONAL_DRINK_EXTRA = 1.50; // سعر المشروب للسامبل والماكسي
 const EXTRA_SAUCE_PRICE = 0.50;    // كل صوص إضافي بعد أول واحد
 const EXTRA_DESSERT_PRICE = 1.00;  // أول حلا مجاني ثم كل قطعة إضافية 1€
+const DELIVERY_PRICE = 2.00;
 
 function makeSvgDataUri(svg){
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg.trim())}`;
@@ -1223,6 +1224,9 @@ confirmOrderBtn.addEventListener("click", () => {
     return;
   }
 
+  const DELIVERY_PRICE = 2.00;
+  const ALLOWED_DELIVERY_ZIP = "69008";
+
   const orderType = document.querySelector('input[name="orderType"]:checked')?.value || "pickup";
 
   const today = getTodayLocalDateString();
@@ -1233,7 +1237,7 @@ confirmOrderBtn.addEventListener("click", () => {
   if (!selectedTime){
     checkoutAlert.textContent = "Veuillez choisir une heure.";
     checkoutAlert.classList.add("show");
-  return;
+    return;
   }
 
   if (orderType === "pickup" && !isPickupTimeValid(selectedTime)){
@@ -1249,6 +1253,7 @@ confirmOrderBtn.addEventListener("click", () => {
   }
 
   let addressBlock = "";
+
   if (orderType === "delivery"){
     const addrValue = addr.value.trim();
     const zipValue = zip.value.trim();
@@ -1260,8 +1265,9 @@ confirmOrderBtn.addEventListener("click", () => {
       return;
     }
 
-    if (cityValue.toLowerCase() !== "lyon"){
-      checkoutAlert.textContent = "La livraison est disponible uniquement à Lyon.";
+    if (zipValue !== ALLOWED_DELIVERY_ZIP){
+      checkoutAlert.textContent =
+        "🚫 Livraison disponible uniquement à Lyon 8 (69008). Vous pouvez choisir le retrait à emporter avec plaisir 😊";
       checkoutAlert.classList.add("show");
       return;
     }
@@ -1285,7 +1291,11 @@ confirmOrderBtn.addEventListener("click", () => {
     ].filter(Boolean).join("\n");
   });
 
-  const grandTotal = getCartGrandTotal();
+  let grandTotal = getCartGrandTotal();
+
+  if (orderType === "delivery"){
+    grandTotal += DELIVERY_PRICE;
+  }
 
   const receptionLabel =
     orderType === "delivery"
@@ -1303,7 +1313,7 @@ Mode de réception : ${receptionLabel}
 Date souhaitée : ${selectedDate}
 Heure souhaitée : ${selectedTime}${addressBlock}
 
-Total estimé : ${formatEuro(grandTotal)}
+${orderType === "delivery" ? `Frais de livraison : ${formatEuro(DELIVERY_PRICE)}\n` : ""}Total estimé : ${formatEuro(grandTotal)}
 
 Merci !`;
 
@@ -1311,6 +1321,8 @@ Merci !`;
   window.open(url, "_blank");
   closeCheckoutModal();
 });
+
+
 
 
 
