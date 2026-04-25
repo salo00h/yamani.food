@@ -1267,7 +1267,9 @@ confirmOrderBtn.addEventListener("click", () => {
 
     if (zipValue !== ALLOWED_DELIVERY_ZIP){
       checkoutAlert.textContent =
-        "🚫 Livraison disponible uniquement à Lyon 8 (69008). Vous pouvez choisir le retrait à emporter avec plaisir 😊";
+        if (zipValue !== ALLOWED_DELIVERY_ZIP){
+  checkoutAlert.textContent =
+       "🚫 La livraison est disponible uniquement à Lyon 8 (69008).\n\n✨ Pas de souci !\nVous pouvez choisir le retrait à emporter ou planifier votre commande à l’avance 😊";
       checkoutAlert.classList.add("show");
       return;
     }
