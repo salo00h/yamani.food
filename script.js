@@ -1370,22 +1370,16 @@ document.addEventListener("click", (e) => {
 
 
 function showDeliveryInfoPopup() {
+  const receptionBox = document.querySelector(".option-group"); // أول بلوك فوق
+
   checkoutAlert.innerHTML =
-    "🚚 <b>Livraison à domicile</b><br><br>" +
-
-    "💶 Prix de livraison : <b>2,00 €</b><br><br>" +
-
-    "📍 Zones disponibles :<br>" +
-    "• Lyon 2<br>" +
-    "• Lyon 3<br>" +
-    "• Lyon 6<br>" +
-    "• Lyon 7<br>" +
-    "• Lyon 8<br>" +
-    "• Villeurbanne (69100)<br><br>" +
-
-    "⏰ Livraison disponible :<br>" +
-    "13h → 14h<br>" +
-    "19h → 22h";
+    "🚚 <b>Livraison à domicile</b> • 💶 2,00 €<br>" +
+    "📍 Lyon 2, 3, 6, 7, 8 + Villeurbanne<br>" +
+    "⏰ 13h–14h / 19h–22h";
 
   checkoutAlert.classList.add("show");
+
+  if (receptionBox) {
+    receptionBox.prepend(checkoutAlert);
+  }
 }
