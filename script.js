@@ -1185,14 +1185,22 @@ function isDeliveryTimeValid(time) {
 
 orderTypeInputs.forEach(input => {
   input.addEventListener("change", () => {
+
     if (input.value === "delivery" && input.checked) {
       deliveryFields.style.display = "block";
+
+      showDeliveryInfoPopup(); // يظهر المعلومات
+
     } else if (input.checked) {
       deliveryFields.style.display = "none";
+
+      // 🔥 إخفاء الرسالة عند الرجوع لـ À emporter
+      checkoutAlert.classList.remove("show");
+      checkoutAlert.innerHTML = "";
     }
+
   });
 });
-
 
 dateCmd.addEventListener("change", () => {
   document.querySelectorAll("#timeSlots .time-btn").forEach(btn => btn.classList.remove("active"));
@@ -1359,3 +1367,25 @@ document.addEventListener("click", (e) => {
     e.target.classList.add("active");
   }
 });
+
+
+function showDeliveryInfoPopup() {
+  checkoutAlert.innerHTML =
+    "🚚 <b>Livraison à domicile</b><br><br>" +
+
+    "💶 Prix de livraison : <b>2,00 €</b><br><br>" +
+
+    "📍 Zones disponibles :<br>" +
+    "• Lyon 2<br>" +
+    "• Lyon 3<br>" +
+    "• Lyon 6<br>" +
+    "• Lyon 7<br>" +
+    "• Lyon 8<br>" +
+    "• Villeurbanne (69100)<br><br>" +
+
+    "⏰ Livraison disponible :<br>" +
+    "13h → 14h<br>" +
+    "19h → 22h";
+
+  checkoutAlert.classList.add("show");
+}
