@@ -1432,3 +1432,24 @@ button,input,textarea,select{
   color:#ffe59c;
 }
 
+.time-slots{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:10px;
+}
+
+.time-btn{
+  padding:10px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.2);
+  background:rgba(255,255,255,.08);
+  color:white;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.time-btn.active{
+  background:linear-gradient(135deg, #ffe082, #ffca28);
+  color:#2d1900;
+}

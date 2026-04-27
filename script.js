@@ -1145,8 +1145,7 @@ function openCheckoutModal(prefillTomorrow = false){
     dateCmd.value = today;
   }
 
-  timeCmd.value = "";
-  timeNowCmd.value = "";
+  document.querySelectorAll(".time-btn").forEach(btn => btn.classList.remove("active"));
   checkoutAlert.textContent = "";
   checkoutAlert.classList.remove("show");
 
@@ -1232,7 +1231,12 @@ confirmOrderBtn.addEventListener("click", () => {
   const today = getTodayLocalDateString();
   const selectedDate = dateCmd.value || today;
   const isTodayOrder = selectedDate === today;
-  const selectedTime = isTodayOrder ? timeNowCmd.value : timeCmd.value;
+  let selectedTime = "";
+
+  const activeBtn = document.querySelector(".time-btn.active");
+  if (activeBtn) {
+    selectedTime = activeBtn.dataset.time;
+  }
 
   if (!selectedTime){
     checkoutAlert.textContent = "Veuillez choisir une heure.";
@@ -1327,3 +1331,10 @@ Merci !`;
 
 
 renderCart();
+
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("time-btn")) {
+    document.querySelectorAll(".time-btn").forEach(btn => btn.classList.remove("active"));
+    e.target.classList.add("active");
+  }
+});
