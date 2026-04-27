@@ -971,17 +971,26 @@ function getTodayLocalDateString(){
   return `${year}-${month}-${day}`;
 }
 
-function updatePlanningVisibility(){
-  const today = getTodayLocalDateString();
-  const selectedDate = dateCmd.value;
 
-  if (!selectedDate || selectedDate === today){
-    planningGroup.style.display = "none";
-    todayTimeGroup.style.display = "block";
-  } else {
+
+let isPlanningMode = false;
+
+function updatePlanningVisibility(){
+  const timeSlots = document.getElementById("timeSlots");
+
+  if (isPlanningMode){
     planningGroup.style.display = "block";
     todayTimeGroup.style.display = "none";
+
+    if (timeSlots){
+      timeSlots.style.display = dateCmd.value ? "grid" : "none";
+    }
+
+    return;
   }
+
+  planningGroup.style.display = "none";
+  todayTimeGroup.style.display = "block";
 }
 
 function getCartGrandTotal(){
@@ -1132,20 +1141,16 @@ function openCheckoutModal(prefillTomorrow = false){
   const today = getTodayLocalDateString();
   dateCmd.min = today;
 
-  const mustPlanForLater = prefillTomorrow || !isCurrentTimeInOrderWindow();
+  isPlanningMode = prefillTomorrow || !isCurrentTimeInOrderWindow();
 
-  if (mustPlanForLater){
-    const d = new Date();
-    d.setDate(d.getDate() + 1);
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, "0");
-    const day = String(d.getDate()).padStart(2, "0");
-    dateCmd.value = `${year}-${month}-${day}`;
+  if (isPlanningMode){
+    dateCmd.value = "";
   } else {
     dateCmd.value = today;
   }
 
   document.querySelectorAll(".time-btn").forEach(btn => btn.classList.remove("active"));
+
   checkoutAlert.textContent = "";
   checkoutAlert.classList.remove("show");
 
@@ -1189,7 +1194,10 @@ orderTypeInputs.forEach(input => {
 });
 
 
-dateCmd.addEventListener("change", updatePlanningVisibility);
+dateCmd.addEventListener("change", () => {
+  document.querySelectorAll("#timeSlots .time-btn").forEach(btn => btn.classList.remove("active"));
+  updatePlanningVisibility();
+});
 whatsappBtn.addEventListener("click", openOrderStatusModal);
 closeCheckoutBtn.addEventListener("click", closeCheckoutModal);
 
@@ -1229,8 +1237,14 @@ confirmOrderBtn.addEventListener("click", () => {
   const orderType = document.querySelector('input[name="orderType"]:checked')?.value || "pickup";
 
   const today = getTodayLocalDateString();
-  const selectedDate = dateCmd.value || today;
-  const isTodayOrder = selectedDate === today;
+  const selectedDate = isPlanningMode ? dateCmd.value : today;
+
+  if (isPlanningMode && !selectedDate){
+   checkoutAlert.textContent = "Veuillez choisir une date.";
+   checkoutAlert.classList.add("show");
+   return;
+  }
+
   let selectedTime = "";
 
   const activeBtn = document.querySelector(".time-btn.active");
@@ -1334,7 +1348,12 @@ renderCart();
 
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("time-btn")) {
-    document.querySelectorAll(".time-btn").forEach(btn => btn.classList.remove("active"));
+    const parent = e.target.closest(".time-slots");
+
+    if (parent) {
+      parent.querySelectorAll(".time-btn").forEach(btn => btn.classList.remove("active"));
+    }
+
     e.target.classList.add("active");
   }
 });
