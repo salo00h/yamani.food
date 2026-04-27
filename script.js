@@ -1249,23 +1249,11 @@ confirmOrderBtn.addEventListener("click", () => {
 
   const activeBtn = document.querySelector(".time-btn.active");
   if (activeBtn) {
-    selectedTime = activeBtn.dataset.time;
+    selectedTime = activeBtn.textContent.trim();
   }
 
   if (!selectedTime) {
     checkoutAlert.textContent = "Veuillez choisir une heure.";
-    checkoutAlert.classList.add("show");
-    return;
-  }
-
-  if (orderType === "pickup" && !isPickupTimeValid(selectedTime)) {
-    checkoutAlert.textContent = "Retrait disponible uniquement de 13h à 14h ou de 19h à 22h.";
-    checkoutAlert.classList.add("show");
-    return;
-  }
-
-  if (orderType === "delivery" && !isDeliveryTimeValid(selectedTime)) {
-    checkoutAlert.textContent = "Livraison disponible uniquement de 13h à 14h ou de 19h à 22h.";
     checkoutAlert.classList.add("show");
     return;
   }
@@ -1292,7 +1280,7 @@ confirmOrderBtn.addEventListener("click", () => {
         "• Lyon 6<br>" +
         "• Lyon 7<br>" +
         "• Lyon 8<br>" +
-        "• Villeurbanne <br><br>" +
+        "• Villeurbanne (69100)<br><br>" +
         "😊 Pas de souci !<br>" +
         "Vous pouvez choisir le retrait à emporter.";
 
@@ -1301,7 +1289,7 @@ confirmOrderBtn.addEventListener("click", () => {
     }
 
     addressBlock =
-      `\nAdresse de livraison :
+      `\n📍 Adresse de livraison :
 - Adresse : ${addrValue}
 - Code postal : ${zipValue}
 - Ville : ${cityValue}`;
@@ -1327,23 +1315,27 @@ confirmOrderBtn.addEventListener("click", () => {
 
   const receptionLabel =
     orderType === "delivery"
-      ? "Livraison à domicile"
-      : "À emporter";
+      ? "🚚 Livraison à domicile"
+      : "🛍️ À emporter";
 
   const message =
-    `Bonjour Yamani Food,
+    `🍽️ Bonjour Yamani Food,
 
 Je souhaite commander :
 
 ${lines.join("\n\n")}
 
-Mode de réception : ${receptionLabel}
-Date souhaitée : ${selectedDate}
-Heure souhaitée : ${selectedTime}${addressBlock}
+━━━━━━━━━━━━━━━
 
-${orderType === "delivery" ? `Frais de livraison : ${formatEuro(DELIVERY_PRICE)}\n` : ""}Total estimé : ${formatEuro(grandTotal)}
+📦 Mode : ${receptionLabel}
+📅 Date : ${selectedDate}
+⏰ Heure : ${selectedTime}${addressBlock}
 
-Merci !`;
+${orderType === "delivery" ? `\n🚚 Frais de livraison : ${formatEuro(DELIVERY_PRICE)}` : ""}
+
+💰 Total estimé : ${formatEuro(grandTotal)}
+
+🙏 Merci !`;
 
   const url = `https://wa.me/33749773595?text=${encodeURIComponent(message)}`;
   window.open(url, "_blank");
