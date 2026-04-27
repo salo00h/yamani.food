@@ -48,7 +48,7 @@ const EXTRA_SAUCE_PRICE = 0.50;    // كل صوص إضافي بعد أول وا�
 const EXTRA_DESSERT_PRICE = 1.00;  // أول حلا مجاني ثم كل قطعة إضافية 1€
 const DELIVERY_PRICE = 2.00;
 
-function makeSvgDataUri(svg){
+function makeSvgDataUri(svg) {
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg.trim())}`;
 }
 
@@ -126,12 +126,12 @@ let selectedConfig = null;
 let hasShownOpeningStatusModal = false;
 const cart = {};
 
-function setAppHeight(){
+function setAppHeight() {
   const vh = window.innerHeight;
   document.documentElement.style.setProperty("--app-h", `${vh}px`);
 }
 
-function syncHotspotArtwork(){
+function syncHotspotArtwork() {
   if (!imageFrame) return;
 
   const frameRect = imageFrame.getBoundingClientRect();
@@ -158,12 +158,12 @@ function syncHotspotArtwork(){
   });
 }
 
-function resetHotspotTilt(btn){
+function resetHotspotTilt(btn) {
   btn.style.setProperty("--rx", "0deg");
   btn.style.setProperty("--ry", "0deg");
 }
 
-function handlePointerTilt(event, btn){
+function handlePointerTilt(event, btn) {
   const rect = btn.getBoundingClientRect();
   const x = event.clientX - rect.left;
   const y = event.clientY - rect.top;
@@ -177,7 +177,7 @@ function handlePointerTilt(event, btn){
   btn.style.setProperty("--ry", `${ry}deg`);
 }
 
-function parseEuro(value){
+function parseEuro(value) {
   return Number(
     String(value)
       .replace(/[^\d,.-]/g, "")
@@ -185,28 +185,28 @@ function parseEuro(value){
   ) || 0;
 }
 
-function formatEuro(value){
+function formatEuro(value) {
   return `${value.toFixed(2).replace(".", ",")} €`;
 }
 
-function escapeHtml(str){
+function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, ch => ({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#39;"
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
   }[ch]));
 }
 
-function getDishCategory(id){
+function getDishCategory(id) {
   return DISHES[id]?.category || "";
 }
 
-function getDefaultConfig(id){
+function getDefaultConfig(id) {
   const category = getDishCategory(id);
 
-  if (category === "single"){
+  if (category === "single") {
     return {
       drink: "",
       dessert: {},
@@ -214,7 +214,7 @@ function getDefaultConfig(id){
     };
   }
 
-  if (category === "box"){
+  if (category === "box") {
     return {
       drink: DRINKS[0].id,
       dessert: {},
@@ -229,19 +229,19 @@ function getDefaultConfig(id){
   };
 }
 
-function getDrinkById(id){
+function getDrinkById(id) {
   return DRINKS.find(item => item.id === id) || null;
 }
 
-function getDessertById(id){
+function getDessertById(id) {
   return DESSERTS.find(item => item.id === id) || null;
 }
 
-function getSauceById(id){
+function getSauceById(id) {
   return SAUCES.find(item => item.id === id) || null;
 }
 
-function renderDrinkOptions(required = false, selected = ""){
+function renderDrinkOptions(required = false, selected = "") {
   const noneOption = required ? "" : `
     <label class="choice-item">
       <input class="choice-input" type="radio" name="drinkChoice" value="" ${selected === "" ? "checked" : ""}>
@@ -289,8 +289,8 @@ function renderDrinkOptions(required = false, selected = ""){
       </div>
       <p class="option-note">
         ${required
-          ? "Choisissez une seule boisson pour votre box."
-          : "Vous pouvez ajouter une boisson. Cette option augmente le prix."}
+      ? "Choisissez une seule boisson pour votre box."
+      : "Vous pouvez ajouter une boisson. Cette option augmente le prix."}
       </p>
       <div class="choice-list">
         ${noneOption}
@@ -300,7 +300,7 @@ function renderDrinkOptions(required = false, selected = ""){
   `;
 }
 
-function renderDessertOptions(selectedDesserts = {}){
+function renderDessertOptions(selectedDesserts = {}) {
   return `
     <div class="option-group sauce-group">
       <div class="option-head">
@@ -361,7 +361,7 @@ const sauceQty = {};
 
 const dessertQty = {};
 
-function changeDessertQty(id, delta){
+function changeDessertQty(id, delta) {
   if (!dessertQty[id]) dessertQty[id] = 0;
 
   dessertQty[id] += delta;
@@ -374,7 +374,7 @@ function changeDessertQty(id, delta){
   updateModalState();
 }
 
-function changeSauceQty(id, delta){
+function changeSauceQty(id, delta) {
   if (!sauceQty[id]) sauceQty[id] = 0;
 
   sauceQty[id] += delta;
@@ -387,7 +387,7 @@ function changeSauceQty(id, delta){
   updateModalState();
 }
 
-function renderSauceOptions(selectedSauces = {}, requiredAtLeastOne = false){
+function renderSauceOptions(selectedSauces = {}, requiredAtLeastOne = false) {
   return `
     <div class="option-group sauce-group">
       <div class="option-head">
@@ -444,11 +444,11 @@ function renderSauceOptions(selectedSauces = {}, requiredAtLeastOne = false){
   `;
 }
 
-function renderModalOptions(id){
+function renderModalOptions(id) {
   const category = getDishCategory(id);
   const config = selectedConfig || getDefaultConfig(id);
 
-  if (category === "single"){
+  if (category === "single") {
     modalOptions.innerHTML = `
       ${renderDrinkOptions(false, config.drink)}
       ${renderSauceOptions(config.sauces, false)}
@@ -457,7 +457,7 @@ function renderModalOptions(id){
     return;
   }
 
-  if (category === "box"){
+  if (category === "box") {
     modalOptions.innerHTML = `
       ${renderDrinkOptions(true, config.drink)}
       ${renderDessertOptions(config.dessert)}
@@ -470,11 +470,11 @@ function renderModalOptions(id){
   modalOptions.innerHTML = "";
 }
 
-function readConfigFromModal(id){
+function readConfigFromModal(id) {
   const category = getDishCategory(id);
   const config = getDefaultConfig(id);
 
-  if (category === "single"){
+  if (category === "single") {
     const drinkEl = modal.querySelector('input[name="drinkChoice"]:checked');
 
     config.drink = drinkEl ? drinkEl.value : "";
@@ -483,7 +483,7 @@ function readConfigFromModal(id){
     return config;
   }
 
-  if (category === "box"){
+  if (category === "box") {
     const drinkEl = modal.querySelector('input[name="drinkChoice"]:checked');
 
     config.drink = drinkEl ? drinkEl.value : "";
@@ -496,23 +496,23 @@ function readConfigFromModal(id){
   return config;
 }
 
-function getExtrasTotal(id, config){
+function getExtrasTotal(id, config) {
   const category = getDishCategory(id);
   let extras = 0;
 
-  if ((category === "single" || category === "box") && config.drink){
+  if ((category === "single" || category === "box") && config.drink) {
     if (category === "single") {
       extras += OPTIONAL_DRINK_EXTRA;
     }
   }
 
-  if (config.sauces){
+  if (config.sauces) {
     const totalSauces = Object.values(config.sauces).reduce((a, b) => a + b, 0);
     const extraSauceCount = Math.max(totalSauces - 1, 0);
     extras += extraSauceCount * EXTRA_SAUCE_PRICE;
   }
 
-  if (category === "box" && config.dessert){
+  if (category === "box" && config.dessert) {
     const totalDesserts = Object.values(config.dessert).reduce((a, b) => a + b, 0);
     const extraDessertCount = Math.max(totalDesserts - 1, 0);
     extras += extraDessertCount * EXTRA_DESSERT_PRICE;
@@ -521,19 +521,19 @@ function getExtrasTotal(id, config){
   return extras;
 }
 
-function getItemTotal(id, config){
+function getItemTotal(id, config) {
   const base = parseEuro(DISHES[id].price);
   return base + getExtrasTotal(id, config);
 }
 
-function isModalSelectionValid(id, config){
+function isModalSelectionValid(id, config) {
   const category = getDishCategory(id);
 
-  if (category === "single"){
+  if (category === "single") {
     return true;
   }
 
-  if (category === "box"){
+  if (category === "box") {
     const totalSauces = config.sauces
       ? Object.values(config.sauces).reduce((a, b) => a + b, 0)
       : 0;
@@ -548,13 +548,13 @@ function isModalSelectionValid(id, config){
   return true;
 }
 
-function renderSauceSummary(sauces = {}){
+function renderSauceSummary(sauces = {}) {
   const summary = document.getElementById("sauceSummary");
   if (!summary) return;
 
   const entries = Object.entries(sauces).filter(([_, qty]) => qty > 0);
 
-  if (!entries.length){
+  if (!entries.length) {
     summary.innerHTML = `
       <div class="summary-pill">Aucune sauce choisie</div>
       <div class="summary-pill accent">Supplément sauces: Inclus</div>
@@ -568,13 +568,13 @@ function renderSauceSummary(sauces = {}){
 
   summary.innerHTML = `
     ${entries.map(([id, qty]) => {
-      const sauce = getSauceById(id);
-      return `
+    const sauce = getSauceById(id);
+    return `
         <div class="summary-pill">
           ${escapeHtml(sauce?.name || id)} ×${qty}
         </div>
       `;
-    }).join("")}
+  }).join("")}
 
     <div class="summary-pill accent">
       Supplément sauces: ${extraPrice > 0 ? "+" + formatEuro(extraPrice) : "Inclus"}
@@ -582,13 +582,13 @@ function renderSauceSummary(sauces = {}){
   `;
 }
 
-function renderDessertSummary(desserts = {}){
+function renderDessertSummary(desserts = {}) {
   const summary = document.getElementById("dessertSummary");
   if (!summary) return;
 
   const entries = Object.entries(desserts).filter(([_, qty]) => qty > 0);
 
-  if (!entries.length){
+  if (!entries.length) {
     summary.innerHTML = `
       <div class="summary-pill">Aucun dessert sélectionné</div>
       <div class="summary-pill accent">Desserts supplémentaires : +0,00 €</div>
@@ -602,13 +602,13 @@ function renderDessertSummary(desserts = {}){
 
   summary.innerHTML = `
     ${entries.map(([id, qty]) => {
-      const dessert = getDessertById(id);
-      return `
+    const dessert = getDessertById(id);
+    return `
         <div class="summary-pill">
           ${escapeHtml(dessert?.name || id)} ×${qty}
         </div>
       `;
-    }).join("")}
+  }).join("")}
 
     <div class="summary-pill accent">
       Supplément dessert : ${extraPrice > 0 ? "+" + formatEuro(extraPrice) : "0,00 €"}
@@ -617,7 +617,7 @@ function renderDessertSummary(desserts = {}){
 }
 
 
-function updateModalState(){
+function updateModalState() {
   if (!selectedDish) return;
 
   selectedConfig = readConfigFromModal(selectedDish);
@@ -629,7 +629,7 @@ function updateModalState(){
   const isValid = isModalSelectionValid(selectedDish, selectedConfig);
   addToCartBtn.disabled = !isValid;
 
-  if (!isValid && getDishCategory(selectedDish) === "box"){
+  if (!isValid && getDishCategory(selectedDish) === "box") {
     modalAlert.textContent = "Veuillez choisir une boisson, au moins un dessert et au moins une sauce pour continuer.";
     modalAlert.classList.add("show");
   } else {
@@ -641,11 +641,11 @@ function updateModalState(){
   renderDessertSummary(selectedConfig.dessert || {});
 }
 
-function buildSelectionLabel(id, config){
+function buildSelectionLabel(id, config) {
   const parts = [];
   const category = getDishCategory(id);
 
-  if (config.dessert){
+  if (config.dessert) {
     const desserts = Object.entries(config.dessert)
       .filter(([_, qty]) => qty > 0)
       .map(([id, qty]) => {
@@ -653,21 +653,21 @@ function buildSelectionLabel(id, config){
         return `${d?.name} ×${qty}`;
       });
 
-    if (desserts.length){
+    if (desserts.length) {
       parts.push(`Desserts: ${desserts.join(", ")}`);
 
       if (category === "box") {
         const totalDesserts = Object.values(config.dessert).reduce((a, b) => a + b, 0);
         const extraDessertCount = Math.max(totalDesserts - 1, 0);
 
-        if (extraDessertCount > 0){
+        if (extraDessertCount > 0) {
           parts.push(`Supplément desserts: +${formatEuro(extraDessertCount * EXTRA_DESSERT_PRICE)}`);
         }
       }
     }
   }
 
-  if (config.sauces){
+  if (config.sauces) {
     const sauces = Object.entries(config.sauces)
       .filter(([_, qty]) => qty > 0)
       .map(([id, qty]) => {
@@ -675,13 +675,13 @@ function buildSelectionLabel(id, config){
         return `${s?.name} ×${qty}`;
       });
 
-    if (sauces.length){
+    if (sauces.length) {
       parts.push(`Sauces: ${sauces.join(", ")}`);
 
       const totalSauces = Object.values(config.sauces).reduce((a, b) => a + b, 0);
       const extraSauceCount = Math.max(totalSauces - 1, 0);
 
-      if (extraSauceCount > 0){
+      if (extraSauceCount > 0) {
         parts.push(`Supplément sauces: +${formatEuro(extraSauceCount * EXTRA_SAUCE_PRICE)}`);
       }
     }
@@ -691,7 +691,7 @@ function buildSelectionLabel(id, config){
 }
 
 
-function buildCartKey(id, config){
+function buildCartKey(id, config) {
   const sauces = Object.entries(config.sauces || {})
     .map(([sauceId, qty]) => `${sauceId}x${qty}`)
     .sort()
@@ -705,7 +705,7 @@ function buildCartKey(id, config){
   return `${id}__drink:${config.drink || "none"}__dessert:${desserts}__sauces:${sauces}`;
 }
 
-function cloneConfig(config){
+function cloneConfig(config) {
   return JSON.parse(JSON.stringify(config || {}));
 }
 
@@ -735,11 +735,11 @@ window.addEventListener("load", () => {
   setTimeout(syncHotspotArtwork, 300);
   setTimeout(syncHotspotArtwork, 900);
   setTimeout(() => {
-   checkOpeningOnLoad();
+    checkOpeningOnLoad();
   }, 2700);
 });
 
-function openPreview(id, triggerEl){
+function openPreview(id, triggerEl) {
   const image = BOX_PREVIEW_IMAGES[id];
   if (!image) {
     openModal(id, triggerEl);
@@ -759,13 +759,13 @@ function openPreview(id, triggerEl){
   previewModal.setAttribute("aria-hidden", "false");
 }
 
-function closePreview(){
+function closePreview() {
   previewModal.classList.remove("open");
   previewModal.setAttribute("aria-hidden", "true");
   previewImage.src = "";
 }
 
-function openModal(id, triggerEl){
+function openModal(id, triggerEl) {
   const item = DISHES[id];
   if (!item) return;
 
@@ -787,7 +787,7 @@ function openModal(id, triggerEl){
   modal.setAttribute("aria-hidden", "false");
 }
 
-function closeModal(){
+function closeModal() {
   modal.classList.remove("open");
   modal.setAttribute("aria-hidden", "true");
   modalOptions.innerHTML = "";
@@ -862,7 +862,7 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-function renderCart(){
+function renderCart() {
   const entries = Object.values(cart);
   const totalQty = entries.reduce((sum, entry) => sum + entry.qty, 0);
 
@@ -918,7 +918,7 @@ function renderCart(){
   }).join("");
 }
 
-function removeFromCart(key){
+function removeFromCart(key) {
   delete cart[key];
   renderCart();
 }
@@ -928,7 +928,7 @@ addToCartBtn.addEventListener("click", () => {
 
   selectedConfig = readConfigFromModal(selectedDish);
 
-  if (!isModalSelectionValid(selectedDish, selectedConfig)){
+  if (!isModalSelectionValid(selectedDish, selectedConfig)) {
     updateModalState();
     return;
   }
@@ -936,7 +936,7 @@ addToCartBtn.addEventListener("click", () => {
   const key = buildCartKey(selectedDish, selectedConfig);
   const lineTotal = getItemTotal(selectedDish, selectedConfig);
 
-  if (cart[key]){
+  if (cart[key]) {
     cart[key].qty += 1;
   } else {
     cart[key] = {
@@ -952,7 +952,7 @@ addToCartBtn.addEventListener("click", () => {
   closeModal();
 });
 
-function pulseWhatsApp(){
+function pulseWhatsApp() {
   whatsappBtn.animate(
     [
       { transform: "scale(1)" },
@@ -963,7 +963,7 @@ function pulseWhatsApp(){
   );
 }
 
-function getTodayLocalDateString(){
+function getTodayLocalDateString() {
   const now = new Date();
   const year = now.getFullYear();
   const month = String(now.getMonth() + 1).padStart(2, "0");
@@ -975,14 +975,14 @@ function getTodayLocalDateString(){
 
 let isPlanningMode = false;
 
-function updatePlanningVisibility(){
+function updatePlanningVisibility() {
   const timeSlots = document.getElementById("timeSlots");
 
-  if (isPlanningMode){
+  if (isPlanningMode) {
     planningGroup.style.display = "block";
     todayTimeGroup.style.display = "none";
 
-    if (timeSlots){
+    if (timeSlots) {
       timeSlots.style.display = dateCmd.value ? "grid" : "none";
     }
 
@@ -993,25 +993,25 @@ function updatePlanningVisibility(){
   todayTimeGroup.style.display = "block";
 }
 
-function getCartGrandTotal(){
+function getCartGrandTotal() {
   return Object.values(cart).reduce((sum, entry) => {
     return sum + (entry.lineTotal * entry.qty);
   }, 0);
 }
 
-function isCurrentTimeInOrderWindow(){
+function isCurrentTimeInOrderWindow() {
   const now = new Date();
   const t = now.getHours() + (now.getMinutes() / 60);
   return (t >= 7 && t < 11) || (t >= 12 && t < 17);
 }
 
-function showInlineOrderStatusMessage(title, lines = []){
+function showInlineOrderStatusMessage(title, lines = []) {
   const orderHoursBox = orderStatusModal.querySelector(".option-group");
 
   orderStatusTitle.textContent = title;
   orderStatusText.innerHTML = lines.map(line => `<div>${line}</div>`).join("");
 
-  if (orderHoursBox){
+  if (orderHoursBox) {
     orderHoursBox.style.display = "none";
   }
 
@@ -1023,30 +1023,30 @@ function showInlineOrderStatusMessage(title, lines = []){
   orderStatusModal.setAttribute("aria-hidden", "false");
 }
 
-function openOrderStatusModal(){
+function openOrderStatusModal() {
   const entries = Object.values(cart);
 
-  if (!entries.length){
+  if (!entries.length) {
     showInlineOrderStatusMessage("🛒 Votre panier est vide", [
       "🍽️ Découvrez notre menu avant de commander",
       "👆 Appuyez sur un plat pour l’ajouter au panier",
       "💬 Une fois votre sélection prête, vous pourrez envoyer votre commande sur WhatsApp"
     ]);
-     return;
+    return;
   }
 
-  if (hasShownOpeningStatusModal){
+  if (hasShownOpeningStatusModal) {
     openCheckoutModal(false);
     return;
   }
 
   const orderHoursBox = orderStatusModal.querySelector(".option-group");
 
-  if (orderHoursBox){
+  if (orderHoursBox) {
     orderHoursBox.style.display = "block";
   }
 
-  if (isCurrentTimeInOrderWindow()){
+  if (isCurrentTimeInOrderWindow()) {
     orderStatusTitle.textContent = "✅ Commandes ouvertes";
 
     orderStatusText.innerHTML = `
@@ -1084,18 +1084,18 @@ function openOrderStatusModal(){
   orderStatusModal.setAttribute("aria-hidden", "false");
 }
 
-function closeOrderStatusModal(){
+function closeOrderStatusModal() {
   orderStatusModal.classList.remove("open");
   orderStatusModal.setAttribute("aria-hidden", "true");
   planLaterBtn.dataset.action = "";
 }
 
-function checkOpeningOnLoad(){
+function checkOpeningOnLoad() {
   const orderHoursBox = orderStatusModal.querySelector(".option-group");
 
   if (isCurrentTimeInOrderWindow()) return;
 
-  if (orderHoursBox){
+  if (orderHoursBox) {
     orderHoursBox.style.display = "block";
   }
 
@@ -1124,10 +1124,10 @@ function checkOpeningOnLoad(){
 }
 
 
-function openCheckoutModal(prefillTomorrow = false){
+function openCheckoutModal(prefillTomorrow = false) {
   const entries = Object.values(cart);
 
-  if (!entries.length){
+  if (!entries.length) {
     showInlineOrderStatusMessage("📅 Planifier une commande", [
       "Bonne idée 😊",
       "🍽️ Découvrez le menu et ajoutez ce qui vous fait envie",
@@ -1143,7 +1143,7 @@ function openCheckoutModal(prefillTomorrow = false){
 
   isPlanningMode = prefillTomorrow || !isCurrentTimeInOrderWindow();
 
-  if (isPlanningMode){
+  if (isPlanningMode) {
     dateCmd.value = "";
   } else {
     dateCmd.value = today;
@@ -1160,14 +1160,14 @@ function openCheckoutModal(prefillTomorrow = false){
   checkoutModal.setAttribute("aria-hidden", "false");
 }
 
-function closeCheckoutModal(){
+function closeCheckoutModal() {
   checkoutModal.classList.remove("open");
   checkoutModal.setAttribute("aria-hidden", "true");
   checkoutAlert.textContent = "";
   checkoutAlert.classList.remove("show");
 }
 
-function isPickupTimeValid(time){
+function isPickupTimeValid(time) {
   if (!time) return false;
   const [h, m] = time.split(":").map(Number);
   const t = h + (m / 60);
@@ -1175,7 +1175,7 @@ function isPickupTimeValid(time){
   return (t >= 13 && t <= 14) || (t >= 19 && t <= 22);
 }
 
-function isDeliveryTimeValid(time){
+function isDeliveryTimeValid(time) {
   if (!time) return false;
   const [h, m] = time.split(":").map(Number);
   const t = h + (m / 60);
@@ -1185,7 +1185,7 @@ function isDeliveryTimeValid(time){
 
 orderTypeInputs.forEach(input => {
   input.addEventListener("change", () => {
-    if (input.value === "delivery" && input.checked){
+    if (input.value === "delivery" && input.checked) {
       deliveryFields.style.display = "block";
     } else if (input.checked) {
       deliveryFields.style.display = "none";
@@ -1211,7 +1211,7 @@ planLaterBtn.addEventListener("click", () => {
 
   closeOrderStatusModal();
 
-  if (action === "plan"){
+  if (action === "plan") {
     openCheckoutModal(true);
   }
 });
@@ -1226,7 +1226,7 @@ checkoutModal.addEventListener("click", (e) => {
 
 confirmOrderBtn.addEventListener("click", () => {
   const entries = Object.values(cart);
-  if (!entries.length){
+  if (!entries.length) {
     closeCheckoutModal();
     return;
   }
@@ -1239,10 +1239,10 @@ confirmOrderBtn.addEventListener("click", () => {
   const today = getTodayLocalDateString();
   const selectedDate = isPlanningMode ? dateCmd.value : today;
 
-  if (isPlanningMode && !selectedDate){
-   checkoutAlert.textContent = "Veuillez choisir une date.";
-   checkoutAlert.classList.add("show");
-   return;
+  if (isPlanningMode && !selectedDate) {
+    checkoutAlert.textContent = "Veuillez choisir une date.";
+    checkoutAlert.classList.add("show");
+    return;
   }
 
   let selectedTime = "";
@@ -1252,19 +1252,19 @@ confirmOrderBtn.addEventListener("click", () => {
     selectedTime = activeBtn.dataset.time;
   }
 
-  if (!selectedTime){
+  if (!selectedTime) {
     checkoutAlert.textContent = "Veuillez choisir une heure.";
     checkoutAlert.classList.add("show");
     return;
   }
 
-  if (orderType === "pickup" && !isPickupTimeValid(selectedTime)){
+  if (orderType === "pickup" && !isPickupTimeValid(selectedTime)) {
     checkoutAlert.textContent = "Retrait disponible uniquement de 13h à 14h ou de 19h à 22h.";
     checkoutAlert.classList.add("show");
     return;
   }
 
-  if (orderType === "delivery" && !isDeliveryTimeValid(selectedTime)){
+  if (orderType === "delivery" && !isDeliveryTimeValid(selectedTime)) {
     checkoutAlert.textContent = "Livraison disponible uniquement de 13h à 14h ou de 19h à 22h.";
     checkoutAlert.classList.add("show");
     return;
@@ -1272,26 +1272,36 @@ confirmOrderBtn.addEventListener("click", () => {
 
   let addressBlock = "";
 
-  if (orderType === "delivery"){
+  if (orderType === "delivery") {
     const addrValue = addr.value.trim();
     const zipValue = zip.value.trim();
     const cityValue = city.value.trim();
 
-    if (!addrValue || !zipValue || !cityValue){
+    if (!addrValue || !zipValue || !cityValue) {
       checkoutAlert.textContent = "Veuillez remplir l’adresse complète de livraison.";
       checkoutAlert.classList.add("show");
       return;
     }
 
-    if (!ALLOWED_DELIVERY_ZIPS.includes(zipValue)){
-      checkoutAlert.textContent =
-       "🚫 La livraison est disponible uniquement dans les zones suivantes :\nLyon 2, Lyon 3, Lyon 6, Lyon 7, Lyon 8 et Villeurbanne (69100).\n\n✨ Pas de souci !\nVous pouvez choisir le retrait à emporter 😊";
-     checkoutAlert.classList.add("show");
+    if (!ALLOWED_DELIVERY_ZIPS.includes(zipValue)) {
+      checkoutAlert.innerHTML =
+        "🚫 Livraison non disponible ici<br><br>" +
+        "📍 Zones couvertes :<br>" +
+        "• Lyon 2<br>" +
+        "• Lyon 3<br>" +
+        "• Lyon 6<br>" +
+        "• Lyon 7<br>" +
+        "• Lyon 8<br>" +
+        "• Villeurbanne (69100)<br><br>" +
+        "😊 Pas de souci !<br>" +
+        "Vous pouvez choisir le retrait à emporter.";
+
+      checkoutAlert.classList.add("show");
       return;
     }
 
     addressBlock =
-`\nAdresse de livraison :
+      `\nAdresse de livraison :
 - Adresse : ${addrValue}
 - Code postal : ${zipValue}
 - Ville : ${cityValue}`;
@@ -1311,7 +1321,7 @@ confirmOrderBtn.addEventListener("click", () => {
 
   let grandTotal = getCartGrandTotal();
 
-  if (orderType === "delivery"){
+  if (orderType === "delivery") {
     grandTotal += DELIVERY_PRICE;
   }
 
@@ -1321,7 +1331,7 @@ confirmOrderBtn.addEventListener("click", () => {
       : "À emporter";
 
   const message =
-`Bonjour Yamani Food,
+    `Bonjour Yamani Food,
 
 Je souhaite commander :
 
