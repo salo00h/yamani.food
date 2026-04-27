@@ -1370,7 +1370,8 @@ document.addEventListener("click", (e) => {
 
 
 function showDeliveryInfoPopup() {
-  const receptionBox = document.querySelector(".option-group"); // أول بلوك فوق
+  const deliveryChoice = document.querySelector('input[name="orderType"][value="delivery"]')
+    ?.closest(".choice-item");
 
   checkoutAlert.innerHTML =
     "🚚 <b>Livraison à domicile</b> • 💶 2,00 €<br>" +
@@ -1379,7 +1380,7 @@ function showDeliveryInfoPopup() {
 
   checkoutAlert.classList.add("show");
 
-  if (receptionBox) {
-    receptionBox.prepend(checkoutAlert);
+  if (deliveryChoice) {
+    deliveryChoice.insertAdjacentElement("afterend", checkoutAlert);
   }
 }
