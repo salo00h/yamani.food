@@ -1232,7 +1232,7 @@ confirmOrderBtn.addEventListener("click", () => {
   }
 
   const DELIVERY_PRICE = 2.00;
-  const ALLOWED_DELIVERY_ZIP = "69008";
+  const ALLOWED_DELIVERY_ZIPS = ["69002", "69003", "69006", "69007", "69008", "69100"];
 
   const orderType = document.querySelector('input[name="orderType"]:checked')?.value || "pickup";
 
@@ -1283,10 +1283,10 @@ confirmOrderBtn.addEventListener("click", () => {
       return;
     }
 
-    if (zipValue !== ALLOWED_DELIVERY_ZIP){
+    if (!ALLOWED_DELIVERY_ZIPS.includes(zipValue)){
       checkoutAlert.textContent =
-       "🚫 La livraison est disponible uniquement à Lyon 8 (69008).\n\n✨ Pas de souci !\nVous pouvez choisir le retrait à emporter ou planifier votre commande à l’avance 😊";
-      checkoutAlert.classList.add("show");
+       "🚫 La livraison est disponible uniquement dans les zones suivantes :\nLyon 2, Lyon 3, Lyon 6, Lyon 7, Lyon 8 et Villeurbanne (69100).\n\n✨ Pas de souci !\nVous pouvez choisir le retrait à emporter 😊";
+     checkoutAlert.classList.add("show");
       return;
     }
 
