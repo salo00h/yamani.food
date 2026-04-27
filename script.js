@@ -1292,7 +1292,7 @@ confirmOrderBtn.addEventListener("click", () => {
         "• Lyon 6<br>" +
         "• Lyon 7<br>" +
         "• Lyon 8<br>" +
-        "• Villeurbanne (69100)<br><br>" +
+        "• Villeurbanne <br><br>" +
         "😊 Pas de souci !<br>" +
         "Vous pouvez choisir le retrait à emporter.";
 
