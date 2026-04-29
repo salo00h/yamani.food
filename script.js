@@ -120,6 +120,8 @@ const orderStatusTitle = document.getElementById("orderStatusTitle");
 const orderStatusText = document.getElementById("orderStatusText");
 const continueNowBtn = document.getElementById("continueNowBtn");
 const planLaterBtn = document.getElementById("planLaterBtn");
+const deliveryZoneModal = document.getElementById("deliveryZoneModal");
+const closeDeliveryZoneBtn = document.getElementById("closeDeliveryZoneBtn");
 
 let selectedDish = null;
 let selectedConfig = null;
@@ -1167,6 +1169,17 @@ function closeCheckoutModal() {
   checkoutAlert.classList.remove("show");
 }
 
+function showDeliveryZonePopup() {
+  deliveryZoneModal.classList.add("open");
+  deliveryZoneModal.setAttribute("aria-hidden", "false");
+}
+
+function closeDeliveryZonePopup() {
+  deliveryZoneModal.classList.remove("open");
+  deliveryZoneModal.setAttribute("aria-hidden", "true");
+}
+
+
 function isPickupTimeValid(time) {
   if (!time) return false;
   const [h, m] = time.split(":").map(Number);
@@ -1208,6 +1221,19 @@ dateCmd.addEventListener("change", () => {
 });
 whatsappBtn.addEventListener("click", openOrderStatusModal);
 closeCheckoutBtn.addEventListener("click", closeCheckoutModal);
+closeDeliveryZoneBtn.addEventListener("click", () => {
+  closeDeliveryZonePopup();
+
+  const pickupInput = document.querySelector('input[name="orderType"][value="pickup"]');
+
+  if (pickupInput) {
+    pickupInput.checked = true;
+    deliveryFields.style.display = "none";
+  }
+
+  checkoutAlert.classList.remove("show");
+  checkoutAlert.innerHTML = "";
+});
 
 continueNowBtn.addEventListener("click", () => {
   closeOrderStatusModal();
@@ -1280,19 +1306,7 @@ confirmOrderBtn.addEventListener("click", () => {
     }
 
     if (!ALLOWED_DELIVERY_ZIPS.includes(zipValue)) {
-      checkoutAlert.innerHTML =
-        "🚫 Livraison non disponible ici<br><br>" +
-        "📍 Zones couvertes :<br>" +
-        "• Lyon 2<br>" +
-        "• Lyon 3<br>" +
-        "• Lyon 6<br>" +
-        "• Lyon 7<br>" +
-        "• Lyon 8<br>" +
-        "• Villeurbanne (69100)<br><br>" +
-        "😊 Pas de souci !<br>" +
-        "Vous pouvez choisir le retrait à emporter.";
-
-      checkoutAlert.classList.add("show");
+      showDeliveryZonePopup();
       return;
     }
 
