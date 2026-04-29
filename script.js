@@ -517,10 +517,17 @@ function getExtrasTotal(id, config) {
     extras += extraSauceCount * EXTRA_SAUCE_PRICE;
   }
 
-  if (category === "box" && config.dessert) {
+  if (config.dessert) {
     const totalDesserts = Object.values(config.dessert).reduce((a, b) => a + b, 0);
-    const extraDessertCount = Math.max(totalDesserts - 1, 0);
-    extras += extraDessertCount * EXTRA_DESSERT_PRICE;
+
+    if (category === "box") {
+      const extraDessertCount = Math.max(totalDesserts - 1, 0);
+      extras += extraDessertCount * EXTRA_DESSERT_PRICE;
+    }
+
+    if (category === "single") {
+      extras += totalDesserts * EXTRA_DESSERT_PRICE;
+    }
   }
 
   return extras;
