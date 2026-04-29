@@ -1219,6 +1219,23 @@ function showPlanDatePopup() {
   deliveryZoneModal.setAttribute("aria-hidden", "false");
 }
 
+function showTimeRequiredPopup() {
+  deliveryZoneModal.dataset.type = "time";
+
+  deliveryZoneModal.querySelector(".modal-title").textContent = "⏰ Heure non sélectionnée";
+  deliveryZoneModal.querySelector(".modal-desc").textContent =
+    "Veuillez choisir une heure pour continuer votre commande.";
+
+  deliveryZoneModal.querySelector(".option-title").textContent = "🕒 Créneaux disponibles";
+  deliveryZoneModal.querySelector(".option-note").innerHTML =
+    "13h → 14h<br>19h → 22h";
+
+  closeDeliveryZoneBtn.textContent = "Compris";
+
+  deliveryZoneModal.classList.add("open");
+  deliveryZoneModal.setAttribute("aria-hidden", "false");
+}
+
 
 
 function closeDeliveryZonePopup() {
@@ -1345,8 +1362,7 @@ confirmOrderBtn.addEventListener("click", () => {
   }
 
   if (!selectedTime) {
-    checkoutAlert.textContent = "Veuillez choisir une heure.";
-    checkoutAlert.classList.add("show");
+    showTimeRequiredPopup();
     return;
   }
 
