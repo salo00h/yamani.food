@@ -976,6 +976,17 @@ function getTodayLocalDateString() {
   return `${year}-${month}-${day}`;
 }
 
+function getTomorrowLocalDateString() {
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+
+  const year = tomorrow.getFullYear();
+  const month = String(tomorrow.getMonth() + 1).padStart(2, "0");
+  const day = String(tomorrow.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+
 
 
 let isPlanningMode = false;
@@ -1144,13 +1155,15 @@ function openCheckoutModal(prefillTomorrow = false) {
   checkoutTotal.textContent = formatEuro(getCartGrandTotal());
 
   const today = getTodayLocalDateString();
-  dateCmd.min = today;
+  const tomorrow = getTomorrowLocalDateString();
 
   isPlanningMode = prefillTomorrow || !isCurrentTimeInOrderWindow();
 
   if (isPlanningMode) {
+    dateCmd.min = tomorrow;
     dateCmd.value = "";
   } else {
+    dateCmd.min = today;
     dateCmd.value = today;
   }
 
@@ -1274,10 +1287,17 @@ confirmOrderBtn.addEventListener("click", () => {
   const orderType = document.querySelector('input[name="orderType"]:checked')?.value || "pickup";
 
   const today = getTodayLocalDateString();
+  const tomorrow = getTomorrowLocalDateString();
   const selectedDate = isPlanningMode ? dateCmd.value : today;
 
   if (isPlanningMode && !selectedDate) {
     checkoutAlert.textContent = "Veuillez choisir une date.";
+    checkoutAlert.classList.add("show");
+    return;
+  }
+
+  if (isPlanningMode && selectedDate < tomorrow) {
+    checkoutAlert.textContent = "Veuillez choisir une date à partir de demain.";
     checkoutAlert.classList.add("show");
     return;
   }
@@ -1366,7 +1386,6 @@ ${orderType === "delivery" ? `\n🚚 Frais de livraison : ${formatEuro(DELIVERY_
   window.open(url, "_blank");
   closeCheckoutModal();
 });
-
 
 
 
