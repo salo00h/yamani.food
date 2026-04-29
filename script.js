@@ -1186,9 +1186,40 @@ function closeCheckoutModal() {
 }
 
 function showDeliveryZonePopup() {
+  deliveryZoneModal.dataset.type = "delivery";
+
+  deliveryZoneModal.querySelector(".modal-title").textContent = "🚫 Livraison non disponible";
+  deliveryZoneModal.querySelector(".modal-desc").textContent =
+    "Désolé, nous ne livrons pas encore dans ce code postal.";
+
+  deliveryZoneModal.querySelector(".option-title").textContent = "📍 Zones couvertes";
+  deliveryZoneModal.querySelector(".option-note").innerHTML =
+    "Lyon 2, Lyon 3, Lyon 6, Lyon 7, Lyon 8<br>Villeurbanne 69100";
+
+  closeDeliveryZoneBtn.textContent = "Compris, je choisis à emporter";
+
   deliveryZoneModal.classList.add("open");
   deliveryZoneModal.setAttribute("aria-hidden", "false");
 }
+
+function showPlanDatePopup() {
+  deliveryZoneModal.dataset.type = "date";
+
+  deliveryZoneModal.querySelector(".modal-title").textContent = "📅 Date non disponible";
+  deliveryZoneModal.querySelector(".modal-desc").textContent =
+    "Quand les commandes sont fermées, vous pouvez planifier uniquement à partir de demain.";
+
+  deliveryZoneModal.querySelector(".option-title").textContent = "⏰ Planification";
+  deliveryZoneModal.querySelector(".option-note").innerHTML =
+    "Veuillez choisir une date à partir de demain.";
+
+  closeDeliveryZoneBtn.textContent = "Compris";
+
+  deliveryZoneModal.classList.add("open");
+  deliveryZoneModal.setAttribute("aria-hidden", "false");
+}
+
+
 
 function closeDeliveryZonePopup() {
   deliveryZoneModal.classList.remove("open");
@@ -1237,18 +1268,23 @@ dateCmd.addEventListener("change", () => {
 });
 whatsappBtn.addEventListener("click", openOrderStatusModal);
 closeCheckoutBtn.addEventListener("click", closeCheckoutModal);
+
 closeDeliveryZoneBtn.addEventListener("click", () => {
+  const popupType = deliveryZoneModal.dataset.type;
+
   closeDeliveryZonePopup();
 
-  const pickupInput = document.querySelector('input[name="orderType"][value="pickup"]');
+  if (popupType === "delivery") {
+    const pickupInput = document.querySelector('input[name="orderType"][value="pickup"]');
 
-  if (pickupInput) {
-    pickupInput.checked = true;
-    deliveryFields.style.display = "none";
+    if (pickupInput) {
+      pickupInput.checked = true;
+      deliveryFields.style.display = "none";
+    }
+
+    checkoutAlert.classList.remove("show");
+    checkoutAlert.innerHTML = "";
   }
-
-  checkoutAlert.classList.remove("show");
-  checkoutAlert.innerHTML = "";
 });
 
 continueNowBtn.addEventListener("click", () => {
@@ -1297,8 +1333,7 @@ confirmOrderBtn.addEventListener("click", () => {
   }
 
   if (isPlanningMode && selectedDate < tomorrow) {
-    checkoutAlert.textContent = "Veuillez choisir une date à partir de demain.";
-    checkoutAlert.classList.add("show");
+    showPlanDatePopup();
     return;
   }
 
