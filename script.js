@@ -453,8 +453,10 @@ function renderModalOptions(id) {
   if (category === "single") {
     modalOptions.innerHTML = `
       ${renderDrinkOptions(false, config.drink)}
+      ${renderDessertOptions(config.dessert)}
       ${renderSauceOptions(config.sauces, false)}
     `;
+    renderDessertSummary(config.dessert);
     renderSauceSummary(config.sauces);
     return;
   }
@@ -465,6 +467,7 @@ function renderModalOptions(id) {
       ${renderDessertOptions(config.dessert)}
       ${renderSauceOptions(config.sauces, true)}
     `;
+    renderDessertSummary(config.dessert);
     renderSauceSummary(config.sauces);
     return;
   }
@@ -480,6 +483,7 @@ function readConfigFromModal(id) {
     const drinkEl = modal.querySelector('input[name="drinkChoice"]:checked');
 
     config.drink = drinkEl ? drinkEl.value : "";
+    config.dessert = { ...dessertQty };
     config.sauces = { ...sauceQty };
 
     return config;
@@ -497,7 +501,6 @@ function readConfigFromModal(id) {
 
   return config;
 }
-
 function getExtrasTotal(id, config) {
   const category = getDishCategory(id);
   let extras = 0;
