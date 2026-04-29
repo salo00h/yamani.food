@@ -657,24 +657,36 @@ function buildSelectionLabel(id, config) {
   const parts = [];
   const category = getDishCategory(id);
 
+  if (config.drink) {
+    const drink = getDrinkById(config.drink);
+    if (drink) {
+      parts.push(`🥤 Boisson: ${drink.name}`);
+    }
+  }
+
   if (config.dessert) {
     const desserts = Object.entries(config.dessert)
       .filter(([_, qty]) => qty > 0)
-      .map(([id, qty]) => {
-        const d = getDessertById(id);
-        return `${d?.name} ×${qty}`;
+      .map(([dessertId, qty]) => {
+        const d = getDessertById(dessertId);
+        return `🍰 ${d?.name} ×${qty}`;
       });
 
     if (desserts.length) {
       parts.push(`Desserts: ${desserts.join(", ")}`);
 
+      const totalDesserts = Object.values(config.dessert).reduce((a, b) => a + b, 0);
+
       if (category === "box") {
-        const totalDesserts = Object.values(config.dessert).reduce((a, b) => a + b, 0);
         const extraDessertCount = Math.max(totalDesserts - 1, 0);
 
         if (extraDessertCount > 0) {
-          parts.push(`Supplément desserts: +${formatEuro(extraDessertCount * EXTRA_DESSERT_PRICE)}`);
+          parts.push(`💶 Supplément desserts: +${formatEuro(extraDessertCount * EXTRA_DESSERT_PRICE)}`);
         }
+      }
+
+      if (category === "single") {
+        parts.push(`💶 Supplément desserts: +${formatEuro(totalDesserts * EXTRA_DESSERT_PRICE)}`);
       }
     }
   }
@@ -682,9 +694,9 @@ function buildSelectionLabel(id, config) {
   if (config.sauces) {
     const sauces = Object.entries(config.sauces)
       .filter(([_, qty]) => qty > 0)
-      .map(([id, qty]) => {
-        const s = getSauceById(id);
-        return `${s?.name} ×${qty}`;
+      .map(([sauceId, qty]) => {
+        const s = getSauceById(sauceId);
+        return `🥣 ${s?.name} ×${qty}`;
       });
 
     if (sauces.length) {
@@ -694,7 +706,7 @@ function buildSelectionLabel(id, config) {
       const extraSauceCount = Math.max(totalSauces - 1, 0);
 
       if (extraSauceCount > 0) {
-        parts.push(`Supplément sauces: +${formatEuro(extraSauceCount * EXTRA_SAUCE_PRICE)}`);
+        parts.push(`💶 Supplément sauces: +${formatEuro(extraSauceCount * EXTRA_SAUCE_PRICE)}`);
       }
     }
   }
