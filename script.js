@@ -1037,6 +1037,7 @@ function getCartGrandTotal() {
 function isCurrentTimeInOrderWindow() {
   const now = new Date();
   const t = now.getHours() + (now.getMinutes() / 60);
+
   return (t >= 7 && t < 11) || (t >= 12 && t < 17);
 }
 
@@ -1395,7 +1396,11 @@ confirmOrderBtn.addEventListener("click", () => {
     return;
   }
 
-  if (isPlanningMode && selectedDate < tomorrow) {
+  const now = new Date();
+  const currentHour = now.getHours() + (now.getMinutes() / 60);
+  const specialMiddayPlanning = currentHour >= 11 && currentHour < 12;
+
+  if (isPlanningMode && selectedDate < tomorrow && !specialMiddayPlanning) {
     showPlanDatePopup();
     return;
   }
