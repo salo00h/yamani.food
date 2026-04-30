@@ -1203,15 +1203,34 @@ function openCheckoutModal(prefillTomorrow = false) {
     btn.classList.remove("active");
 
     const label = btn.textContent.trim();
+    const selectedDate = dateCmd.value || today;
 
-    if (currentHour >= 11) {
-      // ✅ فقط أوقات المساء
-      if (label.includes("19h") || label.includes("20h") || label.includes("21h")) {
-        btn.style.display = "flex";
-      } else {
-        btn.style.display = "none";
+    // ✅ إذا التاريخ اليوم
+    if (selectedDate === today) {
+
+      // بين 11 و17 -> فقط المساء
+      if (currentHour >= 11 && currentHour < 17) {
+        if (label.includes("19h") || label.includes("20h") || label.includes("21h")) {
+          btn.style.display = "flex";
+        } else {
+          btn.style.display = "none";
+        }
       }
-    } else {
+
+      // بعد 17 -> بكرا فقط
+      else if (currentHour >= 17) {
+        btn.style.display = "flex";
+      }
+
+      // قبل 11 -> كل الأوقات
+      else {
+        btn.style.display = "flex";
+      }
+
+    }
+
+    // ✅ إذا التاريخ غداً أو أي يوم آخر
+    else {
       btn.style.display = "flex";
     }
   });
