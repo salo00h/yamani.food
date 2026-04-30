@@ -1173,20 +1173,47 @@ function openCheckoutModal(prefillTomorrow = false) {
 
   checkoutTotal.textContent = formatEuro(getCartGrandTotal());
 
+  const now = new Date();
+  const currentHour = now.getHours() + (now.getMinutes() / 60);
+
   const today = getTodayLocalDateString();
   const tomorrow = getTomorrowLocalDateString();
 
-  isPlanningMode = prefillTomorrow || !isCurrentTimeInOrderWindow();
+  // ✅ حالة خاصة بين 11h و12h
+  const specialMiddayPlanning = currentHour >= 11 && currentHour < 12;
 
-  if (isPlanningMode) {
-    dateCmd.min = tomorrow;
-    dateCmd.value = "";
-  } else {
+  if (specialMiddayPlanning) {
+    isPlanningMode = true;
     dateCmd.min = today;
     dateCmd.value = today;
+  } else {
+    isPlanningMode = prefillTomorrow || !isCurrentTimeInOrderWindow();
+
+    if (isPlanningMode) {
+      dateCmd.min = tomorrow;
+      dateCmd.value = "";
+    } else {
+      dateCmd.min = today;
+      dateCmd.value = today;
+    }
   }
 
-  document.querySelectorAll(".time-btn").forEach(btn => btn.classList.remove("active"));
+  document.querySelectorAll(".time-btn").forEach(btn => {
+    btn.classList.remove("active");
+
+    const label = btn.textContent.trim();
+
+    if (specialMiddayPlanning) {
+      // ✅ فقط أوقات المساء
+      if (label.includes("19h") || label.includes("20h") || label.includes("21h")) {
+        btn.style.display = "flex";
+      } else {
+        btn.style.display = "none";
+      }
+    } else {
+      btn.style.display = "flex";
+    }
+  });
 
   checkoutAlert.textContent = "";
   checkoutAlert.classList.remove("show");
