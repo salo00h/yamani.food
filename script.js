@@ -1183,7 +1183,7 @@ function openCheckoutModal(prefillTomorrow = false) {
   // ✅ حالة خاصة بين 11h و12h
   const specialMiddayPlanning = currentHour >= 11 && currentHour < 12;
 
-  if (specialMiddayPlanning) {
+  if (currentHour >= 11 && currentHour < 17) {
     isPlanningMode = true;
     dateCmd.min = today;
     dateCmd.value = today;
@@ -1204,7 +1204,7 @@ function openCheckoutModal(prefillTomorrow = false) {
 
     const label = btn.textContent.trim();
 
-    if (specialMiddayPlanning) {
+    if (currentHour >= 11) {
       // ✅ فقط أوقات المساء
       if (label.includes("19h") || label.includes("20h") || label.includes("21h")) {
         btn.style.display = "flex";
@@ -1400,7 +1400,9 @@ confirmOrderBtn.addEventListener("click", () => {
   const currentHour = now.getHours() + (now.getMinutes() / 60);
   const specialMiddayPlanning = currentHour >= 11 && currentHour < 12;
 
-  if (isPlanningMode && selectedDate < tomorrow && !specialMiddayPlanning) {
+  const allowSameDayEvening = currentHour >= 11 && currentHour < 17;
+
+  if (isPlanningMode && selectedDate < tomorrow && !allowSameDayEvening) {
     showPlanDatePopup();
     return;
   }
