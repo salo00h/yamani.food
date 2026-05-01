@@ -1260,7 +1260,7 @@ function showDeliveryZonePopup() {
 
   deliveryZoneModal.querySelector(".option-title").textContent = "📍 Zones couvertes";
   deliveryZoneModal.querySelector(".option-note").innerHTML =
-    "Lyon 2, Lyon 3, Lyon 6, Lyon 7, Lyon 8<br>Villeurbanne 69100";
+    "Lyon 2, Lyon 3, Lyon 6, Lyon 7, Lyon 8<br>Villeurbanne 69100<br>Bron 69500";
 
   closeDeliveryZoneBtn.textContent = "Compris, je choisis à emporter";
 
@@ -1401,7 +1401,7 @@ confirmOrderBtn.addEventListener("click", () => {
   }
 
   const DELIVERY_PRICE = 2.00;
-  const ALLOWED_DELIVERY_ZIPS = ["69002", "69003", "69006", "69007", "69008", "69100"];
+  const ALLOWED_DELIVERY_ZIPS = ["69002", "69003", "69006", "69007", "69008", "69100", "69500"];
 
   const orderType = document.querySelector('input[name="orderType"]:checked')?.value || "pickup";
 
@@ -1534,7 +1534,7 @@ function showDeliveryInfoPopup() {
 
   checkoutAlert.innerHTML =
     "🚚 <b>Livraison à domicile</b> • 💶 2,00 €<br>" +
-    "📍 Lyon 2, 3, 6, 7, 8 + Villeurbanne<br>" +
+    "📍 Lyon 2, 3, 6, 7, 8 + Villeurbanne + Bron<br>" +
     "⏰ 13h–14h / 19h–22h";
 
   checkoutAlert.classList.add("show");
