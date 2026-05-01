@@ -1183,7 +1183,11 @@ function openCheckoutModal(prefillTomorrow = false) {
   // ✅ حالة خاصة بين 11h و12h
   const specialMiddayPlanning = currentHour >= 11 && currentHour < 12;
 
-  if (currentHour >= 11 && currentHour < 17) {
+  if (currentHour >= 0 && currentHour < 7) {
+    isPlanningMode = true;
+    dateCmd.min = today;
+    dateCmd.value = today;
+  } else if (currentHour >= 11 && currentHour < 17) {
     isPlanningMode = true;
     dateCmd.min = today;
     dateCmd.value = today;
