@@ -1509,7 +1509,7 @@ ${orderType === "delivery" ? `\n🚚 Frais de livraison : ${formatEuro(DELIVERY_
 
 🙏 Merci !`;
 
-  const url = `https://wa.me/33749773595?text=${encodeURIComponent(message)}`;
+  const url = `https://wa.me/33782549043?text=${encodeURIComponent(message)}`;
   window.open(url, "_blank");
   closeCheckoutModal();
 });
