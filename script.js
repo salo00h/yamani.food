@@ -1425,7 +1425,12 @@ confirmOrderBtn.addEventListener("click", () => {
 
   const allowSameDayEvening = currentHour >= 11 && currentHour < 17;
 
-  if (isPlanningMode && selectedDate < tomorrow && !allowSameDayEvening) {
+  if (
+    isPlanningMode &&
+    selectedDate < tomorrow &&
+    !allowSameDayEvening &&
+    !(currentHour >= 0 && currentHour < 7)
+  ) {
     showPlanDatePopup();
     return;
   }
