@@ -672,6 +672,7 @@ function buildSelectionLabel(id, config) {
   const parts = [];
   const category = getDishCategory(id);
 
+  // 🥤 Drink
   if (config.drink) {
     const drink = getDrinkById(config.drink);
     if (drink) {
@@ -679,6 +680,7 @@ function buildSelectionLabel(id, config) {
     }
   }
 
+  // 🍰 Dessert
   if (config.dessert) {
     const desserts = Object.entries(config.dessert)
       .filter(([_, qty]) => qty > 0)
@@ -688,7 +690,7 @@ function buildSelectionLabel(id, config) {
       });
 
     if (desserts.length) {
-      parts.push(`Desserts: ${desserts.join(", ")}`);
+      parts.push(`🍰 Dessert: ${desserts.join(", ")}`);
 
       const totalDesserts = Object.values(config.dessert).reduce((a, b) => a + b, 0);
 
@@ -696,16 +698,17 @@ function buildSelectionLabel(id, config) {
         const extraDessertCount = Math.max(totalDesserts - 1, 0);
 
         if (extraDessertCount > 0) {
-          parts.push(`💶 Supplément desserts: +${formatEuro(extraDessertCount * EXTRA_DESSERT_PRICE)}`);
+          parts.push(`💶 Supplément dessert: +${formatEuro(extraDessertCount * EXTRA_DESSERT_PRICE)}`);
         }
       }
 
       if (category === "single") {
-        parts.push(`💶 Supplément desserts: +${formatEuro(totalDesserts * EXTRA_DESSERT_PRICE)}`);
+        parts.push(`💶 Dessert inclus dans le total: +${formatEuro(totalDesserts * EXTRA_DESSERT_PRICE)}`);
       }
     }
   }
 
+  // 🥣 Sauces
   if (config.sauces) {
     const sauces = Object.entries(config.sauces)
       .filter(([_, qty]) => qty > 0)
@@ -715,7 +718,7 @@ function buildSelectionLabel(id, config) {
       });
 
     if (sauces.length) {
-      parts.push(`Sauces: ${sauces.join(", ")}`);
+      parts.push(`🥣 Sauces: ${sauces.join(", ")}`);
 
       const totalSauces = Object.values(config.sauces).reduce((a, b) => a + b, 0);
       const extraSauceCount = Math.max(totalSauces - 1, 0);
@@ -1489,14 +1492,75 @@ confirmOrderBtn.addEventListener("click", () => {
 
   const lines = entries.map((entry, index) => {
     const item = DISHES[entry.id];
-    const summary = buildSelectionLabel(entry.id, entry.config);
+    const config = entry.config;
+    const category = getDishCategory(entry.id);
     const unitTotal = formatEuro(entry.lineTotal);
+
+    const detailLines = [];
+
+    if (config.drink) {
+      const drink = getDrinkById(config.drink);
+      if (drink) {
+        if (category === "single") {
+          detailLines.push(`   - 🥤 Boisson : ${drink.name} (+${formatEuro(OPTIONAL_DRINK_EXTRA)})`);
+        } else {
+          detailLines.push(`   - 🥤 Boisson incluse : ${drink.name}`);
+        }
+      }
+    }
+
+    if (config.dessert) {
+      Object.entries(config.dessert)
+        .filter(([_, qty]) => qty > 0)
+        .forEach(([dessertId, qty]) => {
+          const dessert = getDessertById(dessertId);
+          if (!dessert) return;
+
+          if (category === "box") {
+            detailLines.push(`   - 🍰 Dessert inclus : ${dessert.name} ×1`);
+
+            if (qty > 1) {
+              detailLines.push(
+                `   - 💶 Dessert supplémentaire : ${dessert.name} ×${qty - 1} (+${formatEuro((qty - 1) * EXTRA_DESSERT_PRICE)})`
+              );
+            }
+          } else {
+            detailLines.push(
+              `   - 🍰 Dessert : ${dessert.name} ×${qty} (+${formatEuro(qty * EXTRA_DESSERT_PRICE)})`
+            );
+          }
+        });
+    }
+
+    if (config.sauces) {
+      let sauceCounter = 0;
+
+      Object.entries(config.sauces)
+        .filter(([_, qty]) => qty > 0)
+        .forEach(([sauceId, qty]) => {
+          const sauce = getSauceById(sauceId);
+          if (!sauce) return;
+
+          for (let i = 0; i < qty; i++) {
+            sauceCounter++;
+
+            if (sauceCounter === 1) {
+              detailLines.push(`   - 🥣 Sauce incluse : ${sauce.name}`);
+            } else {
+              detailLines.push(
+                `   - 💶 Sauce supplémentaire : ${sauce.name} (+${formatEuro(EXTRA_SAUCE_PRICE)})`
+              );
+            }
+          }
+        });
+    }
+
+    detailLines.push(`   - 💰 Prix du plat complet : ${unitTotal}`);
 
     return [
       `${index + 1}. ${item.name} x${entry.qty}`,
-      summary ? `   - ${summary}` : "",
-      `   - Prix unitaire: ${unitTotal}`
-    ].filter(Boolean).join("\n");
+      ...detailLines
+    ].join("\n");
   });
 
   let grandTotal = getCartGrandTotal();
