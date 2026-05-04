@@ -45,7 +45,7 @@ const DISHES = {
 
 const OPTIONAL_DRINK_EXTRA = 1.50; // سعر المشروب للسامبل والماكسي
 const EXTRA_SAUCE_PRICE = 0.50;    // كل صوص إضافي بعد أول واحد
-const EXTRA_DESSERT_PRICE = 1.00;  // أول حلا مجاني ثم كل قطعة إضافية 1€
+const EXTRA_DESSERT_PRICE = 2.00;  // أول حلا مجاني ثم كل قطعة إضافية 1€
 const DELIVERY_PRICE = 2.00;
 
 function makeSvgDataUri(svg) {
@@ -303,15 +303,21 @@ function renderDrinkOptions(required = false, selected = "") {
 }
 
 function renderDessertOptions(selectedDesserts = {}) {
+  const isBox = getDishCategory(selectedDish) === "box";
+  const dessertBadge = isBox ? "1 inclus" : "+2,00 €";
+  const dessertNote = isBox
+    ? "1 dessert inclus. Chaque dessert supplémentaire coûte +2,00 €."
+    : "Chaque dessert coûte +2,00 €.";
+
   return `
     <div class="option-group sauce-group">
       <div class="option-head">
         <div class="option-title">Dessert</div>
-        <div class="option-badge">1 inclus</div>
+        <div class="option-badge">${dessertBadge}</div>
       </div>
 
       <p class="option-note">
-        1 dessert inclus. Chaque dessert supplémentaire coûte +1,00 €.
+        ${dessertNote}
       </p>
 
       <div class="sauce-list">
@@ -599,18 +605,27 @@ function renderDessertSummary(desserts = {}) {
   if (!summary) return;
 
   const entries = Object.entries(desserts).filter(([_, qty]) => qty > 0);
+  const category = getDishCategory(selectedDish);
 
   if (!entries.length) {
     summary.innerHTML = `
       <div class="summary-pill">Aucun dessert sélectionné</div>
-      <div class="summary-pill accent">Desserts supplémentaires : +0,00 €</div>
+      <div class="summary-pill accent">Supplément dessert : +0,00 €</div>
     `;
     return;
   }
 
   const total = entries.reduce((sum, [_, qty]) => sum + qty, 0);
-  const extraCount = Math.max(total - 1, 0);
-  const extraPrice = extraCount * EXTRA_DESSERT_PRICE;
+
+  let dessertPrice = 0;
+
+  if (category === "box") {
+    dessertPrice = Math.max(total - 1, 0) * EXTRA_DESSERT_PRICE;
+  }
+
+  if (category === "single") {
+    dessertPrice = total * EXTRA_DESSERT_PRICE;
+  }
 
   summary.innerHTML = `
     ${entries.map(([id, qty]) => {
@@ -623,7 +638,7 @@ function renderDessertSummary(desserts = {}) {
   }).join("")}
 
     <div class="summary-pill accent">
-      Supplément dessert : ${extraPrice > 0 ? "+" + formatEuro(extraPrice) : "0,00 €"}
+      Supplément dessert : ${dessertPrice > 0 ? "+" + formatEuro(dessertPrice) : "0,00 €"}
     </div>
   `;
 }
