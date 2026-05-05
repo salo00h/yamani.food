@@ -56,7 +56,8 @@ const DRINK_IMAGES = {
   cola: "assets/images/coca.png",
   "cola-zero": "assets/images/colazero.png",
   "ice-tea": "assets/images/icetea.png",
-  oasis: "assets/images/oasis.png"
+  oasis: "assets/images/oasis.png",
+  colapp: "assets/images/colapp.png"
 };
 
 const BOX_PREVIEW_IMAGES = {
@@ -68,7 +69,8 @@ const DRINKS = [
   { id: "cola", name: "Cola", image: DRINK_IMAGES["cola"] },
   { id: "cola-zero", name: "Cola Zero", image: DRINK_IMAGES["cola-zero"] },
   { id: "ice-tea", name: "Ice Tea", image: DRINK_IMAGES["ice-tea"] },
-  { id: "oasis", name: "Oasis", image: DRINK_IMAGES["oasis"] }
+  { id: "oasis", name: "Oasis", image: DRINK_IMAGES["oasis"] },
+  { id: "colapp", name: "Colapp", image: DRINK_IMAGES["colapp"] }
 ];
 
 const DESSERTS = [
