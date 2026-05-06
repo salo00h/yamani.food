@@ -1124,7 +1124,7 @@ function shouldShowMay8Announcement() {
   const year = new Date().getFullYear();
   const lastDay = `${year}-05-08`;
 
-  return today <= lastDay;
+  return today === lastDay;
 }
 
 function showMay8AnnouncementPopup() {
