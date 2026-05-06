@@ -1113,8 +1113,10 @@ function isRestaurantClosed(selectedDate = null) {
 }
 
 function showRestaurantClosedPopup() {
-  showInlineOrderStatusMessage("🚫 Restaurant fermé aujourd’hui", [
-    "Les commandes sont indisponibles le 8 mai.",
+  showInlineOrderStatusMessage("🚫 Vendredi 8 mai complet", [
+    "Nous sommes exceptionnellement fermés ce vendredi 8 mai.",
+    "Nous avons atteint notre capacité maximale de commandes.",
+    "Merci pour votre confiance 🙏",
     "Veuillez choisir une autre date."
   ]);
 }
