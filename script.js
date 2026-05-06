@@ -1109,15 +1109,14 @@ function getTomorrowLocalDateString() {
 
 function isRestaurantClosed(selectedDate = null) {
   const targetDate = selectedDate || getTodayLocalDateString();
-  return targetDate.endsWith("-05-08");
+  return targetDate.endsWith("-05-07") || targetDate.endsWith("-05-08");
 }
 
 function showRestaurantClosedPopup() {
-  showInlineOrderStatusMessage("🚫 Vendredi 8 mai complet", [
-    "Nous sommes exceptionnellement fermés ce vendredi 8 mai.",
-    "Nous avons atteint notre capacité maximale de commandes.",
-    "Merci pour votre confiance 🙏",
-    "Veuillez choisir une autre date."
+  showInlineOrderStatusMessage("🚫 Jeudi 7 et vendredi 8 mai complets", [
+    "Nous sommes complets jeudi 7 et vendredi 8 mai.",
+    "🙏 Merci infiniment pour votre confiance.",
+    "Veuillez choisir une autre date pour votre commande."
   ]);
 }
 
@@ -1130,8 +1129,8 @@ function shouldShowMay8Announcement() {
 }
 
 function showMay8AnnouncementPopup() {
-  showInlineOrderStatusMessage("🔥 Vendredi 8 mai complet", [
-    "Nous sommes complets pour ce vendredi 8 mai.",
+  showInlineOrderStatusMessage("🔥 Jeudi 7 et vendredi 8 mai complets", [
+    "Nous sommes complets jeudi 7 et vendredi 8 mai.",
     "🙏 Merci infiniment pour votre confiance et votre fidélité.",
     "Yamani Food fonctionne à pleine capacité.",
     "📅 Pensez à planifier votre prochaine commande dès maintenant."
