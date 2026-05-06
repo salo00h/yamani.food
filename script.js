@@ -1026,6 +1026,17 @@ function getTomorrowLocalDateString() {
   return `${year}-${month}-${day}`;
 }
 
+function isRestaurantClosed(selectedDate = null) {
+  const targetDate = selectedDate || getTodayLocalDateString();
+  return targetDate.endsWith("-05-08");
+}
+
+function showRestaurantClosedPopup() {
+  showInlineOrderStatusMessage("🚫 Restaurant fermé aujourd’hui", [
+    "Les commandes sont indisponibles le 8 mai.",
+    "Veuillez choisir une autre date."
+  ]);
+}
 
 
 let isPlanningMode = false;
@@ -1081,6 +1092,10 @@ function showInlineOrderStatusMessage(title, lines = []) {
 
 function openOrderStatusModal() {
   const entries = Object.values(cart);
+  if (isRestaurantClosed()) {
+    showRestaurantClosedPopup();
+    return;
+  }
 
   if (!entries.length) {
     showInlineOrderStatusMessage("🛒 Votre panier est vide", [
@@ -1198,6 +1213,10 @@ function openCheckoutModal(prefillTomorrow = false) {
   const currentHour = now.getHours() + (now.getMinutes() / 60);
 
   const today = getTodayLocalDateString();
+  if (isRestaurantClosed(today)) {
+    showRestaurantClosedPopup();
+    return;
+  }
   const tomorrow = getTomorrowLocalDateString();
 
   // ✅ حالة خاصة بين 11h و12h
@@ -1432,6 +1451,10 @@ confirmOrderBtn.addEventListener("click", () => {
   const today = getTodayLocalDateString();
   const tomorrow = getTomorrowLocalDateString();
   const selectedDate = isPlanningMode ? dateCmd.value : today;
+  if (isRestaurantClosed(selectedDate)) {
+    showRestaurantClosedPopup();
+    return;
+  }
 
   if (isPlanningMode && !selectedDate) {
     checkoutAlert.textContent = "Veuillez choisir une date.";
