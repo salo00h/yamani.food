@@ -1122,9 +1122,9 @@ function showRestaurantClosedPopup() {
 function shouldShowMay8Announcement() {
   const today = getTodayLocalDateString();
   const year = new Date().getFullYear();
-  const lastDay = `${year}-05-08`;
+  const may8 = `${year}-05-08`;
 
-  return today === lastDay;
+  return today <= may8;
 }
 
 function showMay8AnnouncementPopup() {
@@ -1133,8 +1133,45 @@ function showMay8AnnouncementPopup() {
     "Merci énormément pour votre confiance 🙏",
     "Yamani Food fonctionne à pleine capacité."
   ]);
+
+  planLaterBtn.style.display = "block";
+  planLaterBtn.textContent = "Compris";
+  planLaterBtn.dataset.action = "may8-close";
 }
 
+function showCurrentClosedPopupIfNeeded() {
+  if (isCurrentTimeInOrderWindow()) return;
+
+  const orderHoursBox = orderStatusModal.querySelector(".option-group");
+
+  if (orderHoursBox) {
+    orderHoursBox.style.display = "block";
+  }
+
+  orderStatusTitle.textContent = "⏰ Commandes fermées pour le moment";
+
+  orderStatusText.innerHTML = `
+<div>Nous ne prenons pas</div>
+<div>de commandes maintenant.</div>
+<br>
+<div>📅 Vous pouvez planifier</div>
+<div>votre commande pour plus tard.</div>
+<br>
+<div>🛍️ Retrait :</div>
+<div>13h → 14h</div>
+<div>19h → 22h</div>
+  `;
+
+  continueNowBtn.style.display = "none";
+  planLaterBtn.style.display = "block";
+  planLaterBtn.textContent = "📅 Planifier une commande";
+  planLaterBtn.dataset.action = "plan";
+
+  orderStatusModal.classList.add("open");
+  orderStatusModal.setAttribute("aria-hidden", "false");
+
+  hasShownOpeningStatusModal = true;
+}
 
 let isPlanningMode = false;
 
@@ -1259,42 +1296,13 @@ function closeOrderStatusModal() {
 }
 
 function checkOpeningOnLoad() {
-  const orderHoursBox = orderStatusModal.querySelector(".option-group");
-
   if (shouldShowMay8Announcement()) {
     showMay8AnnouncementPopup();
     hasShownOpeningStatusModal = true;
     return;
   }
 
-  if (isCurrentTimeInOrderWindow()) return;
-
-  if (orderHoursBox) {
-    orderHoursBox.style.display = "block";
-  }
-
-  orderStatusTitle.textContent = "⏰ Commandes fermées pour le moment";
-
-  orderStatusText.innerHTML = `
-<div>Nous ne prenons pas</div>
-<div>de commandes maintenant.</div>
-<br>
-<div>📅 Vous pouvez planifier</div>
-<div>votre commande pour plus tard.</div>
-<br>
-<div>🛍️ Retrait :</div>
-<div>13h → 14h</div>
-<div>19h → 22h</div>
-  `;
-
-  continueNowBtn.style.display = "none";
-  planLaterBtn.textContent = "📅 Planifier une commande";
-  planLaterBtn.dataset.action = "plan";
-
-  orderStatusModal.classList.add("open");
-  orderStatusModal.setAttribute("aria-hidden", "false");
-
-  hasShownOpeningStatusModal = true;
+  showCurrentClosedPopupIfNeeded();
 }
 
 
@@ -1533,6 +1541,11 @@ planLaterBtn.addEventListener("click", () => {
   const action = planLaterBtn.dataset.action;
 
   closeOrderStatusModal();
+
+  if (action === "may8-close") {
+    showCurrentClosedPopupIfNeeded();
+    return;
+  }
 
   if (action === "plan") {
     openCheckoutModal(true);
