@@ -930,33 +930,69 @@ function renderCart() {
 
     return `
       <div class="cart-item" style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
-        
         <span style="flex:1;">
           ${item.name}
           ${summary ? ` — ${summary}` : ""}
           × ${entry.qty}
         </span>
 
-        <button 
-          onclick="removeFromCart('${key}')"
-          aria-label="Supprimer"
-          title="Supprimer"
-          style="
-            border:none;
-            background:rgba(255,255,255,.08);
-            color:#fff;
-            font-size:18px;
-            cursor:pointer;
-            padding:6px 8px;
-            border-radius:10px;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-          "
-        >
-          🗑️
-        </button>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <button
+            onclick="decreaseCartItem('${key}')"
+            aria-label="Diminuer"
+            title="Diminuer"
+            style="
+              border:none;
+              background:rgba(255,255,255,.10);
+              color:#fff;
+              font-size:18px;
+              cursor:pointer;
+              padding:6px 10px;
+              border-radius:10px;
+              font-weight:900;
+            "
+          >
+            −
+          </button>
 
+          <button
+            onclick="increaseCartItem('${key}')"
+            aria-label="Augmenter"
+            title="Augmenter"
+            style="
+              border:none;
+              background:rgba(255,214,95,.22);
+              color:#fff;
+              font-size:18px;
+              cursor:pointer;
+              padding:6px 10px;
+              border-radius:10px;
+              font-weight:900;
+            "
+          >
+            +
+          </button>
+
+          <button
+            onclick="removeFromCart('${key}')"
+            aria-label="Supprimer"
+            title="Supprimer"
+            style="
+              border:none;
+              background:rgba(255,255,255,.08);
+              color:#fff;
+              font-size:18px;
+              cursor:pointer;
+              padding:6px 8px;
+              border-radius:10px;
+              display:flex;
+              align-items:center;
+              justify-content:center;
+            "
+          >
+            🗑️
+          </button>
+        </div>
       </div>
     `;
   }).join("");
@@ -964,6 +1000,26 @@ function renderCart() {
 
 function removeFromCart(key) {
   delete cart[key];
+  renderCart();
+}
+
+function increaseCartItem(key) {
+  if (!cart[key]) return;
+
+  cart[key].qty += 1;
+  renderCart();
+  pulseWhatsApp();
+}
+
+function decreaseCartItem(key) {
+  if (!cart[key]) return;
+
+  cart[key].qty -= 1;
+
+  if (cart[key].qty <= 0) {
+    delete cart[key];
+  }
+
   renderCart();
 }
 
