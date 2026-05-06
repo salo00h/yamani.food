@@ -212,7 +212,7 @@ function getDefaultConfig(id) {
 
   if (category === "single") {
     return {
-      drink: "",
+      drink: {},
       dessert: {},
       sauces: {}
     };
@@ -220,14 +220,14 @@ function getDefaultConfig(id) {
 
   if (category === "box") {
     return {
-      drink: DRINKS[0].id,
+      drink: {},
       dessert: {},
       sauces: {}
     };
   }
 
   return {
-    drink: "",
+    drink: {},
     dessert: {},
     sauces: {}
   };
@@ -245,60 +245,43 @@ function getSauceById(id) {
   return SAUCES.find(item => item.id === id) || null;
 }
 
-function renderDrinkOptions(required = false, selected = "") {
-  const noneOption = required ? "" : `
-    <label class="choice-item">
-      <input class="choice-input" type="radio" name="drinkChoice" value="" ${selected === "" ? "checked" : ""}>
-      <div class="choice-card">
-        <div class="choice-main">
-          <div class="choice-mark"></div>
-          <div class="choice-thumb" style="display:grid;place-items:center;font-size:18px;">🚫</div>
-          <div class="choice-text">
-            <div class="choice-name">Sans boisson</div>
-            <div class="choice-sub">Vous pouvez continuer sans choisir</div>
-          </div>
-        </div>
-        <div class="choice-price">+0,00 €</div>
-      </div>
-    </label>
-  `;
-
-  const items = DRINKS.map(drink => {
-    const priceText = required ? "Inclus" : `+${formatEuro(OPTIONAL_DRINK_EXTRA)}`;
-    const subText = required ? "Choix obligatoire pour la box" : "Option supplémentaire payante";
-
-    return `
-      <label class="choice-item">
-        <input class="choice-input" type="radio" name="drinkChoice" value="${drink.id}" ${selected === drink.id ? "checked" : ""}>
-        <div class="choice-card">
-          <div class="choice-main">
-            <div class="choice-mark"></div>
-            <img class="choice-thumb" src="${drink.image}" alt="${escapeHtml(drink.name)}">
-            <div class="choice-text">
-              <div class="choice-name">${escapeHtml(drink.name)}</div>
-              <div class="choice-sub">${subText}</div>
-            </div>
-          </div>
-          <div class="choice-price">${priceText}</div>
-        </div>
-      </label>
-    `;
-  }).join("");
-
+function renderDrinkOptions(required = false, selected = {}) {
   return `
-    <div class="option-group">
+    <div class="option-group sauce-group">
       <div class="option-head">
-        <div class="option-title">Boisson</div>
-        <div class="option-badge">${required ? "Obligatoire" : "Option"}</div>
+        <div class="option-title">Boissons</div>
+        <div class="option-badge">${required ? "1 incluse" : "+1,50 €"}</div>
       </div>
+
       <p class="option-note">
         ${required
-      ? "Choisissez une seule boisson pour votre box."
-      : "Vous pouvez ajouter une boisson. Cette option augmente le prix."}
+      ? "1 boisson est incluse. Chaque boisson supplémentaire coûte +1,50 €."
+      : "Ajoutez la quantité souhaitée. Chaque boisson coûte +1,50 €."}
       </p>
-      <div class="choice-list">
-        ${noneOption}
-        ${items}
+
+      <div class="sauce-list">
+        ${DRINKS.map((drink) => `
+          <div class="sauce-row">
+            <div class="sauce-info">
+              <img class="choice-thumb" src="${drink.image}" alt="${escapeHtml(drink.name)}">
+
+              <div class="sauce-text">
+                <div class="sauce-name">${escapeHtml(drink.name)}</div>
+                <div class="sauce-sub">Ajoutez la quantité souhaitée</div>
+              </div>
+            </div>
+
+            <div class="qty-stepper">
+              <button type="button" class="qty-btn" onclick="changeDrinkQty('${drink.id}', -1)">−</button>
+
+              <span class="qty-value" id="drink-qty-${drink.id}">
+                ${selected[drink.id] || 0}
+              </span>
+
+              <button type="button" class="qty-btn qty-btn-plus" onclick="changeDrinkQty('${drink.id}', 1)">+</button>
+            </div>
+          </div>
+        `).join("")}
       </div>
     </div>
   `;
@@ -368,8 +351,8 @@ function renderDessertOptions(selectedDesserts = {}) {
 }
 
 const sauceQty = {};
-
 const dessertQty = {};
+const drinkQty = {};
 
 function changeDessertQty(id, delta) {
   if (!dessertQty[id]) dessertQty[id] = 0;
@@ -393,6 +376,19 @@ function changeSauceQty(id, delta) {
 
   const el = document.getElementById(`qty-${id}`);
   if (el) el.textContent = sauceQty[id];
+
+  updateModalState();
+}
+
+function changeDrinkQty(id, delta) {
+  if (!drinkQty[id]) drinkQty[id] = 0;
+
+  drinkQty[id] += delta;
+
+  if (drinkQty[id] < 0) drinkQty[id] = 0;
+
+  const el = document.getElementById(`drink-qty-${id}`);
+  if (el) el.textContent = drinkQty[id];
 
   updateModalState();
 }
@@ -488,9 +484,7 @@ function readConfigFromModal(id) {
   const config = getDefaultConfig(id);
 
   if (category === "single") {
-    const drinkEl = modal.querySelector('input[name="drinkChoice"]:checked');
-
-    config.drink = drinkEl ? drinkEl.value : "";
+    config.drink = { ...drinkQty };
     config.dessert = { ...dessertQty };
     config.sauces = { ...sauceQty };
 
@@ -498,9 +492,7 @@ function readConfigFromModal(id) {
   }
 
   if (category === "box") {
-    const drinkEl = modal.querySelector('input[name="drinkChoice"]:checked');
-
-    config.drink = drinkEl ? drinkEl.value : "";
+    config.drink = { ...drinkQty };
     config.dessert = { ...dessertQty };
     config.sauces = { ...sauceQty };
 
@@ -513,9 +505,16 @@ function getExtrasTotal(id, config) {
   const category = getDishCategory(id);
   let extras = 0;
 
-  if ((category === "single" || category === "box") && config.drink) {
+  if (config.drink) {
+    const totalDrinks = Object.values(config.drink).reduce((a, b) => a + b, 0);
+
+    if (category === "box") {
+      const extraDrinkCount = Math.max(totalDrinks - 1, 0);
+      extras += extraDrinkCount * OPTIONAL_DRINK_EXTRA;
+    }
+
     if (category === "single") {
-      extras += OPTIONAL_DRINK_EXTRA;
+      extras += totalDrinks * OPTIONAL_DRINK_EXTRA;
     }
   }
 
@@ -562,7 +561,11 @@ function isModalSelectionValid(id, config) {
       ? Object.values(config.dessert).reduce((a, b) => a + b, 0)
       : 0;
 
-    return Boolean(config.drink) && totalDesserts > 0 && totalSauces > 0;
+    const totalDrinks = config.drink
+      ? Object.values(config.drink).reduce((a, b) => a + b, 0)
+      : 0;
+
+    return totalDrinks > 0 && totalDesserts > 0 && totalSauces > 0;
   }
 
   return true;
@@ -674,15 +677,21 @@ function buildSelectionLabel(id, config) {
   const parts = [];
   const category = getDishCategory(id);
 
-  // 🥤 Drink
+  // 🥤 Drinks
   if (config.drink) {
-    const drink = getDrinkById(config.drink);
-    if (drink) {
-      parts.push(`🥤 Boisson: ${drink.name}`);
+    const drinks = Object.entries(config.drink)
+      .filter(([_, qty]) => qty > 0)
+      .map(([drinkId, qty]) => {
+        const d = getDrinkById(drinkId);
+        return `🥤 ${d?.name} ×${qty}`;
+      });
+
+    if (drinks.length) {
+      parts.push(`🥤 Boissons: ${drinks.join(", ")}`);
     }
   }
 
-  // 🍰 Dessert
+  // 🍰 Desserts
   if (config.dessert) {
     const desserts = Object.entries(config.dessert)
       .filter(([_, qty]) => qty > 0)
@@ -736,6 +745,11 @@ function buildSelectionLabel(id, config) {
 
 
 function buildCartKey(id, config) {
+  const drinks = Object.entries(config.drink || {})
+    .map(([drinkId, qty]) => `${drinkId}x${qty}`)
+    .sort()
+    .join("+") || "none";
+
   const sauces = Object.entries(config.sauces || {})
     .map(([sauceId, qty]) => `${sauceId}x${qty}`)
     .sort()
@@ -746,7 +760,7 @@ function buildCartKey(id, config) {
     .sort()
     .join("+") || "none";
 
-  return `${id}__drink:${config.drink || "none"}__dessert:${desserts}__sauces:${sauces}`;
+  return `${id}__drink:${drinks}__dessert:${desserts}__sauces:${sauces}`;
 }
 
 function cloneConfig(config) {
@@ -816,6 +830,7 @@ function openModal(id, triggerEl) {
   selectedDish = id;
   selectedConfig = getDefaultConfig(id);
   Object.keys(sauceQty).forEach((key) => delete sauceQty[key]);
+  Object.keys(drinkQty).forEach((key) => delete drinkQty[key]);
   Object.keys(dessertQty).forEach((key) => delete dessertQty[key]);
 
   hotspots.forEach(el => el.classList.remove("active"));
@@ -1650,14 +1665,26 @@ confirmOrderBtn.addEventListener("click", () => {
     const detailLines = [];
 
     if (config.drink) {
-      const drink = getDrinkById(config.drink);
-      if (drink) {
-        if (category === "single") {
-          detailLines.push(`   - 🥤 Boisson : ${drink.name} (+${formatEuro(OPTIONAL_DRINK_EXTRA)})`);
-        } else {
-          detailLines.push(`   - 🥤 Boisson incluse : ${drink.name}`);
-        }
-      }
+      let drinkCounter = 0;
+
+      Object.entries(config.drink)
+        .filter(([_, qty]) => qty > 0)
+        .forEach(([drinkId, qty]) => {
+          const drink = getDrinkById(drinkId);
+          if (!drink) return;
+
+          for (let i = 0; i < qty; i++) {
+            drinkCounter++;
+
+            if (category === "box" && drinkCounter === 1) {
+              detailLines.push(`   - 🥤 Boisson incluse : ${drink.name}`);
+            } else {
+              detailLines.push(
+                `   - 🥤 Boisson : ${drink.name} (+${formatEuro(OPTIONAL_DRINK_EXTRA)})`
+              );
+            }
+          }
+        });
     }
 
     if (config.dessert) {
