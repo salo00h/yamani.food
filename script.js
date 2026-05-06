@@ -1128,10 +1128,10 @@ function shouldShowMay8Announcement() {
 }
 
 function showMay8AnnouncementPopup() {
-  showInlineOrderStatusMessage("ℹ️ Information importante", [
-    "Nous serons fermés le 8 mai.",
-    "Les commandes ne seront pas disponibles ce jour-là.",
-    "Merci de choisir une autre date."
+  showInlineOrderStatusMessage("🔥 Vendredi complet", [
+    "Nous avons atteint le nombre maximum de commandes pour ce vendredi.",
+    "Merci énormément pour votre confiance 🙏",
+    "Yamani Food fonctionne à pleine capacité."
   ]);
 }
 
