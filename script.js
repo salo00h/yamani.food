@@ -1038,6 +1038,22 @@ function showRestaurantClosedPopup() {
   ]);
 }
 
+function shouldShowMay8Announcement() {
+  const today = getTodayLocalDateString();
+  const year = new Date().getFullYear();
+  const lastDay = `${year}-05-08`;
+
+  return today <= lastDay;
+}
+
+function showMay8AnnouncementPopup() {
+  showInlineOrderStatusMessage("ℹ️ Information importante", [
+    "Nous serons fermés le 8 mai.",
+    "Les commandes ne seront pas disponibles ce jour-là.",
+    "Merci de choisir une autre date."
+  ]);
+}
+
 
 let isPlanningMode = false;
 
@@ -1163,6 +1179,12 @@ function closeOrderStatusModal() {
 
 function checkOpeningOnLoad() {
   const orderHoursBox = orderStatusModal.querySelector(".option-group");
+
+  if (shouldShowMay8Announcement()) {
+    showMay8AnnouncementPopup();
+    hasShownOpeningStatusModal = true;
+    return;
+  }
 
   if (isCurrentTimeInOrderWindow()) return;
 
