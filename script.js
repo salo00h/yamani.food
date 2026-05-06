@@ -1389,7 +1389,15 @@ orderTypeInputs.forEach(input => {
 });
 
 dateCmd.addEventListener("change", () => {
-  document.querySelectorAll("#timeSlots .time-btn").forEach(btn => btn.classList.remove("active"));
+  document.querySelectorAll("#timeSlots .time-btn").forEach(btn => {
+    btn.classList.remove("active");
+
+    // إذا اختار تاريخ غير اليوم، تظهر كل الأوقات
+    if (dateCmd.value !== getTodayLocalDateString()) {
+      btn.style.display = "flex";
+    }
+  });
+
   updatePlanningVisibility();
 });
 whatsappBtn.addEventListener("click", openOrderStatusModal);
