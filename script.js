@@ -929,14 +929,38 @@ function renderCart() {
     const key = buildCartKey(entry.id, entry.config);
 
     return `
-      <div class="cart-item" style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
-        <span style="flex:1;">
+      <div class="cart-item" style="display:flex;align-items:center;justify-content:space-between;gap:10px;">
+        
+        <span style="
+          flex:1;
+          display:block;
+          font-size:15px;
+          line-height:1.5;
+          font-weight:700;
+          color:#ffffff;
+        ">
           ${item.name}
           ${summary ? ` — ${summary}` : ""}
-          × ${entry.qty}
+
+          <span style="
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            min-width:32px;
+            padding:4px 10px;
+            margin-left:8px;
+            border-radius:999px;
+            background:rgba(255,214,95,.22);
+            color:#FFD65F;
+            font-size:16px;
+            font-weight:900;
+          ">
+            × ${entry.qty}
+          </span>
         </span>
 
         <div style="display:flex;align-items:center;gap:6px;">
+          
           <button
             onclick="decreaseCartItem('${key}')"
             aria-label="Diminuer"
@@ -992,6 +1016,7 @@ function renderCart() {
           >
             🗑️
           </button>
+
         </div>
       </div>
     `;
