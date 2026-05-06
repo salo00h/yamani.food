@@ -26,19 +26,19 @@ const DISHES = {
   "daqoos": {
     name: "Basbas",
     price: "1,00 €",
-    description: "Sauce yéménite relevée à base de tomate et de piment, parfaite pour donner plus de caractère au plat.",
+    description: "Sauce au piment vert, citron, sésame et fromage, fraîche, relevée et pleine de caractère.",
     category: "sauce-single"
   },
   "labneh": {
     name: "Tahina",
     price: "1,00 €",
-    description: "Crème onctueuse au yaourt, douce et fraîche, idéale pour une touche légère et équilibrée.",
+    description: "Sauce onctueuse à base de tahina, yaourt, huile d’olive, menthe, ail, vinaigre, poivre noir et sel.",
     category: "sauce-single"
   },
   "sahawiq": {
     name: "Sahawiq",
     price: "1,00 €",
-    description: "Sauce verte épicée aux herbes fraîches, à l’ail et au piment, intense et pleine de fraîcheur.",
+    description: "Sauce épicée à base de tomates, piment vert, ail, sel et fromage, au goût intense et savoureux.",
     category: "sauce-single"
   }
 };
@@ -74,7 +74,11 @@ const DRINKS = [
 ];
 
 const DESSERTS = [
-  { id: "basbousa", name: "Basbousa" }
+  {
+    id: "basbousa",
+    name: "Basbousa",
+    description: "Gâteau oriental traditionnel préparé avec crème, œufs, sucre, noix de coco, semoule, huile et lait concentré, à la texture fondante et généreuse."
+  }
 ];
 
 const SAUCES = [
