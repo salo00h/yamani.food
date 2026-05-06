@@ -1130,10 +1130,13 @@ function shouldShowMay8Announcement() {
 }
 
 function showMay8AnnouncementPopup() {
-  showInlineOrderStatusMessage("🔥 Vendredi complet", [
-    "Nous avons atteint le nombre maximum de commandes pour ce vendredi.",
-    "Merci énormément pour votre confiance 🙏",
-    "Yamani Food fonctionne à pleine capacité."
+  showInlineOrderStatusMessage("🔥 Vendredi 8 mai complet", [
+    "Nous sommes officiellement complets pour ce vendredi 8 mai.",
+    "Grâce à votre incroyable confiance, toutes nos capacités de production ont été atteintes.",
+    "🙏 Un immense merci pour votre fidélité et votre soutien exceptionnel.",
+    "Toute l’équipe Yamani Food fonctionne à pleine capacité pour vous offrir la meilleure expérience possible.",
+    "💛 Votre enthousiasme dépasse nos attentes.",
+    "📅 Pensez à planifier votre prochaine commande dès maintenant afin de garantir votre place."
   ]);
 
   planLaterBtn.style.display = "block";
