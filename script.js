@@ -1247,10 +1247,6 @@ function showInlineOrderStatusMessage(title, lines = []) {
 
 function openOrderStatusModal() {
   const entries = Object.values(cart);
-  if (isRestaurantClosed()) {
-    showRestaurantClosedPopup();
-    return;
-  }
 
   if (!entries.length) {
     showInlineOrderStatusMessage("🛒 Votre panier est vide", [
@@ -1261,20 +1257,29 @@ function openOrderStatusModal() {
     return;
   }
 
+  if (isRestaurantClosed()) {
+    showInlineOrderStatusMessage("🚫 Jeudi 7 et vendredi 8 mai complets", [
+      "Nous sommes complets jeudi 7 et vendredi 8 mai.",
+      "🙏 Merci infiniment pour votre confiance.",
+      "📅 Vous pouvez planifier votre commande pour samedi 9 mai ou une autre date."
+    ]);
+
+    planLaterBtn.style.display = "block";
+    planLaterBtn.textContent = "📅 Planifier une commande";
+    planLaterBtn.dataset.action = "plan";
+    return;
+  }
+
   if (hasShownOpeningStatusModal) {
     openCheckoutModal(false);
     return;
   }
 
   const orderHoursBox = orderStatusModal.querySelector(".option-group");
-
-  if (orderHoursBox) {
-    orderHoursBox.style.display = "block";
-  }
+  if (orderHoursBox) orderHoursBox.style.display = "block";
 
   if (isCurrentTimeInOrderWindow()) {
     orderStatusTitle.textContent = "✅ Commandes ouvertes";
-
     orderStatusText.innerHTML = `
 <div>Vous pouvez commander maintenant.</div>
 <br>
@@ -1284,11 +1289,8 @@ function openOrderStatusModal() {
     `;
 
     continueNowBtn.style.display = "block";
-    planLaterBtn.textContent = "📅 Planifier une commande";
-    planLaterBtn.dataset.action = "plan";
   } else {
     orderStatusTitle.textContent = "⏰ Commandes fermées pour le moment";
-
     orderStatusText.innerHTML = `
 <div>Nous ne prenons pas</div>
 <div>de commandes maintenant.</div>
@@ -1302,9 +1304,11 @@ function openOrderStatusModal() {
     `;
 
     continueNowBtn.style.display = "none";
-    planLaterBtn.textContent = "📅 Planifier une commande";
-    planLaterBtn.dataset.action = "plan";
   }
+
+  planLaterBtn.style.display = "block";
+  planLaterBtn.textContent = "📅 Planifier une commande";
+  planLaterBtn.dataset.action = "plan";
 
   orderStatusModal.classList.add("open");
   orderStatusModal.setAttribute("aria-hidden", "false");
@@ -1345,16 +1349,13 @@ function openCheckoutModal(prefillTomorrow = false) {
   const currentHour = now.getHours() + (now.getMinutes() / 60);
 
   const today = getTodayLocalDateString();
-  if (isRestaurantClosed(today)) {
-    showRestaurantClosedPopup();
-    return;
-  }
   const tomorrow = getTomorrowLocalDateString();
 
-  // ✅ حالة خاصة بين 11h و12h
-  const specialMiddayPlanning = currentHour >= 11 && currentHour < 12;
-
-  if (currentHour >= 0 && currentHour < 7) {
+  if (isRestaurantClosed(today)) {
+    isPlanningMode = true;
+    dateCmd.min = "2026-05-09";
+    dateCmd.value = "2026-05-09";
+  } else if (currentHour >= 0 && currentHour < 7) {
     isPlanningMode = true;
     dateCmd.min = today;
     dateCmd.value = today;
@@ -1376,38 +1377,7 @@ function openCheckoutModal(prefillTomorrow = false) {
 
   document.querySelectorAll(".time-btn").forEach(btn => {
     btn.classList.remove("active");
-
-    const label = btn.textContent.trim();
-    const selectedDate = dateCmd.value || today;
-
-    // ✅ إذا التاريخ اليوم
-    if (selectedDate === today) {
-
-      // بين 11 و17 -> فقط المساء
-      if (currentHour >= 11 && currentHour < 17) {
-        if (label.includes("19h") || label.includes("20h") || label.includes("21h")) {
-          btn.style.display = "flex";
-        } else {
-          btn.style.display = "none";
-        }
-      }
-
-      // بعد 17 -> بكرا فقط
-      else if (currentHour >= 17) {
-        btn.style.display = "flex";
-      }
-
-      // قبل 11 -> كل الأوقات
-      else {
-        btn.style.display = "flex";
-      }
-
-    }
-
-    // ✅ إذا التاريخ غداً أو أي يوم آخر
-    else {
-      btn.style.display = "flex";
-    }
+    btn.style.display = "flex";
   });
 
   checkoutAlert.textContent = "";
