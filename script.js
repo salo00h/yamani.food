@@ -1388,6 +1388,7 @@ function openCheckoutModal(prefillTomorrow = false) {
   checkoutAlert.classList.remove("show");
 
   updatePlanningVisibility();
+  updateTimeSlotsByOrderType();
 
   checkoutModal.classList.add("open");
   checkoutModal.setAttribute("aria-hidden", "false");
@@ -1475,18 +1476,36 @@ function isDeliveryTimeValid(time) {
   return (t >= 13 && t <= 14) || (t >= 19 && t <= 22);
 }
 
+function updateTimeSlotsByOrderType() {
+  const orderType = document.querySelector('input[name="orderType"]:checked')?.value || "pickup";
+
+  document.querySelectorAll(".time-btn").forEach(btn => {
+    const text = btn.textContent.trim();
+
+    if (orderType === "delivery" && text.includes("19") && text.includes("20")) {
+      btn.style.display = "none";
+
+      if (btn.classList.contains("active")) {
+        btn.classList.remove("active");
+      }
+    } else {
+      btn.style.display = "flex";
+    }
+  });
+}
+
 orderTypeInputs.forEach(input => {
   input.addEventListener("change", () => {
 
+    updateTimeSlotsByOrderType();
+
     if (input.value === "delivery" && input.checked) {
       deliveryFields.style.display = "block";
-
-      showDeliveryInfoPopup(); // يظهر المعلومات
+      showDeliveryInfoPopup();
 
     } else if (input.checked) {
       deliveryFields.style.display = "none";
 
-      // 🔥 إخفاء الرسالة عند الرجوع لـ À emporter
       checkoutAlert.classList.remove("show");
       checkoutAlert.innerHTML = "";
     }
@@ -1498,13 +1517,13 @@ dateCmd.addEventListener("change", () => {
   document.querySelectorAll("#timeSlots .time-btn").forEach(btn => {
     btn.classList.remove("active");
 
-    // إذا اختار تاريخ غير اليوم، تظهر كل الأوقات
     if (dateCmd.value !== getTodayLocalDateString()) {
       btn.style.display = "flex";
     }
   });
 
   updatePlanningVisibility();
+  updateTimeSlotsByOrderType();
 });
 whatsappBtn.addEventListener("click", openOrderStatusModal);
 closeCheckoutBtn.addEventListener("click", closeCheckoutModal);
@@ -1779,7 +1798,7 @@ function showDeliveryInfoPopup() {
   checkoutAlert.innerHTML =
     "🚚 <b>Livraison à domicile</b> • 💶 2,00 €<br>" +
     "📍 Lyon 2, 3, 6, 7, 8 + Villeurbanne + Bron<br>" +
-    "⏰ 13h–14h / 19h–22h";
+    "⏰ 13h–14h / 20h–22h";
 
   checkoutAlert.classList.add("show");
 
