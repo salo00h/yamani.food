@@ -1128,12 +1128,16 @@ function getTomorrowLocalDateString() {
 
 function isRestaurantClosed(selectedDate = null) {
   const targetDate = selectedDate || getTodayLocalDateString();
-  return targetDate.endsWith("-05-07") || targetDate.endsWith("-05-08");
+  return (
+    targetDate.endsWith("-05-11") ||
+    targetDate.endsWith("-05-12") ||
+    targetDate.endsWith("-05-13")
+  );
 }
 
 function showRestaurantClosedPopup() {
-  showInlineOrderStatusMessage("🚫 Jeudi 7 et vendredi 8 mai complets", [
-    "Nous sommes complets jeudi 7 et vendredi 8 mai.",
+  showInlineOrderStatusMessage("🚫 11, 12 et 13 mai complets", [
+    "Nous sommes complets les 11, 12 et 13 mai.",
     "🙏 Merci infiniment pour votre confiance.",
     "Veuillez choisir une autre date pour votre commande."
   ]);
@@ -1142,14 +1146,14 @@ function showRestaurantClosedPopup() {
 function shouldShowMay8Announcement() {
   const today = getTodayLocalDateString();
   const year = new Date().getFullYear();
-  const may8 = `${year}-05-08`;
+  const limitDate = `${year}-05-13`;
 
-  return today <= may8;
+  return today <= limitDate;
 }
 
 function showMay8AnnouncementPopup() {
-  showInlineOrderStatusMessage("🔥 Jeudi 7 et vendredi 8 mai complets", [
-    "Nous sommes complets jeudi 7 et vendredi 8 mai.",
+  showInlineOrderStatusMessage("🔥 11, 12 et 13 mai complets", [
+    "Nous sommes complets les 11, 12 et 13 mai.",
     "🙏 Merci infiniment pour votre confiance et votre fidélité.",
     "Yamani Food fonctionne à pleine capacité.",
     "📅 Pensez à planifier votre prochaine commande dès maintenant."
@@ -1258,10 +1262,10 @@ function openOrderStatusModal() {
   }
 
   if (isRestaurantClosed()) {
-    showInlineOrderStatusMessage("🚫 Jeudi 7 et vendredi 8 mai complets", [
-      "Nous sommes complets jeudi 7 et vendredi 8 mai.",
+    showInlineOrderStatusMessage("🚫 11, 12 et 13 mai complets", [
+      "Nous sommes complets les 11, 12 et 13 mai.",
       "🙏 Merci infiniment pour votre confiance.",
-      "📅 Vous pouvez planifier votre commande pour samedi 9 mai ou une autre date."
+      "📅 Vous pouvez planifier votre commande à partir du 14 mai ou une autre date."
     ]);
 
     planLaterBtn.style.display = "block";
@@ -1353,8 +1357,8 @@ function openCheckoutModal(prefillTomorrow = false) {
 
   if (isRestaurantClosed(today)) {
     isPlanningMode = true;
-    dateCmd.min = "2026-05-09";
-    dateCmd.value = "2026-05-09";
+    dateCmd.min = "2026-05-14";
+    dateCmd.value = "2026-05-14";
   } else if (currentHour >= 0 && currentHour < 7) {
     isPlanningMode = true;
     dateCmd.min = today;
