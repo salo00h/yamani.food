@@ -1,5 +1,13 @@
-﻿تم إنشاء نظام جديد لرسائل التحديث.
+﻿تم تحسين نظام أوقات الطلبات وتصحيح جميع الساعات حسب آلية العمل المطلوبة.
 
-الآن يمكن كتابة تفاصيل العمل داخل ملف update-message.txt، وسيتم إرسال محتوى هذا الملف تلقائيًا في الإيميل عند الرفع إلى GitHub.
+أصبح النظام الآن أكثر دقة في إدارة أوقات نفس اليوم، مع إخفاء الفترات غير المتاحة تلقائيًا حسب الساعة.
 
-Cela permet d'envoyer un message clair aux responsables du projet avec les détails de la mise à jour, sans écrire un long message dans le commit.
+تم أيضًا إنشاء ملف إعدادات منفصل للتحكم السريع في إغلاق المطعم أو فتحه بسهولة دون الحاجة لتعديل الكود الأساسي.
+
+بالإضافة إلى ذلك، تم تفعيل نظام الإيميلات الاحترافي لإرسال تقارير التحديثات المهمة تلقائيًا إلى أصحاب المشروع.
+
+Le systeme des horaires a ete corrige et optimise selon les besoins du restaurant.
+
+Un fichier de configuration independant a ete ajoute pour gerer facilement les fermetures et ouvertures du restaurant.
+
+Le systeme professionnel de notifications par email est egalement actif afin d'informer automatiquement les responsables des mises a jour importantes.
