@@ -8,6 +8,7 @@ on:
 
 jobs:
   send-email:
+    if: contains(github.event.head_commit.message, '[notify]')
     runs-on: ubuntu-latest
 
     steps:
@@ -19,19 +20,27 @@ jobs:
           secure: true
           username: Saleh738297@gmail.com
           password: "hqbmxvldijbjhybh"
-          subject: "Mise a jour du site Yamani Food"
+          subject: "🚀 Nouvelle mise a jour - Yamani Food"
           to: "aaalkhulagi@gmail.com,a774264429@gmail.com"
           from: "Yamani Food Updates <Saleh738297@gmail.com>"
           body: |
-            Bonjour,
+            Bonjour 👋
 
-            Une nouvelle mise a jour a ete envoyee sur le site Yamani Food.
+            🚀 Une nouvelle mise a jour importante a ete appliquee sur le site Yamani Food.
 
-            Auteur : ${{ github.actor }}
-            Branche : ${{ github.ref_name }}
-            Message : ${{ github.event.head_commit.message }}
+            📌 Travail realise :
+            ${{ github.event.head_commit.message }}
 
-            Ceci est une notification automatique.
+            📊 Informations du projet :
+            • Projet : Yamani Food
+            • Branche : ${{ github.ref_name }}
+            • Developpeur : ${{ github.actor }}
 
-            Cordialement,
-            Yamani Food
+            🎯 Objectif :
+            Le site continue d’evoluer avec des ameliorations, corrections et optimisations regulieres afin d’ameliorer l’experience client, la stabilite et les performances.
+
+            🔔 Notification envoyee uniquement pour les mises a jour importantes.
+
+            Merci pour votre confiance 🙏
+
+            — Yamani Food
