@@ -1,0 +1,37 @@
+name: Notify owners by email on push
+
+on:
+  push:
+    branches:
+      - main
+      - saleh
+
+jobs:
+  send-email:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send email notification
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "Mise à jour du site Yamani Food"
+          to: "aaalkhulagi@gmail.com,a774264429@gmail.com"
+          from: "Yamani Food Updates <${{ secrets.EMAIL_USERNAME }}>"
+          body: |
+            Bonjour,
+
+            Une nouvelle mise à jour a été envoyée sur le site Yamani Food.
+
+            Auteur : ${{ github.actor }}
+            Branche : ${{ github.ref_name }}
+            Message : ${{ github.event.head_commit.message }}
+
+            Ceci est une notification automatique.
+
+            Cordialement,
+            Yamani Food
