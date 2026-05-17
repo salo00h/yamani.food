@@ -8,10 +8,12 @@ on:
 
 jobs:
   send-email:
-    if: contains(github.event.head_commit.message, '[notify]')
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout files
+        uses: actions/checkout@v4
+
       - name: Read update message
         id: update_message
         shell: bash
@@ -23,7 +25,9 @@ jobs:
           else
             echo "message=Aucun message detaille fourni." >> $GITHUB_OUTPUT
           fi
+
       - name: Send email notification
+        if: contains(github.event.head_commit.message, '[notify]')
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
@@ -31,31 +35,25 @@ jobs:
           secure: true
           username: Saleh738297@gmail.com
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "ðŸš€ Nouvelle mise a jour - Yamani Food"
+          subject: "🚀 Nouvelle mise a jour - Yamani Food"
           to: "aaalkhulagi@gmail.com,a774264429@gmail.com"
           from: "Yamani Food Updates <Saleh738297@gmail.com>"
           body: |
-            Bonjour ðŸ‘‹
+            Bonjour 👋
 
-            ðŸš€ Une nouvelle mise a jour importante a ete appliquee sur le site Yamani Food.
+            🚀 Une nouvelle mise a jour importante a ete appliquee sur le site Yamani Food.
 
-            ðŸ“Œ Travail realise :
+            📌 Titre :
             ${{ github.event.head_commit.message }}
 
-📝 Details de la mise a jour :
-${{ steps.update_message.outputs.message }}
+            📝 Details de la mise a jour :
+            ${{ steps.update_message.outputs.message }}
 
-            ðŸ“Š Informations du projet :
-            â€¢ Projet : Yamani Food
-            â€¢ Branche : ${{ github.ref_name }}
-            â€¢ Developpeur : ${{ github.actor }}
+            📊 Informations du projet :
+            • Projet : Yamani Food
+            • Branche : ${{ github.ref_name }}
+            • Developpeur : ${{ github.actor }}
 
-            ðŸŽ¯ Objectif :
-            Le site continue dâ€™evoluer avec des ameliorations, corrections et optimisations regulieres afin dâ€™ameliorer lâ€™experience client, la stabilite et les performances.
+            Merci pour votre confiance 🙏
 
-            ðŸ”” Notification envoyee uniquement pour les mises a jour importantes.
-
-            Merci pour votre confiance ðŸ™
-
-            â€” Yamani Food
-
+            — Yamani Food
