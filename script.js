@@ -1478,18 +1478,30 @@ function isDeliveryTimeValid(time) {
 
 function updateTimeSlotsByOrderType() {
   const orderType = document.querySelector('input[name="orderType"]:checked')?.value || "pickup";
+  const today = getTodayLocalDateString();
+  const now = new Date();
+  const currentHour = now.getHours() + (now.getMinutes() / 60);
+
+  const selectedDate = isPlanningMode ? dateCmd.value : today;
+  const isToday = selectedDate === today;
 
   document.querySelectorAll(".time-btn").forEach(btn => {
     const text = btn.textContent.trim();
 
-    if (orderType === "delivery" && text.includes("19") && text.includes("20")) {
-      btn.style.display = "none";
+    btn.style.display = "flex";
 
-      if (btn.classList.contains("active")) {
+    // ✅ إذا الطلب لنفس اليوم بعد 11:00، اخفِ 13h → 14h
+    if (isToday && currentHour >= 11) {
+      if (text.includes("13") && text.includes("14")) {
+        btn.style.display = "none";
         btn.classList.remove("active");
       }
-    } else {
-      btn.style.display = "flex";
+    }
+
+    // ✅ إذا توصيل، اخفِ 19h → 20h فقط إذا موجود كزر مستقل
+    if (orderType === "delivery" && text.includes("19") && text.includes("20")) {
+      btn.style.display = "none";
+      btn.classList.remove("active");
     }
   });
 }
@@ -1516,10 +1528,6 @@ orderTypeInputs.forEach(input => {
 dateCmd.addEventListener("change", () => {
   document.querySelectorAll("#timeSlots .time-btn").forEach(btn => {
     btn.classList.remove("active");
-
-    if (dateCmd.value !== getTodayLocalDateString()) {
-      btn.style.display = "flex";
-    }
   });
 
   updatePlanningVisibility();
