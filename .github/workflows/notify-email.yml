@@ -17,15 +17,15 @@ jobs:
           server_address: smtp.gmail.com
           server_port: 465
           secure: true
-          username: ${{ secrets.EMAIL_USERNAME }}
-          password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "Mise à jour du site Yamani Food"
+          username: Saleh738297@gmail.com
+          password: "hqbmxvldijbjhybh"
+          subject: "Mise a jour du site Yamani Food"
           to: "aaalkhulagi@gmail.com,a774264429@gmail.com"
-          from: "Yamani Food Updates <${{ secrets.EMAIL_USERNAME }}>"
+          from: "Yamani Food Updates <Saleh738297@gmail.com>"
           body: |
             Bonjour,
 
-            Une nouvelle mise à jour a été envoyée sur le site Yamani Food.
+            Une nouvelle mise a jour a ete envoyee sur le site Yamani Food.
 
             Auteur : ${{ github.actor }}
             Branche : ${{ github.ref_name }}
