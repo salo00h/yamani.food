@@ -35,25 +35,24 @@ jobs:
           secure: true
           username: Saleh738297@gmail.com
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "🚀 Nouvelle mise a jour - Yamani Food"
+          subject: "Correction importante - Yamani Food"
           to: "aaalkhulagi@gmail.com,a774264429@gmail.com"
           from: "Yamani Food Updates <Saleh738297@gmail.com>"
           body: |
-            Bonjour 👋
+            Bonjour,
 
-            🚀 Une nouvelle mise a jour importante a ete appliquee sur le site Yamani Food.
+            Une correction importante a ete appliquee sur le site Yamani Food.
 
-            📌 Titre :
+            Titre :
             ${{ github.event.head_commit.message }}
 
-            📝 Details de la mise a jour :
+            Details :
             ${{ steps.update_message.outputs.message }}
 
-            📊 Informations du projet :
-            • Projet : Yamani Food
-            • Branche : ${{ github.ref_name }}
-            • Developpeur : ${{ github.actor }}
+            Projet : Yamani Food
+            Branche : ${{ github.ref_name }}
+            Developpeur : ${{ github.actor }}
 
-            Merci pour votre confiance 🙏
+            Merci pour votre confiance.
 
-            — Yamani Food
+            Yamani Food

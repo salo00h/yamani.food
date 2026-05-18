@@ -1,11 +1,21 @@
-تم إصلاح مشكلة الأحرف الغريبة التي ظهرت في الموقع بسبب حفظ الملفات بترميز غير صحيح.
+﻿تم إصلاح مشكلة الأحرف الغريبة التي ظهرت في الموقع.
 
-تمت استعادة ملفات index.html و script.js من نسخة سليمة، ثم إعادة ربط ملف إعدادات المطعم restaurant-settings.js بطريقة آمنة.
+كانت المشكلة بسبب حفظ بعض الملفات بترميز غير صحيح، مما تسبب في ظهور الرموز والنصوص الفرنسية والعربية بشكل غير مفهوم.
 
-تم الحفاظ على نظام إدارة إغلاق المطعم من ملف منفصل، مع إصلاح عرض النصوص والرموز والأسعار بشكل صحيح.
+تمت استعادة الملفات الأساسية بنسخة سليمة، وإعادة ربط ملف إعدادات المطعم بشكل آمن.
 
-Le probleme d'encodage des caracteres a ete corrige.
+النظام الآن يحافظ على:
+- عرض النصوص العربية والفرنسية بشكل صحيح
+- عرض الأسعار والرموز بشكل طبيعي
+- استمرار نظام التحكم في إغلاق وفتح المطعم من ملف مستقل
 
-Les fichiers principaux ont ete restaures depuis une version propre, puis le fichier restaurant-settings.js a ete reconnecte correctement.
+Le probleme des caracteres incorrects a ete corrige.
 
-Le systeme de gestion des fermetures reste actif avec un affichage propre des textes, prix et symboles.
+La cause venait d'un mauvais encodage de certains fichiers, ce qui affichait les textes arabes, francais et les symboles de maniere incorrecte.
+
+Les fichiers principaux ont ete restaures proprement et le fichier de configuration du restaurant reste actif.
+
+Le site conserve maintenant:
+- un affichage correct des textes arabes et francais
+- un affichage correct des prix et symboles
+- le systeme de gestion des fermetures depuis un fichier separe
