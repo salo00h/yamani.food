@@ -1,13 +1,11 @@
-﻿تم تحسين نظام أوقات الطلبات وتصحيح جميع الساعات حسب آلية العمل المطلوبة.
+تم إصلاح مشكلة الأحرف الغريبة التي ظهرت في الموقع بسبب حفظ الملفات بترميز غير صحيح.
 
-أصبح النظام الآن أكثر دقة في إدارة أوقات نفس اليوم، مع إخفاء الفترات غير المتاحة تلقائيًا حسب الساعة.
+تمت استعادة ملفات index.html و script.js من نسخة سليمة، ثم إعادة ربط ملف إعدادات المطعم restaurant-settings.js بطريقة آمنة.
 
-تم أيضًا إنشاء ملف إعدادات منفصل للتحكم السريع في إغلاق المطعم أو فتحه بسهولة دون الحاجة لتعديل الكود الأساسي.
+تم الحفاظ على نظام إدارة إغلاق المطعم من ملف منفصل، مع إصلاح عرض النصوص والرموز والأسعار بشكل صحيح.
 
-بالإضافة إلى ذلك، تم تفعيل نظام الإيميلات الاحترافي لإرسال تقارير التحديثات المهمة تلقائيًا إلى أصحاب المشروع.
+Le probleme d'encodage des caracteres a ete corrige.
 
-Le systeme des horaires a ete corrige et optimise selon les besoins du restaurant.
+Les fichiers principaux ont ete restaures depuis une version propre, puis le fichier restaurant-settings.js a ete reconnecte correctement.
 
-Un fichier de configuration independant a ete ajoute pour gerer facilement les fermetures et ouvertures du restaurant.
-
-Le systeme professionnel de notifications par email est egalement actif afin d'informer automatiquement les responsables des mises a jour importantes.
+Le systeme de gestion des fermetures reste actif avec un affichage propre des textes, prix et symboles.

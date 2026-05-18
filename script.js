@@ -1,51 +1,51 @@
-﻿const DISHES = {
+const DISHES = {
   "zerbian-simple": {
     name: "Zerbian Simple",
-    price: "4,99 â‚¬",
-    description: "Riz zerbian parfumÃ© avec des morceaux de poulet tendres, dans un format simple, savoureux et gÃ©nÃ©reux.",
+    price: "4,99 €",
+    description: "Riz zerbian parfumé avec des morceaux de poulet tendres, dans un format simple, savoureux et généreux.",
     category: "single"
   },
   "zerbian-max": {
     name: "Zerbian Max",
-    price: "6,99 â‚¬",
+    price: "6,99 €",
     description: "Une portion plus copieuse de zerbian avec davantage de poulet et une saveur encore plus intense.",
     category: "single"
   },
   "box-simple": {
     name: "Box Simple",
-    price: "7,99 â‚¬",
-    description: "Une formule complÃ¨te avec zerbian, boisson et dessert, idÃ©ale pour un repas gourmand et Ã©quilibrÃ©.",
+    price: "7,99 €",
+    description: "Une formule complète avec zerbian, boisson et dessert, idéale pour un repas gourmand et équilibré.",
     category: "box"
   },
   "box-max": {
     name: "Box Max",
-    price: "9,99 â‚¬",
-    description: "La formule la plus gÃ©nÃ©reuse avec zerbian, boisson et dessert, parfaite pour les grandes faims.",
+    price: "9,99 €",
+    description: "La formule la plus généreuse avec zerbian, boisson et dessert, parfaite pour les grandes faims.",
     category: "box"
   },
   "daqoos": {
     name: "Basbas",
-    price: "1,00 â‚¬",
-    description: "Sauce au piment vert, citron, sÃ©same et fromage, fraÃ®che, relevÃ©e et pleine de caractÃ¨re.",
+    price: "1,00 €",
+    description: "Sauce au piment vert, citron, sésame et fromage, fraîche, relevée et pleine de caractère.",
     category: "sauce-single"
   },
   "labneh": {
     name: "Tahina",
-    price: "1,00 â‚¬",
-    description: "Sauce onctueuse Ã  base de tahina, yaourt, huile dâ€™olive, menthe, ail, vinaigre, poivre noir et sel.",
+    price: "1,00 €",
+    description: "Sauce onctueuse à base de tahina, yaourt, huile d’olive, menthe, ail, vinaigre, poivre noir et sel.",
     category: "sauce-single"
   },
   "sahawiq": {
     name: "Sahawiq",
-    price: "1,00 â‚¬",
-    description: "Sauce Ã©picÃ©e Ã  base de tomates, piment vert, ail, sel et fromage, au goÃ»t intense et savoureux.",
+    price: "1,00 €",
+    description: "Sauce épicée à base de tomates, piment vert, ail, sel et fromage, au goût intense et savoureux.",
     category: "sauce-single"
   }
 };
 
-const OPTIONAL_DRINK_EXTRA = 1.50; // Ø³Ø¹Ø± Ø§Ù„Ù…Ø´Ø±ÙˆØ¨ Ù„Ù„Ø³Ø§Ù…Ø¨Ù„ ÙˆØ§Ù„Ù…Ø§ÙƒØ³ÙŠ
-const EXTRA_SAUCE_PRICE = 0.50;    // ÙƒÙ„ ØµÙˆØµ Ø¥Ø¶Ø§ÙÙŠ Ø¨Ø¹Ø¯ Ø£ÙˆÙ„ ÙˆØ§Ø­Ø¯
-const EXTRA_DESSERT_PRICE = 2.00;  // Ø£ÙˆÙ„ Ø­Ù„Ø§ Ù…Ø¬Ø§Ù†ÙŠ Ø«Ù… ÙƒÙ„ Ù‚Ø·Ø¹Ø© Ø¥Ø¶Ø§ÙÙŠØ© 1â‚¬
+const OPTIONAL_DRINK_EXTRA = 1.50; // سعر المشروب للسامبل والماكسي
+const EXTRA_SAUCE_PRICE = 0.50;    // كل صوص إضافي بعد أول واحد
+const EXTRA_DESSERT_PRICE = 2.00;  // أول حلا مجاني ثم كل قطعة إضافية 1€
 const DELIVERY_PRICE = 2.00;
 
 function makeSvgDataUri(svg) {
@@ -77,7 +77,7 @@ const DESSERTS = [
   {
     id: "basbousa",
     name: "Basbousa",
-    description: "GÃ¢teau oriental traditionnel prÃ©parÃ© avec crÃ¨me, Å“ufs, sucre, noix de coco, semoule, huile et lait concentrÃ©, Ã  la texture fondante et gÃ©nÃ©reuse."
+    description: "Gâteau oriental traditionnel préparé avec crème, œufs, sucre, noix de coco, semoule, huile et lait concentré, à la texture fondante et généreuse."
   }
 ];
 
@@ -194,7 +194,7 @@ function parseEuro(value) {
 }
 
 function formatEuro(value) {
-  return `${value.toFixed(2).replace(".", ",")} â‚¬`;
+  return `${value.toFixed(2).replace(".", ",")} €`;
 }
 
 function escapeHtml(str) {
@@ -254,13 +254,13 @@ function renderDrinkOptions(required = false, selected = {}) {
     <div class="option-group sauce-group">
       <div class="option-head">
         <div class="option-title">Boissons</div>
-        <div class="option-badge">${required ? "1 incluse" : "+1,50 â‚¬"}</div>
+        <div class="option-badge">${required ? "1 incluse" : "+1,50 €"}</div>
       </div>
 
       <p class="option-note">
         ${required
-      ? "1 boisson est incluse. Chaque boisson supplÃ©mentaire coÃ»te +1,50 â‚¬."
-      : "Ajoutez la quantitÃ© souhaitÃ©e. Chaque boisson coÃ»te +1,50 â‚¬."}
+      ? "1 boisson est incluse. Chaque boisson supplémentaire coûte +1,50 €."
+      : "Ajoutez la quantité souhaitée. Chaque boisson coûte +1,50 €."}
       </p>
 
       <div class="sauce-list">
@@ -271,12 +271,12 @@ function renderDrinkOptions(required = false, selected = {}) {
 
               <div class="sauce-text">
                 <div class="sauce-name">${escapeHtml(drink.name)}</div>
-                <div class="sauce-sub">Ajoutez la quantitÃ© souhaitÃ©e</div>
+                <div class="sauce-sub">Ajoutez la quantité souhaitée</div>
               </div>
             </div>
 
             <div class="qty-stepper">
-              <button type="button" class="qty-btn" onclick="changeDrinkQty('${drink.id}', -1)">âˆ’</button>
+              <button type="button" class="qty-btn" onclick="changeDrinkQty('${drink.id}', -1)">−</button>
 
               <span class="qty-value" id="drink-qty-${drink.id}">
                 ${selected[drink.id] || 0}
@@ -293,10 +293,10 @@ function renderDrinkOptions(required = false, selected = {}) {
 
 function renderDessertOptions(selectedDesserts = {}) {
   const isBox = getDishCategory(selectedDish) === "box";
-  const dessertBadge = isBox ? "1 inclus" : "+2,00 â‚¬";
+  const dessertBadge = isBox ? "1 inclus" : "+2,00 €";
   const dessertNote = isBox
-    ? "1 dessert inclus. Chaque dessert supplÃ©mentaire coÃ»te +2,00 â‚¬."
-    : "Chaque dessert coÃ»te +2,00 â‚¬.";
+    ? "1 dessert inclus. Chaque dessert supplémentaire coûte +2,00 €."
+    : "Chaque dessert coûte +2,00 €.";
 
   return `
     <div class="option-group sauce-group">
@@ -313,11 +313,11 @@ function renderDessertOptions(selectedDesserts = {}) {
         ${DESSERTS.map((dessert) => `
           <div class="sauce-row">
             <div class="sauce-info">
-              <div class="sauce-icon">ðŸ°</div>
+              <div class="sauce-icon">🍰</div>
 
               <div class="sauce-text">
                 <div class="sauce-name">${escapeHtml(dessert.name)}</div>
-                <div class="sauce-sub">Ajoutez la quantitÃ© souhaitÃ©e</div>
+                <div class="sauce-sub">Ajoutez la quantité souhaitée</div>
               </div>
             </div>
 
@@ -328,7 +328,7 @@ function renderDessertOptions(selectedDesserts = {}) {
                 onclick="changeDessertQty('${dessert.id}', -1)"
                 aria-label="Diminuer ${escapeHtml(dessert.name)}"
               >
-                âˆ’
+                −
               </button>
 
               <span
@@ -406,18 +406,18 @@ function renderSauceOptions(selectedSauces = {}, requiredAtLeastOne = false) {
       </div>
 
       <p class="option-note">
-        Une sauce est gratuite. Chaque sauce supplÃ©mentaire coÃ»te +${formatEuro(EXTRA_SAUCE_PRICE)}.
+        Une sauce est gratuite. Chaque sauce supplémentaire coûte +${formatEuro(EXTRA_SAUCE_PRICE)}.
       </p>
 
       <div class="sauce-list">
         ${SAUCES.map((sauce) => `
           <div class="sauce-row">
             <div class="sauce-info">
-              <div class="sauce-icon">ðŸ¥£</div>
+              <div class="sauce-icon">🥣</div>
 
               <div class="sauce-text">
                 <div class="sauce-name">${escapeHtml(sauce.name)}</div>
-                <div class="sauce-sub">Ajoutez la quantitÃ© souhaitÃ©e</div>
+                <div class="sauce-sub">Ajoutez la quantité souhaitée</div>
               </div>
             </div>
 
@@ -428,7 +428,7 @@ function renderSauceOptions(selectedSauces = {}, requiredAtLeastOne = false) {
                 onclick="changeSauceQty('${sauce.id}', -1)"
                 aria-label="Diminuer ${escapeHtml(sauce.name)}"
               >
-                âˆ’
+                −
               </button>
 
               <span
@@ -584,7 +584,7 @@ function renderSauceSummary(sauces = {}) {
   if (!entries.length) {
     summary.innerHTML = `
       <div class="summary-pill">Aucune sauce choisie</div>
-      <div class="summary-pill accent">SupplÃ©ment sauces: Inclus</div>
+      <div class="summary-pill accent">Supplément sauces: Inclus</div>
     `;
     return;
   }
@@ -598,13 +598,13 @@ function renderSauceSummary(sauces = {}) {
     const sauce = getSauceById(id);
     return `
         <div class="summary-pill">
-          ${escapeHtml(sauce?.name || id)} Ã—${qty}
+          ${escapeHtml(sauce?.name || id)} ×${qty}
         </div>
       `;
   }).join("")}
 
     <div class="summary-pill accent">
-      SupplÃ©ment sauces: ${extraPrice > 0 ? "+" + formatEuro(extraPrice) : "Inclus"}
+      Supplément sauces: ${extraPrice > 0 ? "+" + formatEuro(extraPrice) : "Inclus"}
     </div>
   `;
 }
@@ -618,8 +618,8 @@ function renderDessertSummary(desserts = {}) {
 
   if (!entries.length) {
     summary.innerHTML = `
-      <div class="summary-pill">Aucun dessert sÃ©lectionnÃ©</div>
-      <div class="summary-pill accent">SupplÃ©ment dessert : +0,00 â‚¬</div>
+      <div class="summary-pill">Aucun dessert sélectionné</div>
+      <div class="summary-pill accent">Supplément dessert : +0,00 €</div>
     `;
     return;
   }
@@ -641,13 +641,13 @@ function renderDessertSummary(desserts = {}) {
     const dessert = getDessertById(id);
     return `
         <div class="summary-pill">
-          ${escapeHtml(dessert?.name || id)} Ã—${qty}
+          ${escapeHtml(dessert?.name || id)} ×${qty}
         </div>
       `;
   }).join("")}
 
     <div class="summary-pill accent">
-      SupplÃ©ment dessert : ${dessertPrice > 0 ? "+" + formatEuro(dessertPrice) : "0,00 â‚¬"}
+      Supplément dessert : ${dessertPrice > 0 ? "+" + formatEuro(dessertPrice) : "0,00 €"}
     </div>
   `;
 }
@@ -660,7 +660,7 @@ function updateModalState() {
   const total = getItemTotal(selectedDish, selectedConfig);
 
   modalPrice.textContent = formatEuro(total);
-  addToCartBtn.textContent = `Ajouter au panier â€¢ ${formatEuro(total)}`;
+  addToCartBtn.textContent = `Ajouter au panier • ${formatEuro(total)}`;
 
   const isValid = isModalSelectionValid(selectedDish, selectedConfig);
   addToCartBtn.disabled = !isValid;
@@ -681,31 +681,31 @@ function buildSelectionLabel(id, config) {
   const parts = [];
   const category = getDishCategory(id);
 
-  // ðŸ¥¤ Drinks
+  // 🥤 Drinks
   if (config.drink) {
     const drinks = Object.entries(config.drink)
       .filter(([_, qty]) => qty > 0)
       .map(([drinkId, qty]) => {
         const d = getDrinkById(drinkId);
-        return `ðŸ¥¤ ${d?.name} Ã—${qty}`;
+        return `🥤 ${d?.name} ×${qty}`;
       });
 
     if (drinks.length) {
-      parts.push(`ðŸ¥¤ Boissons: ${drinks.join(", ")}`);
+      parts.push(`🥤 Boissons: ${drinks.join(", ")}`);
     }
   }
 
-  // ðŸ° Desserts
+  // 🍰 Desserts
   if (config.dessert) {
     const desserts = Object.entries(config.dessert)
       .filter(([_, qty]) => qty > 0)
       .map(([dessertId, qty]) => {
         const d = getDessertById(dessertId);
-        return `ðŸ° ${d?.name} Ã—${qty}`;
+        return `🍰 ${d?.name} ×${qty}`;
       });
 
     if (desserts.length) {
-      parts.push(`ðŸ° Dessert: ${desserts.join(", ")}`);
+      parts.push(`🍰 Dessert: ${desserts.join(", ")}`);
 
       const totalDesserts = Object.values(config.dessert).reduce((a, b) => a + b, 0);
 
@@ -713,38 +713,38 @@ function buildSelectionLabel(id, config) {
         const extraDessertCount = Math.max(totalDesserts - 1, 0);
 
         if (extraDessertCount > 0) {
-          parts.push(`ðŸ’¶ SupplÃ©ment dessert: +${formatEuro(extraDessertCount * EXTRA_DESSERT_PRICE)}`);
+          parts.push(`💶 Supplément dessert: +${formatEuro(extraDessertCount * EXTRA_DESSERT_PRICE)}`);
         }
       }
 
       if (category === "single") {
-        parts.push(`ðŸ’¶ Dessert inclus dans le total: +${formatEuro(totalDesserts * EXTRA_DESSERT_PRICE)}`);
+        parts.push(`💶 Dessert inclus dans le total: +${formatEuro(totalDesserts * EXTRA_DESSERT_PRICE)}`);
       }
     }
   }
 
-  // ðŸ¥£ Sauces
+  // 🥣 Sauces
   if (config.sauces) {
     const sauces = Object.entries(config.sauces)
       .filter(([_, qty]) => qty > 0)
       .map(([sauceId, qty]) => {
         const s = getSauceById(sauceId);
-        return `ðŸ¥£ ${s?.name} Ã—${qty}`;
+        return `🥣 ${s?.name} ×${qty}`;
       });
 
     if (sauces.length) {
-      parts.push(`ðŸ¥£ Sauces: ${sauces.join(", ")}`);
+      parts.push(`🥣 Sauces: ${sauces.join(", ")}`);
 
       const totalSauces = Object.values(config.sauces).reduce((a, b) => a + b, 0);
       const extraSauceCount = Math.max(totalSauces - 1, 0);
 
       if (extraSauceCount > 0) {
-        parts.push(`ðŸ’¶ SupplÃ©ment sauces: +${formatEuro(extraSauceCount * EXTRA_SAUCE_PRICE)}`);
+        parts.push(`💶 Supplément sauces: +${formatEuro(extraSauceCount * EXTRA_SAUCE_PRICE)}`);
       }
     }
   }
 
-  return parts.join(" â€¢ ");
+  return parts.join(" • ");
 }
 
 
@@ -934,9 +934,9 @@ function renderCart() {
   if (!entries.length) {
     cartItems.innerHTML = `
       <div class="cart-empty">
-        ðŸ½ï¸ DÃ©couvrez notre menu<br>
-        ðŸ‘† Appuyez sur un plat pour commencer<br>
-        ðŸ“… Vous pouvez aussi planifier votre commande
+        🍽️ Découvrez notre menu<br>
+        👆 Appuyez sur un plat pour commencer<br>
+        📅 Vous pouvez aussi planifier votre commande
       </div>
     `;
     return;
@@ -959,7 +959,7 @@ function renderCart() {
           color:#ffffff;
         ">
           ${item.name}
-          ${summary ? ` â€” ${summary}` : ""}
+          ${summary ? ` — ${summary}` : ""}
 
           <span style="
             display:inline-flex;
@@ -974,7 +974,7 @@ function renderCart() {
             font-size:16px;
             font-weight:900;
           ">
-            Ã— ${entry.qty}
+            × ${entry.qty}
           </span>
         </span>
 
@@ -995,7 +995,7 @@ function renderCart() {
               font-weight:900;
             "
           >
-            âˆ’
+            −
           </button>
 
           <button
@@ -1033,7 +1033,7 @@ function renderCart() {
               justify-content:center;
             "
           >
-            ðŸ—‘ï¸
+            🗑️
           </button>
 
         </div>
@@ -1160,11 +1160,11 @@ function shouldShowMay8Announcement() {
 }
 
 function showMay8AnnouncementPopup() {
-  showInlineOrderStatusMessage("ðŸ”¥ 11, 12 et 13 mai complets", [
+  showInlineOrderStatusMessage("🔥 11, 12 et 13 mai complets", [
     "Nous sommes complets les 11, 12 et 13 mai.",
-    "ðŸ™ Merci infiniment pour votre confiance et votre fidÃ©litÃ©.",
-    "Yamani Food fonctionne Ã  pleine capacitÃ©.",
-    "ðŸ“… Pensez Ã  planifier votre prochaine commande dÃ¨s maintenant."
+    "🙏 Merci infiniment pour votre confiance et votre fidélité.",
+    "Yamani Food fonctionne à pleine capacité.",
+    "📅 Pensez à planifier votre prochaine commande dès maintenant."
   ]);
 
   planLaterBtn.style.display = "block";
@@ -1181,23 +1181,23 @@ function showCurrentClosedPopupIfNeeded() {
     orderHoursBox.style.display = "block";
   }
 
-  orderStatusTitle.textContent = "â° Commandes fermÃ©es pour le moment";
+  orderStatusTitle.textContent = "⏰ Commandes fermées pour le moment";
 
   orderStatusText.innerHTML = `
 <div>Nous ne prenons pas</div>
 <div>de commandes maintenant.</div>
 <br>
-<div>ðŸ“… Vous pouvez planifier</div>
+<div>📅 Vous pouvez planifier</div>
 <div>votre commande pour plus tard.</div>
 <br>
-<div>ðŸ›ï¸ Retrait :</div>
-<div>13h â†’ 14h</div>
-<div>19h â†’ 22h</div>
+<div>🛍️ Retrait :</div>
+<div>13h → 14h</div>
+<div>19h → 22h</div>
   `;
 
   continueNowBtn.style.display = "none";
   planLaterBtn.style.display = "block";
-  planLaterBtn.textContent = "ðŸ“… Planifier une commande";
+  planLaterBtn.textContent = "📅 Planifier une commande";
   planLaterBtn.dataset.action = "plan";
 
   orderStatusModal.classList.add("open");
@@ -1261,23 +1261,23 @@ function openOrderStatusModal() {
   const entries = Object.values(cart);
 
   if (!entries.length) {
-    showInlineOrderStatusMessage("ðŸ›’ Votre panier est vide", [
-      "ðŸ½ï¸ DÃ©couvrez notre menu avant de commander",
-      "ðŸ‘† Appuyez sur un plat pour lâ€™ajouter au panier",
-      "ðŸ’¬ Une fois votre sÃ©lection prÃªte, vous pourrez envoyer votre commande sur WhatsApp"
+    showInlineOrderStatusMessage("🛒 Votre panier est vide", [
+      "🍽️ Découvrez notre menu avant de commander",
+      "👆 Appuyez sur un plat pour l’ajouter au panier",
+      "💬 Une fois votre sélection prête, vous pourrez envoyer votre commande sur WhatsApp"
     ]);
     return;
   }
 
   if (isRestaurantClosed()) {
-    showInlineOrderStatusMessage("ðŸš« 11, 12 et 13 mai complets", [
+    showInlineOrderStatusMessage("🚫 11, 12 et 13 mai complets", [
       "Nous sommes complets les 11, 12 et 13 mai.",
-      "ðŸ™ Merci infiniment pour votre confiance.",
-      "ðŸ“… Vous pouvez planifier votre commande Ã  partir du 14 mai ou une autre date."
+      "🙏 Merci infiniment pour votre confiance.",
+      "📅 Vous pouvez planifier votre commande à partir du 14 mai ou une autre date."
     ]);
 
     planLaterBtn.style.display = "block";
-    planLaterBtn.textContent = "ðŸ“… Planifier une commande";
+    planLaterBtn.textContent = "📅 Planifier une commande";
     planLaterBtn.dataset.action = "plan";
     return;
   }
@@ -1291,35 +1291,35 @@ function openOrderStatusModal() {
   if (orderHoursBox) orderHoursBox.style.display = "block";
 
   if (isCurrentTimeInOrderWindow()) {
-    orderStatusTitle.textContent = "âœ… Commandes ouvertes";
+    orderStatusTitle.textContent = "✅ Commandes ouvertes";
     orderStatusText.innerHTML = `
 <div>Vous pouvez commander maintenant.</div>
 <br>
-<div>ðŸ’¡ Vous pouvez aussi</div>
+<div>💡 Vous pouvez aussi</div>
 <div>planifier votre commande</div>
 <div>pour plus tard.</div>
     `;
 
     continueNowBtn.style.display = "block";
   } else {
-    orderStatusTitle.textContent = "â° Commandes fermÃ©es pour le moment";
+    orderStatusTitle.textContent = "⏰ Commandes fermées pour le moment";
     orderStatusText.innerHTML = `
 <div>Nous ne prenons pas</div>
 <div>de commandes maintenant.</div>
 <br>
-<div>ðŸ“… Vous pouvez planifier</div>
+<div>📅 Vous pouvez planifier</div>
 <div>votre commande pour plus tard.</div>
 <br>
-<div>ðŸ›ï¸ Retrait :</div>
-<div>13h â†’ 14h</div>
-<div>19h â†’ 22h</div>
+<div>🛍️ Retrait :</div>
+<div>13h → 14h</div>
+<div>19h → 22h</div>
     `;
 
     continueNowBtn.style.display = "none";
   }
 
   planLaterBtn.style.display = "block";
-  planLaterBtn.textContent = "ðŸ“… Planifier une commande";
+  planLaterBtn.textContent = "📅 Planifier une commande";
   planLaterBtn.dataset.action = "plan";
 
   orderStatusModal.classList.add("open");
@@ -1356,10 +1356,10 @@ function openCheckoutModal(prefillTomorrow = false) {
   const entries = Object.values(cart);
 
   if (!entries.length) {
-    showInlineOrderStatusMessage("ðŸ“… Planifier une commande", [
-      "Bonne idÃ©e ðŸ˜Š",
-      "ðŸ½ï¸ DÃ©couvrez le menu et ajoutez ce qui vous fait envie",
-      "â° Choisissez ensuite le moment parfaitâ€¦ on sâ€™occupe du reste ðŸ˜‰"
+    showInlineOrderStatusMessage("📅 Planifier une commande", [
+      "Bonne idée 😊",
+      "🍽️ Découvrez le menu et ajoutez ce qui vous fait envie",
+      "⏰ Choisissez ensuite le moment parfait… on s’occupe du reste 😉"
     ]);
     return;
   }
@@ -1421,15 +1421,15 @@ function closeCheckoutModal() {
 function showDeliveryZonePopup() {
   deliveryZoneModal.dataset.type = "delivery";
 
-  deliveryZoneModal.querySelector(".modal-title").textContent = "ðŸš« Livraison non disponible";
+  deliveryZoneModal.querySelector(".modal-title").textContent = "🚫 Livraison non disponible";
   deliveryZoneModal.querySelector(".modal-desc").textContent =
-    "DÃ©solÃ©, nous ne livrons pas encore dans ce code postal.";
+    "Désolé, nous ne livrons pas encore dans ce code postal.";
 
-  deliveryZoneModal.querySelector(".option-title").textContent = "ðŸ“ Zones couvertes";
+  deliveryZoneModal.querySelector(".option-title").textContent = "📍 Zones couvertes";
   deliveryZoneModal.querySelector(".option-note").innerHTML =
     "Lyon 2, Lyon 3, Lyon 6, Lyon 7, Lyon 8<br>Villeurbanne 69100<br>Bron 69500";
 
-  closeDeliveryZoneBtn.textContent = "Compris, je choisis Ã  emporter";
+  closeDeliveryZoneBtn.textContent = "Compris, je choisis à emporter";
 
   deliveryZoneModal.classList.add("open");
   deliveryZoneModal.setAttribute("aria-hidden", "false");
@@ -1438,13 +1438,13 @@ function showDeliveryZonePopup() {
 function showPlanDatePopup() {
   deliveryZoneModal.dataset.type = "date";
 
-  deliveryZoneModal.querySelector(".modal-title").textContent = "ðŸ“… Date non disponible";
+  deliveryZoneModal.querySelector(".modal-title").textContent = "📅 Date non disponible";
   deliveryZoneModal.querySelector(".modal-desc").textContent =
-    "Quand les commandes sont fermÃ©es, vous pouvez planifier uniquement Ã  partir de demain.";
+    "Quand les commandes sont fermées, vous pouvez planifier uniquement à partir de demain.";
 
-  deliveryZoneModal.querySelector(".option-title").textContent = "â° Planification";
+  deliveryZoneModal.querySelector(".option-title").textContent = "⏰ Planification";
   deliveryZoneModal.querySelector(".option-note").innerHTML =
-    "Veuillez choisir une date Ã  partir de demain.";
+    "Veuillez choisir une date à partir de demain.";
 
   closeDeliveryZoneBtn.textContent = "Compris";
 
@@ -1455,13 +1455,13 @@ function showPlanDatePopup() {
 function showTimeRequiredPopup() {
   deliveryZoneModal.dataset.type = "time";
 
-  deliveryZoneModal.querySelector(".modal-title").textContent = "â° Heure non sÃ©lectionnÃ©e";
+  deliveryZoneModal.querySelector(".modal-title").textContent = "⏰ Heure non sélectionnée";
   deliveryZoneModal.querySelector(".modal-desc").textContent =
     "Veuillez choisir une heure pour continuer votre commande.";
 
-  deliveryZoneModal.querySelector(".option-title").textContent = "ðŸ•’ CrÃ©neaux disponibles";
+  deliveryZoneModal.querySelector(".option-title").textContent = "🕒 Créneaux disponibles";
   deliveryZoneModal.querySelector(".option-note").innerHTML =
-    "13h â†’ 14h<br>19h â†’ 22h";
+    "13h → 14h<br>19h → 22h";
 
   closeDeliveryZoneBtn.textContent = "Compris";
 
@@ -1507,7 +1507,7 @@ function updateTimeSlotsByOrderType() {
 
     btn.style.display = "flex";
 
-    // âœ… Ø¥Ø°Ø§ Ø§Ù„Ø·Ù„Ø¨ Ù„Ù†ÙØ³ Ø§Ù„ÙŠÙˆÙ… Ø¨Ø¹Ø¯ 11:00ØŒ Ø§Ø®ÙÙ 13h â†’ 14h
+    // ✅ إذا الطلب لنفس اليوم بعد 11:00، اخفِ 13h → 14h
     if (isToday && currentHour >= 11) {
       if (text.includes("13") && text.includes("14")) {
         btn.style.display = "none";
@@ -1515,7 +1515,7 @@ function updateTimeSlotsByOrderType() {
       }
     }
 
-    // âœ… Ø¥Ø°Ø§ ØªÙˆØµÙŠÙ„ØŒ Ø§Ø®ÙÙ 19h â†’ 20h ÙÙ‚Ø· Ø¥Ø°Ø§ Ù…ÙˆØ¬ÙˆØ¯ ÙƒØ²Ø± Ù…Ø³ØªÙ‚Ù„
+    // ✅ إذا توصيل، اخفِ 19h → 20h فقط إذا موجود كزر مستقل
     if (orderType === "delivery" && text.includes("19") && text.includes("20")) {
       btn.style.display = "none";
       btn.classList.remove("active");
@@ -1661,7 +1661,7 @@ confirmOrderBtn.addEventListener("click", () => {
     const cityValue = city.value.trim();
 
     if (!addrValue || !zipValue || !cityValue) {
-      checkoutAlert.textContent = "Veuillez remplir lâ€™adresse complÃ¨te de livraison.";
+      checkoutAlert.textContent = "Veuillez remplir l’adresse complète de livraison.";
       checkoutAlert.classList.add("show");
       return;
     }
@@ -1672,7 +1672,7 @@ confirmOrderBtn.addEventListener("click", () => {
     }
 
     addressBlock =
-      `\nðŸ“ Adresse de livraison :
+      `\n📍 Adresse de livraison :
 - Adresse : ${addrValue}
 - Code postal : ${zipValue}
 - Ville : ${cityValue}`;
@@ -1699,10 +1699,10 @@ confirmOrderBtn.addEventListener("click", () => {
             drinkCounter++;
 
             if (category === "box" && drinkCounter === 1) {
-              detailLines.push(`   - ðŸ¥¤ Boisson incluse : ${drink.name}`);
+              detailLines.push(`   - 🥤 Boisson incluse : ${drink.name}`);
             } else {
               detailLines.push(
-                `   - ðŸ¥¤ Boisson : ${drink.name} (+${formatEuro(OPTIONAL_DRINK_EXTRA)})`
+                `   - 🥤 Boisson : ${drink.name} (+${formatEuro(OPTIONAL_DRINK_EXTRA)})`
               );
             }
           }
@@ -1717,16 +1717,16 @@ confirmOrderBtn.addEventListener("click", () => {
           if (!dessert) return;
 
           if (category === "box") {
-            detailLines.push(`   - ðŸ° Dessert inclus : ${dessert.name} Ã—1`);
+            detailLines.push(`   - 🍰 Dessert inclus : ${dessert.name} ×1`);
 
             if (qty > 1) {
               detailLines.push(
-                `   - ðŸ’¶ Dessert supplÃ©mentaire : ${dessert.name} Ã—${qty - 1} (+${formatEuro((qty - 1) * EXTRA_DESSERT_PRICE)})`
+                `   - 💶 Dessert supplémentaire : ${dessert.name} ×${qty - 1} (+${formatEuro((qty - 1) * EXTRA_DESSERT_PRICE)})`
               );
             }
           } else {
             detailLines.push(
-              `   - ðŸ° Dessert : ${dessert.name} Ã—${qty} (+${formatEuro(qty * EXTRA_DESSERT_PRICE)})`
+              `   - 🍰 Dessert : ${dessert.name} ×${qty} (+${formatEuro(qty * EXTRA_DESSERT_PRICE)})`
             );
           }
         });
@@ -1745,17 +1745,17 @@ confirmOrderBtn.addEventListener("click", () => {
             sauceCounter++;
 
             if (sauceCounter === 1) {
-              detailLines.push(`   - ðŸ¥£ Sauce incluse : ${sauce.name}`);
+              detailLines.push(`   - 🥣 Sauce incluse : ${sauce.name}`);
             } else {
               detailLines.push(
-                `   - ðŸ’¶ Sauce supplÃ©mentaire : ${sauce.name} (+${formatEuro(EXTRA_SAUCE_PRICE)})`
+                `   - 💶 Sauce supplémentaire : ${sauce.name} (+${formatEuro(EXTRA_SAUCE_PRICE)})`
               );
             }
           }
         });
     }
 
-    detailLines.push(`   - ðŸ’° Prix du plat complet : ${unitTotal}`);
+    detailLines.push(`   - 💰 Prix du plat complet : ${unitTotal}`);
 
     return [
       `${index + 1}. ${item.name} x${entry.qty}`,
@@ -1771,27 +1771,27 @@ confirmOrderBtn.addEventListener("click", () => {
 
   const receptionLabel =
     orderType === "delivery"
-      ? "ðŸšš Livraison Ã  domicile"
-      : "ðŸ›ï¸ Ã€ emporter";
+      ? "🚚 Livraison à domicile"
+      : "🛍️ À emporter";
 
   const message =
-    `ðŸ½ï¸ Bonjour Yamani Food,
+    `🍽️ Bonjour Yamani Food,
 
 Je souhaite commander :
 
 ${lines.join("\n\n")}
 
-â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”
+━━━━━━━━━━━━━━━
 
-ðŸ“¦ Mode : ${receptionLabel}
-ðŸ“… Date : ${selectedDate}
-â° Heure : ${selectedTime}${addressBlock}
+📦 Mode : ${receptionLabel}
+📅 Date : ${selectedDate}
+⏰ Heure : ${selectedTime}${addressBlock}
 
-${orderType === "delivery" ? `\nðŸšš Frais de livraison : ${formatEuro(DELIVERY_PRICE)}` : ""}
+${orderType === "delivery" ? `\n🚚 Frais de livraison : ${formatEuro(DELIVERY_PRICE)}` : ""}
 
-ðŸ’° Total estimÃ© : ${formatEuro(grandTotal)}
+💰 Total estimé : ${formatEuro(grandTotal)}
 
-ðŸ™ Merci !`;
+🙏 Merci !`;
 
   const url = `https://wa.me/33782549043?text=${encodeURIComponent(message)}`;
   window.open(url, "_blank");
@@ -1821,9 +1821,9 @@ function showDeliveryInfoPopup() {
     ?.closest(".choice-item");
 
   checkoutAlert.innerHTML =
-    "ðŸšš <b>Livraison Ã  domicile</b> â€¢ ðŸ’¶ 2,00 â‚¬<br>" +
-    "ðŸ“ Lyon 2, 3, 6, 7, 8 + Villeurbanne + Bron<br>" +
-    "â° 13hâ€“14h / 20hâ€“22h";
+    "🚚 <b>Livraison à domicile</b> • 💶 2,00 €<br>" +
+    "📍 Lyon 2, 3, 6, 7, 8 + Villeurbanne + Bron<br>" +
+    "⏰ 13h–14h / 20h–22h";
 
   checkoutAlert.classList.add("show");
 
@@ -1831,4 +1831,3 @@ function showDeliveryInfoPopup() {
     deliveryChoice.insertAdjacentElement("afterend", checkoutAlert);
   }
 }
-
