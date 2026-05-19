@@ -1,21 +1,27 @@
-﻿تم إصلاح مشكلة الأحرف الغريبة التي ظهرت في الموقع.
+﻿تم تحديث نظام إغلاق المطعم مؤقتًا.
 
-كانت المشكلة بسبب حفظ بعض الملفات بترميز غير صحيح، مما تسبب في ظهور الرموز والنصوص الفرنسية والعربية بشكل غير مفهوم.
+المطعم مغلق يومي 19 و20 مايو، وتم تعديل الرسائل الأساسية التي تظهر داخل الموقع لتوضيح الإغلاق المؤقت للعملاء.
 
-تمت استعادة الملفات الأساسية بنسخة سليمة، وإعادة ربط ملف إعدادات المطعم بشكل آمن.
+التحديث يشمل:
+- إغلاق الطلبات بتاريخ 19 مايو
+- إغلاق الطلبات بتاريخ 20 مايو
+- تعديل رسائل الإغلاق الأساسية
+- منع الطلب في هذه التواريخ
+- الحفاظ على نظام التحكم من ملف مستقل
 
-النظام الآن يحافظ على:
-- عرض النصوص العربية والفرنسية بشكل صحيح
-- عرض الأسعار والرموز بشكل طبيعي
-- استمرار نظام التحكم في إغلاق وفتح المطعم من ملف مستقل
+ملاحظة:
+لا تزال هناك بعض المشاكل البسيطة في بعض النوافذ المنبثقة (Popups) وسيتم تحسينها وتصحيحها لاحقًا.
 
-Le probleme des caracteres incorrects a ete corrige.
+Le système de fermeture temporaire du restaurant a été mis à jour.
 
-La cause venait d'un mauvais encodage de certains fichiers, ce qui affichait les textes arabes, francais et les symboles de maniere incorrecte.
+Le restaurant est fermé les 19 et 20 mai, et les principaux messages affichés sur le site ont été adaptés pour informer les clients de cette fermeture temporaire.
 
-Les fichiers principaux ont ete restaures proprement et le fichier de configuration du restaurant reste actif.
+La mise à jour comprend :
+- la fermeture des commandes le 19 mai
+- la fermeture des commandes le 20 mai
+- la mise à jour des messages principaux du site
+- le blocage des commandes pour ces dates
+- le maintien du système de gestion séparé
 
-Le site conserve maintenant:
-- un affichage correct des textes arabes et francais
-- un affichage correct des prix et symboles
-- le systeme de gestion des fermetures depuis un fichier separe
+Remarque :
+Quelques petits problèmes restent présents dans certaines fenêtres popup et seront corrigés plus tard.
