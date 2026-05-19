@@ -4,41 +4,45 @@ on:
   push:
     branches:
       - main
-      - saleh
 
 jobs:
   send-email:
+    if: contains(github.event.head_commit.message, '[notify]')
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout files
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Read update message
-        id: update_message
-        shell: bash
+        id: message
         run: |
           if [ -f update-message.txt ]; then
-            echo "message<<YAMANI_MESSAGE_END" >> $GITHUB_OUTPUT
-            cat update-message.txt >> $GITHUB_OUTPUT
-  echo "" >> $GITHUB_OUTPUT
-  echo "YAMANI_MESSAGE_END" >> $GITHUB_OUTPUT
+            {
+              echo 'message<<YAMANI_MESSAGE_END'
+              cat update-message.txt
+              echo
+              echo 'YAMANI_MESSAGE_END'
+            } >> "$GITHUB_OUTPUT"
           else
-            echo "message=Aucun message detaille fourni." >> $GITHUB_OUTPUT
+            echo "message=Aucun message detaille fourni." >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Send email notification
-        if: contains(github.event.head_commit.message, '[notify]')
+      - name: Send email
         uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
           server_port: 465
           secure: true
-          username: Saleh738297@gmail.com
+          username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: "Correction importante - Yamani Food"
-          to: "aaalkhulagi@gmail.com,a774264429@gmail.com"
-          from: "Yamani Food Updates <Saleh738297@gmail.com>"
+
+          subject: Correction importante - Yamani Food
+
+          to: aaalkhulagi@gmail.com,a774264429@gmail.com
+
+          from: Yamani Food Updates <${{ secrets.EMAIL_USERNAME }}>
+
           body: |
             Bonjour,
 
@@ -48,15 +52,10 @@ jobs:
             ${{ github.event.head_commit.message }}
 
             Details :
-            ${{ steps.update_message.outputs.message }}
+            ${{ steps.message.outputs.message }}
 
             Projet : Yamani Food
-            Branche : ${{ github.ref_name }}
-            Developpeur : ${{ github.actor }}
+            Branche : main
+            Developpeur : salo00h
 
             Merci pour votre confiance.
-
-            Yamani Food
-
-
-
