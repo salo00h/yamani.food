@@ -18,23 +18,19 @@ jobs:
         id: check
         shell: bash
         env:
-          COMMITS_JSON: ${{ toJson(github.event.commits) }}
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
         run: |
           python3 <<'PY'
-          import json, os
-
-          commits = json.loads(os.environ.get("COMMITS_JSON", "[]"))
-          found = any("[notify]" in commit.get("message", "") for commit in commits)
-
+          import os
+          found = "[notify]" in os.environ.get("COMMIT_MESSAGE", "")
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
               f.write(f"send_email={'true' if found else 'false'}\n")
-
           print("send_email =", found)
           PY
 
-      - name: Skip email
+      - name: Skip email safely
         if: steps.check.outputs.send_email != 'true'
-        run: echo "No [notify] found. Email skipped."
+        run: echo "No [notify] found. Email skipped safely."
 
       - name: Checkout repository
         if: steps.check.outputs.send_email == 'true'
@@ -48,19 +44,14 @@ jobs:
           from pathlib import Path
           import os
 
-          file = Path("update-message.txt")
-
-          if file.exists():
-              update_message = file.read_text(encoding="utf-8-sig").strip()
-          else:
-              update_message = "Aucun message fourni.\n\nلم يتم توفير تفاصيل."
+          msg = Path("update-message.txt").read_text(encoding="utf-8-sig") if Path("update-message.txt").exists() else "Aucun message fourni.\n\nلم يتم توفير تفاصيل."
 
           body = f"""Bonjour,
 
 Une mise à jour importante a été appliquée sur le site Yamani Food.
 
 Détails :
-{update_message}
+{msg.strip()}
 
 ---
 
@@ -69,7 +60,7 @@ Détails :
 تم تطبيق تحديث مهم على موقع Yamani Food.
 
 التفاصيل:
-{update_message}
+{msg.strip()}
 """
 
           Path("email-body.txt").write_text(body, encoding="utf-8")
@@ -77,7 +68,7 @@ Détails :
 
       - name: Send email
         if: steps.check.outputs.send_email == 'true'
-        uses: dawidd6/action-send-mail@v17
+        uses: dawidd6/action-send-mail@v3
         with:
           server_address: smtp.gmail.com
           server_port: 465
