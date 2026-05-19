@@ -98,7 +98,7 @@ jobs:
 
           to: aaalkhulagi@gmail.com,a774264429@gmail.com
 
-          from: ${{ secrets.EMAIL_USERNAME }}
+          from: Saleh738297@gmail.com
 
           body: file://email-body.txt
 
