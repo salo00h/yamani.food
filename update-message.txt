@@ -1,29 +1,13 @@
-Correction importante - Yamani Food
+✨ Mise à jour interne — Yamani Food
 
-✨ Les fenêtres popup du site ont été améliorées.
+Le système des messages et notifications du site a été amélioré afin de rendre les informations plus claires, plus propres et plus professionnelles.
 
-Les messages sont maintenant plus clairs, plus élégants et plus agréables pour les clients, avec une présentation plus moderne et quelques emojis pour rendre l’expérience plus chaleureuse.
-
-Mise à jour effectuée :
-- amélioration des messages popup
-- textes plus professionnels et plus accueillants
-- ajout d’emojis adaptés à l’image Yamani Food
-- confirmation du bon fonctionnement de la fermeture temporaire des 19 et 20 mai
-- amélioration de l’expérience client sur le site
-
-Il reste uniquement quelques petits ajustements visuels possibles plus tard.
+Quelques optimisations techniques et visuelles ont également été appliquées pour améliorer la stabilité générale et l’expérience utilisateur.
 
 ---
 
-تم تحسين النوافذ المنبثقة داخل موقع Yamani Food ✨
+✨ تحديث داخلي — Yamani Food
 
-أصبحت الرسائل أوضح وأجمل وأكثر احترافية للعميل، مع إضافة بعض الإيموجيات المناسبة حتى تكون التجربة ألطف وأكثر دفئًا.
+تم تحسين نظام الرسائل والتنبيهات داخل الموقع ليصبح أوضح وأكثر تنظيمًا واحترافية.
 
-التحديث يشمل:
-- تحسين نصوص النوافذ المنبثقة
-- جعل الرسائل أكثر احترافية وترحيبًا
-- إضافة إيموجيات مناسبة لهوية Yamani Food
-- التأكد من عمل إغلاق يومي 19 و20 مايو بشكل صحيح
-- تحسين تجربة العميل داخل الموقع
-
-لم يتبق إلا بعض التحسينات البصرية البسيطة لاحقًا.
+كما تم تطبيق بعض التحسينات التقنية والبصرية لتحسين الاستقرار وتجربة الاستخدام بشكل عام.
