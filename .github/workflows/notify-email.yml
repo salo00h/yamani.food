@@ -31,9 +31,9 @@ jobs:
           print("send_email =", found)
           PY
 
-      - name: Skip email safely
+      - name: Stop safely if no notify
         if: steps.check.outputs.send_email != 'true'
-        run: echo "No [notify] found. Email skipped safely."
+        run: echo "No [notify] found."
 
       - name: Checkout repository
         if: steps.check.outputs.send_email == 'true'
@@ -89,8 +89,9 @@ jobs:
         uses: dawidd6/action-send-mail@v6
         with:
           server_address: smtp.gmail.com
-          server_port: 465
-          secure: true
+          server_port: 587
+          secure: false
+
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
 
@@ -98,7 +99,7 @@ jobs:
 
           to: aaalkhulagi@gmail.com,a774264429@gmail.com
 
-          from: Saleh738297@gmail.com
+          from: ${{ secrets.EMAIL_USERNAME }}
 
           body: file://email-body.txt
 
