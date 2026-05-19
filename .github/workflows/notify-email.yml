@@ -44,42 +44,36 @@ jobs:
         shell: bash
         run: |
           {
-            echo "🍽️ Yamani Food Update"
+            echo "🍽️ Yamani Food — Internal Website Update"
             echo ""
-            echo "Bonjour 👋"
+            echo "Bonjour 👋 | مرحبًا 👋"
             echo ""
-            echo "Une mise à jour importante a été appliquée sur le site Yamani Food."
+            echo "Une nouvelle amélioration interne a été appliquée avec succès sur le site Yamani Food."
+            echo "تم تطبيق تحديث داخلي جديد بنجاح على موقع Yamani Food."
             echo ""
-            echo "📝 Détails :"
+            echo "📢 Détails de la mise à jour | تفاصيل التحديث"
+            echo "━━━━━━━━━━━━━━━━━━"
             echo ""
 
             if [ -f update-message.txt ]; then
               cat update-message.txt
             else
-              echo "Aucun message fourni."
+              echo "Aucun détail supplémentaire fourni."
+              echo ""
+              echo "لم يتم توفير تفاصيل إضافية."
             fi
 
             echo ""
             echo "━━━━━━━━━━━━━━━━━━"
             echo ""
-            echo "مرحبًا 👋"
+            echo "👨‍💻 Développeur principal | المطور الرئيسي"
+            echo "Saleh BA-ZIGHIFAN"
             echo ""
-            echo "تم تطبيق تحديث مهم على موقع Yamani Food."
-            echo ""
-            echo "📝 التفاصيل:"
-            echo ""
-
-            if [ -f update-message.txt ]; then
-              cat update-message.txt
-            else
-              echo "لم يتم توفير تفاصيل."
-            fi
-
-            echo ""
-            echo "━━━━━━━━━━━━━━━━━━"
-            echo ""
-            echo "📌 Commit:"
+            echo "📌 Commit GitHub"
             echo "${{ github.event.head_commit.message }}"
+            echo ""
+            echo "🕒 Notification automatique envoyée depuis GitHub Actions"
+            echo "تم إرسال هذه الرسالة تلقائيًا عبر GitHub Actions"
             echo ""
             echo "🚀 Yamani Food"
           } > email-body.txt
@@ -95,7 +89,7 @@ jobs:
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
 
-          subject: 🍽️ Correction importante - Yamani Food
+          subject: 🍽️ Yamani Food — Internal Update
 
           to: aaalkhulagi@gmail.com,a774264429@gmail.com
 
