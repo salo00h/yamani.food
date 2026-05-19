@@ -44,8 +44,8 @@ const DISHES = {
 };
 
 const OPTIONAL_DRINK_EXTRA = 1.50; // سعر المشروب للسامبل والماكسي
-const EXTRA_SAUCE_PRICE = 0.50;    // كل صوص إضا�ي بعد أول واحد
-const EXTRA_DESSERT_PRICE = 2.00;  // أول حلا مجاني ثم كل قطعة إضا�ية 1€
+const EXTRA_SAUCE_PRICE = 0.50;    // كل صوص إضاي بعد أول واحد
+const EXTRA_DESSERT_PRICE = 2.00;  // أول حلا مجاني ثم كل قطعة إضاية 1€
 const DELIVERY_PRICE = 2.00;
 
 function makeSvgDataUri(svg) {
@@ -313,7 +313,7 @@ function renderDessertOptions(selectedDesserts = {}) {
         ${DESSERTS.map((dessert) => `
           <div class="sauce-row">
             <div class="sauce-info">
-              <div class="sauce-icon">��</div>
+              <div class="sauce-icon">🍰</div>
 
               <div class="sauce-text">
                 <div class="sauce-name">${escapeHtml(dessert.name)}</div>
@@ -695,17 +695,17 @@ function buildSelectionLabel(id, config) {
     }
   }
 
-  // �� Desserts
+  //  Desserts
   if (config.dessert) {
     const desserts = Object.entries(config.dessert)
       .filter(([_, qty]) => qty > 0)
       .map(([dessertId, qty]) => {
         const d = getDessertById(dessertId);
-        return `�� ${d?.name} ×${qty}`;
+        return ` ${d?.name} ×${qty}`;
       });
 
     if (desserts.length) {
-      parts.push(`�� Dessert: ${desserts.join(", ")}`);
+      parts.push(` Dessert: ${desserts.join(", ")}`);
 
       const totalDesserts = Object.values(config.dessert).reduce((a, b) => a + b, 0);
 
@@ -934,7 +934,7 @@ function renderCart() {
   if (!entries.length) {
     cartItems.innerHTML = `
       <div class="cart-empty">
-        ��� Découvrez notre menu<br>
+        Découvrez notre menu<br>
         👆 Appuyez sur un plat pour commencer<br>
         📅 Vous pouvez aussi planifier votre commande
       </div>
@@ -1033,7 +1033,7 @@ function renderCart() {
               justify-content:center;
             "
           >
-            🗑�
+            🗑
           </button>
 
         </div>
@@ -1165,7 +1165,7 @@ function shouldShowMay8Announcement() {
 function showMay8AnnouncementPopup() {
   showInlineOrderStatusMessage("🔥 11, 12 et 13 mai complets", [
     "Nous sommes complets les 11, 12 et 13 mai.",
-    "� Merci infiniment pour votre confiance et votre fidélité.",
+    " Merci infiniment pour votre confiance et votre fidélité.",
     "Yamani Food fonctionne à pleine capacité.",
     "📅 Pensez à planifier votre prochaine commande dès maintenant."
   ]);
@@ -1184,7 +1184,7 @@ function showCurrentClosedPopupIfNeeded() {
     orderHoursBox.style.display = "block";
   }
 
-  orderStatusTitle.textContent = "�� Commandes fermées pour le moment";
+  orderStatusTitle.textContent = " Commandes fermées pour le moment";
 
   orderStatusText.innerHTML = `
 <div>Nous ne prenons pas</div>
@@ -1193,7 +1193,7 @@ function showCurrentClosedPopupIfNeeded() {
 <div>📅 Vous pouvez planifier</div>
 <div>votre commande pour plus tard.</div>
 <br>
-<div>�� Retrait :</div>
+<div>Retrait :</div>
 <div>13h → 14h</div>
 <div>19h → 22h</div>
   `;
@@ -1261,6 +1261,38 @@ function showInlineOrderStatusMessage(title, lines = []) {
   orderStatusModal.setAttribute("aria-hidden", "false");
 }
 
+
+function closeOrderStatusModal() {
+  orderStatusModal.classList.remove("open");
+  orderStatusModal.setAttribute("aria-hidden", "true");
+  planLaterBtn.dataset.action = "";
+}
+
+function checkOpeningOnLoad() {
+  if (isRestaurantClosed()) {
+    showRestaurantClosedPopup();
+    hasShownOpeningStatusModal = true;
+    return;
+  }
+
+  if (RESTAURANT_SETTINGS.showAnnouncement) {
+    showInlineOrderStatusMessage(
+      RESTAURANT_SETTINGS.announcementTitle,
+      RESTAURANT_SETTINGS.announcementLines
+    );
+    hasShownOpeningStatusModal = true;
+    return;
+  }
+
+  if (RESTAURANT_SETTINGS.forceClosed) {
+    showRestaurantClosedPopup();
+    hasShownOpeningStatusModal = true;
+    return;
+  }
+
+  showCurrentClosedPopupIfNeeded();
+}
+
 function openOrderStatusModal() {
   const entries = Object.values(cart);
 
@@ -1304,7 +1336,7 @@ function openOrderStatusModal() {
 <div>📅 Vous pouvez planifier</div>
 <div>votre commande pour plus tard.</div>
 <br>
-<div>🛍️ Retrait :</div>
+<div>🛍️Retrait :</div>
 <div>13h → 14h</div>
 <div>19h → 22h</div>
     `;
@@ -1391,7 +1423,7 @@ function showDeliveryZonePopup() {
   deliveryZoneModal.querySelector(".modal-desc").textContent =
     "Désolé, nous ne livrons pas encore dans ce code postal.";
 
-  deliveryZoneModal.querySelector(".option-title").textContent = "� Zones couvertes";
+  deliveryZoneModal.querySelector(".option-title").textContent = "Zones couvertes";
   deliveryZoneModal.querySelector(".option-note").innerHTML =
     "Lyon 2, Lyon 3, Lyon 6, Lyon 7, Lyon 8<br>Villeurbanne 69100<br>Bron 69500";
 
@@ -1408,7 +1440,7 @@ function showPlanDatePopup() {
   deliveryZoneModal.querySelector(".modal-desc").textContent =
     "Quand les commandes sont fermées, vous pouvez planifier uniquement à partir de demain.";
 
-  deliveryZoneModal.querySelector(".option-title").textContent = "�� Planification";
+  deliveryZoneModal.querySelector(".option-title").textContent = " Planification";
   deliveryZoneModal.querySelector(".option-note").innerHTML =
     "Veuillez choisir une date à partir de demain.";
 
@@ -1421,7 +1453,7 @@ function showPlanDatePopup() {
 function showTimeRequiredPopup() {
   deliveryZoneModal.dataset.type = "time";
 
-  deliveryZoneModal.querySelector(".modal-title").textContent = "�� Heure non sélectionnée";
+  deliveryZoneModal.querySelector(".modal-title").textContent = " Heure non sélectionnée";
   deliveryZoneModal.querySelector(".modal-desc").textContent =
     "Veuillez choisir une heure pour continuer votre commande.";
 
@@ -1473,7 +1505,7 @@ function updateTimeSlotsByOrderType() {
 
     btn.style.display = "flex";
 
-    // ✅ إذا الطلب لن�س اليوم بعد 11:00، اخ�� 13h → 14h
+    // ✅ إذا الطلب لنس اليوم بعد 11:00، اخ 13h → 14h
     if (isToday && currentHour >= 11) {
       if (text.includes("13") && text.includes("14")) {
         btn.style.display = "none";
@@ -1481,7 +1513,7 @@ function updateTimeSlotsByOrderType() {
       }
     }
 
-    // ✅ إذا توصيل، اخ�� 19h → 20h �قط إذا موجود كزر مستقل
+    // ✅ إذا توصيل، اخ 19h → 20h قط إذا موجود كزر مستقل
     if (orderType === "delivery" && text.includes("19") && text.includes("20")) {
       btn.style.display = "none";
       btn.classList.remove("active");
@@ -1638,7 +1670,7 @@ confirmOrderBtn.addEventListener("click", () => {
     }
 
     addressBlock =
-      `\n� Adresse de livraison :
+      `\nAdresse de livraison :
 - Adresse : ${addrValue}
 - Code postal : ${zipValue}
 - Ville : ${cityValue}`;
@@ -1683,7 +1715,7 @@ confirmOrderBtn.addEventListener("click", () => {
           if (!dessert) return;
 
           if (category === "box") {
-            detailLines.push(`   - �� Dessert inclus : ${dessert.name} ×1`);
+            detailLines.push(`   -  Dessert inclus : ${dessert.name} ×1`);
 
             if (qty > 1) {
               detailLines.push(
@@ -1692,7 +1724,7 @@ confirmOrderBtn.addEventListener("click", () => {
             }
           } else {
             detailLines.push(
-              `   - �� Dessert : ${dessert.name} ×${qty} (+${formatEuro(qty * EXTRA_DESSERT_PRICE)})`
+              `   -  Dessert : ${dessert.name} ×${qty} (+${formatEuro(qty * EXTRA_DESSERT_PRICE)})`
             );
           }
         });
@@ -1738,26 +1770,26 @@ confirmOrderBtn.addEventListener("click", () => {
   const receptionLabel =
     orderType === "delivery"
       ? "🚚 Livraison à domicile"
-      : "�� À emporter";
+      : "À emporter";
 
   const message =
-    `��� Bonjour Yamani Food,
+    `Bonjour Yamani Food,
 
 Je souhaite commander :
 
 ${lines.join("\n\n")}
 
-���������������
+
 
 📦 Mode : ${receptionLabel}
 📅 Date : ${selectedDate}
-�� Heure : ${selectedTime}${addressBlock}
+ Heure : ${selectedTime}${addressBlock}
 
 ${orderType === "delivery" ? `\n🚚 Frais de livraison : ${formatEuro(DELIVERY_PRICE)}` : ""}
 
 💰 Total estimé : ${formatEuro(grandTotal)}
 
-� Merci !`;
+Merci !`;
 
   const url = `https://wa.me/33782549043?text=${encodeURIComponent(message)}`;
   window.open(url, "_blank");
@@ -1788,8 +1820,8 @@ function showDeliveryInfoPopup() {
 
   checkoutAlert.innerHTML =
     "🚚 <b>Livraison à domicile</b> • 💶 2,00 €<br>" +
-    "� Lyon 2, 3, 6, 7, 8 + Villeurbanne + Bron<br>" +
-    "�� 13h–14h / 20h–22h";
+    "Lyon 2, 3, 6, 7, 8 + Villeurbanne + Bron<br>" +
+    " 13h–14h / 20h–22h";
 
   checkoutAlert.classList.add("show");
 
