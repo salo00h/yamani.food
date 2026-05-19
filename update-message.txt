@@ -1,13 +1,29 @@
 ﻿Correction importante - Yamani Food
 
-Le système fonctionne désormais correctement.
+✨ Les fenêtres popup du site ont été améliorées.
 
-Les fermetures des 19 et 20 mai sont actives et les principales fenêtres popup fonctionnent correctement sur le site.
+Les messages sont maintenant plus clairs, plus élégants et plus agréables pour les clients, avec une présentation plus moderne et quelques emojis pour rendre l’expérience plus chaleureuse.
 
-Les boutons principaux ont été réparés et les problèmes critiques ont été corrigés.
+Mise à jour effectuée :
+- amélioration des messages popup
+- textes plus professionnels et plus accueillants
+- ajout d’emojis adaptés à l’image Yamani Food
+- confirmation du bon fonctionnement de la fermeture temporaire des 19 et 20 mai
+- amélioration de l’expérience client sur le site
 
-Il reste uniquement quelques ajustements visuels mineurs et améliorations de design sur certaines fenêtres popup.
+Il reste uniquement quelques petits ajustements visuels possibles plus tard.
 
-Project: Yamani Food
-Branch: main
-Developer: salo00h
+---
+
+تم تحسين النوافذ المنبثقة داخل موقع Yamani Food ✨
+
+أصبحت الرسائل أوضح وأجمل وأكثر احترافية للعميل، مع إضافة بعض الإيموجيات المناسبة حتى تكون التجربة ألطف وأكثر دفئًا.
+
+التحديث يشمل:
+- تحسين نصوص النوافذ المنبثقة
+- جعل الرسائل أكثر احترافية وترحيبًا
+- إضافة إيموجيات مناسبة لهوية Yamani Food
+- التأكد من عمل إغلاق يومي 19 و20 مايو بشكل صحيح
+- تحسين تجربة العميل داخل الموقع
+
+لم يتبق إلا بعض التحسينات البصرية البسيطة لاحقًا.
