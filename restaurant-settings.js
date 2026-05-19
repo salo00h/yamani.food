@@ -1,4 +1,4 @@
-const RESTAURANT_SETTINGS = {
+﻿const RESTAURANT_SETTINGS = {
   forceClosed: false,
 
   forceClosedTitle: "Commandes fermees temporairement",
@@ -9,16 +9,16 @@ const RESTAURANT_SETTINGS = {
   ],
 
   closedDates: [
-    "2026-05-11",
-    "2026-05-12",
-    "2026-05-13"
+    "2026-05-19",
+    "2026-05-20"
   ],
 
-  closedDatesTitle: "Dates completes",
+  closedDatesTitle: "Restaurant temporairement fermé",
+
   closedDatesLines: [
-    "Nous sommes complets pour cette date.",
-    "Merci infiniment pour votre confiance.",
-    "Veuillez choisir une autre date pour votre commande."
+    "Nous sommes fermés les 19 et 20 mai.",
+    "Merci pour votre compréhension.",
+    "Yamani Food sera de retour très bientôt."
   ],
 
   showAnnouncement: false,
