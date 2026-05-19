@@ -98,7 +98,7 @@ jobs:
 
           to: aaalkhulagi@gmail.com,a774264429@gmail.com
 
-          from: Yamani Food Updates <${{ secrets.EMAIL_USERNAME }}>
+          from: ${{ secrets.EMAIL_USERNAME }}
 
           body: file://email-body.txt
 
