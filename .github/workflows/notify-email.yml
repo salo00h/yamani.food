@@ -22,9 +22,12 @@ jobs:
         run: |
           python3 <<'PY'
           import os
+
           found = "[notify]" in os.environ.get("COMMIT_MESSAGE", "")
+
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
               f.write(f"send_email={'true' if found else 'false'}\n")
+
           print("send_email =", found)
           PY
 
@@ -40,31 +43,46 @@ jobs:
         if: steps.check.outputs.send_email == 'true'
         shell: bash
         run: |
-          python3 <<'PY'
-          from pathlib import Path
-          import os
+          {
+            echo "🍽️ Yamani Food Update"
+            echo ""
+            echo "Bonjour 👋"
+            echo ""
+            echo "Une mise à jour importante a été appliquée sur le site Yamani Food."
+            echo ""
+            echo "📝 Détails :"
+            echo ""
 
-          msg = Path("update-message.txt").read_text(encoding="utf-8-sig") if Path("update-message.txt").exists() else "Aucun message fourni.\n\nلم يتم توفير تفاصيل."
+            if [ -f update-message.txt ]; then
+              cat update-message.txt
+            else
+              echo "Aucun message fourni."
+            fi
 
-          body = f"""Bonjour,
+            echo ""
+            echo "━━━━━━━━━━━━━━━━━━"
+            echo ""
+            echo "مرحبًا 👋"
+            echo ""
+            echo "تم تطبيق تحديث مهم على موقع Yamani Food."
+            echo ""
+            echo "📝 التفاصيل:"
+            echo ""
 
-Une mise à jour importante a été appliquée sur le site Yamani Food.
+            if [ -f update-message.txt ]; then
+              cat update-message.txt
+            else
+              echo "لم يتم توفير تفاصيل."
+            fi
 
-Détails :
-{msg.strip()}
-
----
-
-مرحبًا،
-
-تم تطبيق تحديث مهم على موقع Yamani Food.
-
-التفاصيل:
-{msg.strip()}
-"""
-
-          Path("email-body.txt").write_text(body, encoding="utf-8")
-          PY
+            echo ""
+            echo "━━━━━━━━━━━━━━━━━━"
+            echo ""
+            echo "📌 Commit:"
+            echo "${{ github.event.head_commit.message }}"
+            echo ""
+            echo "🚀 Yamani Food"
+          } > email-body.txt
 
       - name: Send email
         if: steps.check.outputs.send_email == 'true'
@@ -75,8 +93,13 @@ Détails :
           secure: true
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-          subject: Correction importante - Yamani Food
+
+          subject: 🍽️ Correction importante - Yamani Food
+
           to: aaalkhulagi@gmail.com,a774264429@gmail.com
+
           from: Yamani Food Updates <${{ secrets.EMAIL_USERNAME }}>
+
           body: file://email-body.txt
+
           priority: normal
