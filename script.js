@@ -934,9 +934,9 @@ function renderCart() {
   if (!entries.length) {
     cartItems.innerHTML = `
       <div class="cart-empty">
-        Découvrez notre menu<br>
-        👆 Appuyez sur un plat pour commencer<br>
-        📅 Vous pouvez aussi planifier votre commande
+        🍛 Découvrez l’univers Yamani Food<br>
+        ✨ Appuyez sur un plat pour commencer<br>
+        📅 Planifiez votre commande en quelques secondes
       </div>
     `;
     return;
@@ -1184,7 +1184,7 @@ function showCurrentClosedPopupIfNeeded() {
     orderHoursBox.style.display = "block";
   }
 
-  orderStatusTitle.textContent = " Commandes fermées pour le moment";
+  orderStatusTitle.textContent = "⏳ Les commandes sont actuellement fermées";
 
   orderStatusText.innerHTML = `
 <div>Nous ne prenons pas</div>
@@ -1297,9 +1297,9 @@ function openOrderStatusModal() {
   const entries = Object.values(cart);
 
   if (!entries.length) {
-    showInlineOrderStatusMessage("Panier vide", [
-      "Veuillez choisir un plat dans le menu avant de planifier.",
-      "Ajoutez votre commande au panier, puis choisissez la date et l'heure."
+    showInlineOrderStatusMessage("🍛 Votre panier attend votre sélection", [
+      "✨ Découvrez les spécialités Yamani Food.",
+      "👆 Sélectionnez vos plats favoris pour commencer votre commande."
     ]);
     return;
   }
@@ -1318,7 +1318,7 @@ function openOrderStatusModal() {
   if (orderHoursBox) orderHoursBox.style.display = "block";
 
   if (isCurrentTimeInOrderWindow()) {
-    orderStatusTitle.textContent = "✅ Commandes ouvertes";
+    orderStatusTitle.textContent = "🔥 Yamani Food est prêt";
     orderStatusText.innerHTML = `
 <div>Vous pouvez commander maintenant.</div>
 <br>
@@ -1328,7 +1328,7 @@ function openOrderStatusModal() {
     `;
     continueNowBtn.style.display = "block";
   } else {
-    orderStatusTitle.textContent = "⏰ Commandes fermées pour le moment";
+    orderStatusTitle.textContent = "⏳ Les commandes sont actuellement fermées";
     orderStatusText.innerHTML = `
 <div>Nous ne prenons pas</div>
 <div>de commandes maintenant.</div>
@@ -1355,9 +1355,9 @@ function openCheckoutModal(prefillTomorrow = false) {
   const entries = Object.values(cart);
 
   if (!entries.length) {
-    showInlineOrderStatusMessage("Panier vide", [
-      "Veuillez choisir un plat dans le menu avant de planifier.",
-      "Ajoutez votre commande au panier, puis choisissez la date et l'heure."
+    showInlineOrderStatusMessage("🍛 Votre panier attend votre sélection", [
+      "✨ Découvrez les spécialités Yamani Food.",
+      "👆 Sélectionnez vos plats favoris pour commencer votre commande."
     ]);
     return;
   }
@@ -1419,9 +1419,9 @@ function closeCheckoutModal() {
 function showDeliveryZonePopup() {
   deliveryZoneModal.dataset.type = "delivery";
 
-  deliveryZoneModal.querySelector(".modal-title").textContent = "🚫 Livraison non disponible";
+  deliveryZoneModal.querySelector(".modal-title").textContent = "🚚 Livraison bientôt disponible";
   deliveryZoneModal.querySelector(".modal-desc").textContent =
-    "Désolé, nous ne livrons pas encore dans ce code postal.";
+    "Nous étendons actuellement nos zones de livraison. Merci pour votre patience et votre soutien.";
 
   deliveryZoneModal.querySelector(".option-title").textContent = "Zones couvertes";
   deliveryZoneModal.querySelector(".option-note").innerHTML =

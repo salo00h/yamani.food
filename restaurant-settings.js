@@ -13,12 +13,13 @@
     "2026-05-20"
   ],
 
-  closedDatesTitle: "Restaurant temporairement fermé",
+  closedDatesTitle: "✨ Yamani Food revient très bientôt",
 
   closedDatesLines: [
-    "Nous sommes fermés les 19 et 20 mai.",
-    "Merci pour votre compréhension.",
-    "Yamani Food sera de retour très bientôt."
+    "🔥 Nos cuisines sont temporairement fermées les 19 et 20 mai.",
+    "💛 Merci pour votre incroyable confiance.",
+    "📅 Vous pouvez déjà planifier votre prochaine commande.",
+    "🍛 L’expérience Yamani Food revient très bientôt."
   ],
 
   showAnnouncement: false,
