@@ -1270,15 +1270,10 @@ function openOrderStatusModal() {
   }
 
   if (isRestaurantClosed()) {
-    showInlineOrderStatusMessage("🚫 11, 12 et 13 mai complets", [
-      "Nous sommes complets les 11, 12 et 13 mai.",
-      "🙏 Merci infiniment pour votre confiance.",
-      "📅 Vous pouvez planifier votre commande à partir du 14 mai ou une autre date."
-    ]);
-
+    showRestaurantClosedPopup();
     planLaterBtn.style.display = "block";
-    planLaterBtn.textContent = "📅 Planifier une commande";
-    planLaterBtn.dataset.action = "plan";
+    planLaterBtn.textContent = "Compris";
+    planLaterBtn.dataset.action = "close";
     return;
   }
 
@@ -1333,6 +1328,12 @@ function closeOrderStatusModal() {
 }
 
 function checkOpeningOnLoad() {
+  if (isRestaurantClosed()) {
+    showRestaurantClosedPopup();
+    hasShownOpeningStatusModal = true;
+    return;
+  }
+
   if (RESTAURANT_SETTINGS.showAnnouncement) {
     showInlineOrderStatusMessage(
       RESTAURANT_SETTINGS.announcementTitle,
@@ -1374,8 +1375,8 @@ function openCheckoutModal(prefillTomorrow = false) {
 
   if (isRestaurantClosed(today)) {
     isPlanningMode = true;
-    dateCmd.min = "2026-05-14";
-    dateCmd.value = "2026-05-14";
+    dateCmd.min = tomorrow;
+    dateCmd.value = tomorrow;
   } else if (currentHour >= 0 && currentHour < 7) {
     isPlanningMode = true;
     dateCmd.min = today;
