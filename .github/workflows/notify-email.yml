@@ -21,7 +21,8 @@ jobs:
           if [ -f update-message.txt ]; then
             echo "message<<YAMANI_MESSAGE_END" >> $GITHUB_OUTPUT
             cat update-message.txt >> $GITHUB_OUTPUT
-            echo "YAMANI_MESSAGE_END" >> $GITHUB_OUTPUT
+  echo "" >> $GITHUB_OUTPUT
+  echo "YAMANI_MESSAGE_END" >> $GITHUB_OUTPUT
           else
             echo "message=Aucun message detaille fourni." >> $GITHUB_OUTPUT
           fi
@@ -56,4 +57,5 @@ jobs:
             Merci pour votre confiance.
 
             Yamani Food
+
 
