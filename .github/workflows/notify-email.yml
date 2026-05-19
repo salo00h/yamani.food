@@ -5,57 +5,101 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
+concurrency:
+  group: notify-email-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   send-email:
-    if: contains(github.event.head_commit.message, '[notify]')
+    name: Send Yamani Food notification email
+    if: ${{ contains(toJson(github.event.commits.*.message), '[notify]') }}
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Read update message
-        id: message
+      - name: Build UTF-8 email body
+        shell: bash
+        env:
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+          COMMIT_SHA: ${{ github.sha }}
+          REPOSITORY: ${{ github.repository }}
         run: |
-          if [ -f update-message.txt ]; then
-            {
-              echo 'message<<YAMANI_MESSAGE_END'
-              cat update-message.txt
-              echo
-              echo 'YAMANI_MESSAGE_END'
-            } >> "$GITHUB_OUTPUT"
-          else
-            echo "message=Aucun message detaille fourni." >> "$GITHUB_OUTPUT"
-          fi
+          set -Eeuo pipefail
+
+          python3 <<'PY'
+          from pathlib import Path
+          import os
+
+          message_file = Path("update-message.txt")
+
+          if message_file.exists():
+              update_message = message_file.read_text(encoding="utf-8-sig")
+              update_message = update_message.replace("\r\n", "\n").replace("\r", "\n").strip()
+          else:
+              update_message = "Aucun message détaillé fourni.\n\nلم يتم توفير تفاصيل إضافية."
+
+          commit_message = os.environ.get("COMMIT_MESSAGE", "").strip()
+          commit_sha = os.environ.get("COMMIT_SHA", "")[:7]
+          repository = os.environ.get("REPOSITORY", "")
+
+          body = f"""Bonjour,
+
+Une mise à jour importante a été appliquée sur le site Yamani Food.
+
+Titre du commit :
+{commit_message}
+
+Détails :
+{update_message}
+
+---
+Projet : Yamani Food
+Repository : {repository}
+Branche : main
+Commit : {commit_sha}
+Développeur : salo00h
+
+Merci pour votre confiance.
+
+---
+
+مرحبًا،
+
+تم تطبيق تحديث مهم على موقع Yamani Food.
+
+عنوان التحديث:
+{commit_message}
+
+التفاصيل:
+{update_message}
+
+---
+المشروع: Yamani Food
+الفرع: main
+رقم التحديث: {commit_sha}
+المطور: salo00h
+
+شكرًا لثقتكم.
+"""
+
+          Path("email-body.txt").write_text(body, encoding="utf-8")
+          PY
 
       - name: Send email
-        uses: dawidd6/action-send-mail@v3
+        uses: dawidd6/action-send-mail@v17
         with:
           server_address: smtp.gmail.com
           server_port: 465
           secure: true
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
-
           subject: Correction importante - Yamani Food
-
           to: aaalkhulagi@gmail.com,a774264429@gmail.com
-
-          from: Yamani Food Updates <${{ secrets.EMAIL_USERNAME }}>
-
-          body: |
-            Bonjour,
-
-            Une correction importante a ete appliquee sur le site Yamani Food.
-
-            Titre :
-            ${{ github.event.head_commit.message }}
-
-            Details :
-            ${{ steps.message.outputs.message }}
-
-            Projet : Yamani Food
-            Branche : main
-            Developpeur : salo00h
-
-            Merci pour votre confiance.
+          from: 'Yamani Food Updates <${{ secrets.EMAIL_USERNAME }}>'
+          body: file://email-body.txt
+          priority: normal
