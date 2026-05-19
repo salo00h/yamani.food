@@ -1,27 +1,17 @@
-﻿تم تحديث نظام إغلاق المطعم مؤقتًا.
+﻿Correction importante - Yamani Food
 
-المطعم مغلق يومي 19 و20 مايو، وتم تعديل الرسائل الأساسية التي تظهر داخل الموقع لتوضيح الإغلاق المؤقت للعملاء.
+Le système fonctionne désormais correctement.
 
-التحديث يشمل:
-- إغلاق الطلبات بتاريخ 19 مايو
-- إغلاق الطلبات بتاريخ 20 مايو
-- تعديل رسائل الإغلاق الأساسية
-- منع الطلب في هذه التواريخ
-- الحفاظ على نظام التحكم من ملف مستقل
+Les fermetures des 19 et 20 mai sont actives et les principales fenêtres popup fonctionnent à nouveau correctement sur le site.
 
-ملاحظة:
-لا تزال هناك بعض المشاكل البسيطة في بعض النوافذ المنبثقة (Popups) وسيتم تحسينها وتصحيحها لاحقًا.
+Les boutons principaux ont été réparés et les problèmes critiques ont été corrigés.
 
-Le système de fermeture temporaire du restaurant a été mis à jour.
+Il reste uniquement quelques ajustements visuels mineurs et améliorations de design sur certaines fenêtres popup.
 
-Le restaurant est fermé les 19 et 20 mai, et les principaux messages affichés sur le site ont été adaptés pour informer les clients de cette fermeture temporaire.
+---
 
-La mise à jour comprend :
-- la fermeture des commandes le 19 mai
-- la fermeture des commandes le 20 mai
-- la mise à jour des messages principaux du site
-- le blocage des commandes pour ces dates
-- le maintien du système de gestion séparé
+تم إصلاح المشاكل الأساسية في الموقع.
 
-Remarque :
-Quelques petits problèmes restent présents dans certaines fenêtres popup et seront corrigés plus tard.
+إغلاق يومي 19 و20 مايو يعمل الآن بشكل صحيح، وتم إصلاح النوافذ المنبثقة الأساسية وأزرارها داخل الموقع.
+
+حالياً لم يتبق سوى بعض التحسينات البصرية والتجميلية البسيطة لبعض النوافذ.
