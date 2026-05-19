@@ -2,16 +2,12 @@
 
 Le système fonctionne désormais correctement.
 
-Les fermetures des 19 et 20 mai sont actives et les principales fenêtres popup fonctionnent à nouveau correctement sur le site.
+Les fermetures des 19 et 20 mai sont actives et les principales fenêtres popup fonctionnent correctement sur le site.
 
 Les boutons principaux ont été réparés et les problèmes critiques ont été corrigés.
 
 Il reste uniquement quelques ajustements visuels mineurs et améliorations de design sur certaines fenêtres popup.
 
----
-
-تم إصلاح المشاكل الأساسية في الموقع.
-
-إغلاق يومي 19 و20 مايو يعمل الآن بشكل صحيح، وتم إصلاح النوافذ المنبثقة الأساسية وأزرارها داخل الموقع.
-
-حالياً لم يتبق سوى بعض التحسينات البصرية والتجميلية البسيطة لبعض النوافذ.
+Project: Yamani Food
+Branch: main
+Developer: salo00h
