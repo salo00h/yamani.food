@@ -8,63 +8,72 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: notify-email-${{ github.ref }}
-  cancel-in-progress: false
-
 jobs:
   send-email:
-    name: Send Yamani Food notification email
-    if: ${{ contains(toJson(github.event.commits.*.message), '[notify]') }}
+    name: Notify owners by email
     runs-on: ubuntu-latest
 
     steps:
+      - name: Check notify keyword
+        id: notify
+        shell: bash
+        env:
+          COMMITS_JSON: ${{ toJson(github.event.commits) }}
+        run: |
+          python3 <<'PY'
+          import json, os
+          commits = json.loads(os.environ["COMMITS_JSON"])
+          should_notify = any("[notify]" in c.get("message", "") for c in commits)
+
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
+              f.write(f"send={'true' if should_notify else 'false'}\n")
+
+          print("Notify:", should_notify)
+          PY
+
+      - name: Stop if no notify keyword
+        if: steps.notify.outputs.send != 'true'
+        run: |
+          echo "No [notify] found in commit message. Email skipped safely."
+
       - name: Checkout repository
+        if: steps.notify.outputs.send == 'true'
         uses: actions/checkout@v4
 
       - name: Build UTF-8 email body
+        if: steps.notify.outputs.send == 'true'
         shell: bash
         env:
           COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
           COMMIT_SHA: ${{ github.sha }}
           REPOSITORY: ${{ github.repository }}
         run: |
-          set -Eeuo pipefail
-
           python3 <<'PY'
           from pathlib import Path
           import os
 
-          message_file = Path("update-message.txt")
+          msg_file = Path("update-message.txt")
 
-          if message_file.exists():
-              update_message = message_file.read_text(encoding="utf-8-sig")
-              update_message = update_message.replace("\r\n", "\n").replace("\r", "\n").strip()
+          if msg_file.exists():
+              update_message = msg_file.read_text(encoding="utf-8-sig")
           else:
-              update_message = "Aucun message détaillé fourni.\n\nلم يتم توفير تفاصيل إضافية."
-
-          commit_message = os.environ.get("COMMIT_MESSAGE", "").strip()
-          commit_sha = os.environ.get("COMMIT_SHA", "")[:7]
-          repository = os.environ.get("REPOSITORY", "")
+              update_message = "Aucun message fourni.\n\nلم يتم توفير تفاصيل."
 
           body = f"""Bonjour,
 
 Une mise à jour importante a été appliquée sur le site Yamani Food.
 
-Titre du commit :
-{commit_message}
+Titre :
+{os.environ.get("COMMIT_MESSAGE", "").strip()}
 
 Détails :
-{update_message}
+{update_message.strip()}
 
 ---
 Projet : Yamani Food
-Repository : {repository}
+Repository : {os.environ.get("REPOSITORY", "")}
 Branche : main
-Commit : {commit_sha}
-Développeur : salo00h
-
-Merci pour votre confiance.
+Commit : {os.environ.get("COMMIT_SHA", "")[:7]}
 
 ---
 
@@ -73,24 +82,22 @@ Merci pour votre confiance.
 تم تطبيق تحديث مهم على موقع Yamani Food.
 
 عنوان التحديث:
-{commit_message}
+{os.environ.get("COMMIT_MESSAGE", "").strip()}
 
 التفاصيل:
-{update_message}
+{update_message.strip()}
 
 ---
 المشروع: Yamani Food
 الفرع: main
-رقم التحديث: {commit_sha}
-المطور: salo00h
-
-شكرًا لثقتكم.
+رقم التحديث: {os.environ.get("COMMIT_SHA", "")[:7]}
 """
 
           Path("email-body.txt").write_text(body, encoding="utf-8")
           PY
 
       - name: Send email
+        if: steps.notify.outputs.send == 'true'
         uses: dawidd6/action-send-mail@v17
         with:
           server_address: smtp.gmail.com
@@ -100,6 +107,6 @@ Merci pour votre confiance.
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: Correction importante - Yamani Food
           to: aaalkhulagi@gmail.com,a774264429@gmail.com
-          from: 'Yamani Food Updates <${{ secrets.EMAIL_USERNAME }}>'
+          from: Yamani Food Updates <${{ secrets.EMAIL_USERNAME }}>
           body: file://email-body.txt
           priority: normal
