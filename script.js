@@ -1,4 +1,4 @@
-﻿const DISHES = {
+const DISHES = {
   "zerbian-simple": {
     name: "Zerbian Simple",
     price: "4,99 â‚¬",
@@ -1261,107 +1261,14 @@ function openOrderStatusModal() {
   const entries = Object.values(cart);
 
   if (!entries.length) {
-    showInlineOrderStatusMessage("ðŸ›’ Votre panier est vide", [
-      "ðŸ½ï¸ DÃ©couvrez notre menu avant de commander",
-      "ðŸ‘† Appuyez sur un plat pour lâ€™ajouter au panier",
-      "ðŸ’¬ Une fois votre sÃ©lection prÃªte, vous pourrez envoyer votre commande sur WhatsApp"
+    showInlineOrderStatusMessage("Panier vide", [
+      "Veuillez choisir un plat dans le menu avant de planifier.",
+      "Ajoutez votre commande au panier, puis choisissez la date et l'heure."
     ]);
-    return;
-  }
 
-  if (isRestaurantClosed()) {
-    showRestaurantClosedPopup();
     planLaterBtn.style.display = "block";
-    planLaterBtn.textContent = "📅 Planifier une commande";
-    planLaterBtn.dataset.action = "plan";
-    return;
-  }
-
-  if (hasShownOpeningStatusModal) {
-    openCheckoutModal(false);
-    return;
-  }
-
-  const orderHoursBox = orderStatusModal.querySelector(".option-group");
-  if (orderHoursBox) orderHoursBox.style.display = "block";
-
-  if (isCurrentTimeInOrderWindow()) {
-    orderStatusTitle.textContent = "âœ… Commandes ouvertes";
-    orderStatusText.innerHTML = `
-<div>Vous pouvez commander maintenant.</div>
-<br>
-<div>ðŸ’¡ Vous pouvez aussi</div>
-<div>planifier votre commande</div>
-<div>pour plus tard.</div>
-    `;
-
-    continueNowBtn.style.display = "block";
-  } else {
-    orderStatusTitle.textContent = "â° Commandes fermÃ©es pour le moment";
-    orderStatusText.innerHTML = `
-<div>Nous ne prenons pas</div>
-<div>de commandes maintenant.</div>
-<br>
-<div>ðŸ“… Vous pouvez planifier</div>
-<div>votre commande pour plus tard.</div>
-<br>
-<div>ðŸ›ï¸ Retrait :</div>
-<div>13h â†’ 14h</div>
-<div>19h â†’ 22h</div>
-    `;
-
-    continueNowBtn.style.display = "none";
-  }
-
-  planLaterBtn.style.display = "block";
-  planLaterBtn.textContent = "ðŸ“… Planifier une commande";
-  planLaterBtn.dataset.action = "plan";
-
-  orderStatusModal.classList.add("open");
-  orderStatusModal.setAttribute("aria-hidden", "false");
-}
-
-function closeOrderStatusModal() {
-  orderStatusModal.classList.remove("open");
-  orderStatusModal.setAttribute("aria-hidden", "true");
-  planLaterBtn.dataset.action = "";
-}
-
-function checkOpeningOnLoad() {
-  if (isRestaurantClosed()) {
-    showRestaurantClosedPopup();
-    hasShownOpeningStatusModal = true;
-    return;
-  }
-
-  if (RESTAURANT_SETTINGS.showAnnouncement) {
-    showInlineOrderStatusMessage(
-      RESTAURANT_SETTINGS.announcementTitle,
-      RESTAURANT_SETTINGS.announcementLines
-    );
-    hasShownOpeningStatusModal = true;
-    return;
-  }
-
-  if (RESTAURANT_SETTINGS.forceClosed) {
-    showRestaurantClosedPopup();
-    hasShownOpeningStatusModal = true;
-    return;
-  }
-
-  showCurrentClosedPopupIfNeeded();
-}
-
-
-function openCheckoutModal(prefillTomorrow = false) {
-  const entries = Object.values(cart);
-
-  if (!entries.length) {
-    showInlineOrderStatusMessage("ðŸ“… Planifier une commande", [
-      "Bonne idÃ©e ðŸ˜Š",
-      "ðŸ½ï¸ DÃ©couvrez le menu et ajoutez ce qui vous fait envie",
-      "â° Choisissez ensuite le moment parfaitâ€¦ on sâ€™occupe du reste ðŸ˜‰"
-    ]);
+    planLaterBtn.textContent = "Compris";
+    planLaterBtn.dataset.action = "close";
     return;
   }
 
