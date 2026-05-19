@@ -15,47 +15,43 @@ jobs:
 
     steps:
       - name: Check notify keyword
-        id: notify
+        id: check
         shell: bash
         env:
           COMMITS_JSON: ${{ toJson(github.event.commits) }}
         run: |
           python3 <<'PY'
           import json, os
-          commits = json.loads(os.environ["COMMITS_JSON"])
-          should_notify = any("[notify]" in c.get("message", "") for c in commits)
+
+          commits = json.loads(os.environ.get("COMMITS_JSON", "[]"))
+          found = any("[notify]" in commit.get("message", "") for commit in commits)
 
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as f:
-              f.write(f"send={'true' if should_notify else 'false'}\n")
+              f.write(f"send_email={'true' if found else 'false'}\n")
 
-          print("Notify:", should_notify)
+          print("send_email =", found)
           PY
 
-      - name: Stop if no notify keyword
-        if: steps.notify.outputs.send != 'true'
-        run: |
-          echo "No [notify] found in commit message. Email skipped safely."
+      - name: Skip email
+        if: steps.check.outputs.send_email != 'true'
+        run: echo "No [notify] found. Email skipped."
 
       - name: Checkout repository
-        if: steps.notify.outputs.send == 'true'
+        if: steps.check.outputs.send_email == 'true'
         uses: actions/checkout@v4
 
       - name: Build UTF-8 email body
-        if: steps.notify.outputs.send == 'true'
+        if: steps.check.outputs.send_email == 'true'
         shell: bash
-        env:
-          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
-          COMMIT_SHA: ${{ github.sha }}
-          REPOSITORY: ${{ github.repository }}
         run: |
           python3 <<'PY'
           from pathlib import Path
           import os
 
-          msg_file = Path("update-message.txt")
+          file = Path("update-message.txt")
 
-          if msg_file.exists():
-              update_message = msg_file.read_text(encoding="utf-8-sig")
+          if file.exists():
+              update_message = file.read_text(encoding="utf-8-sig").strip()
           else:
               update_message = "Aucun message fourni.\n\nلم يتم توفير تفاصيل."
 
@@ -63,17 +59,8 @@ jobs:
 
 Une mise à jour importante a été appliquée sur le site Yamani Food.
 
-Titre :
-{os.environ.get("COMMIT_MESSAGE", "").strip()}
-
 Détails :
-{update_message.strip()}
-
----
-Projet : Yamani Food
-Repository : {os.environ.get("REPOSITORY", "")}
-Branche : main
-Commit : {os.environ.get("COMMIT_SHA", "")[:7]}
+{update_message}
 
 ---
 
@@ -81,23 +68,15 @@ Commit : {os.environ.get("COMMIT_SHA", "")[:7]}
 
 تم تطبيق تحديث مهم على موقع Yamani Food.
 
-عنوان التحديث:
-{os.environ.get("COMMIT_MESSAGE", "").strip()}
-
 التفاصيل:
-{update_message.strip()}
-
----
-المشروع: Yamani Food
-الفرع: main
-رقم التحديث: {os.environ.get("COMMIT_SHA", "")[:7]}
+{update_message}
 """
 
           Path("email-body.txt").write_text(body, encoding="utf-8")
           PY
 
       - name: Send email
-        if: steps.notify.outputs.send == 'true'
+        if: steps.check.outputs.send_email == 'true'
         uses: dawidd6/action-send-mail@v17
         with:
           server_address: smtp.gmail.com
