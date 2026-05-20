@@ -1,13 +1,17 @@
 ✨ Mise à jour interne — Yamani Food
 
-Le système d’emails automatiques et de notifications du site continue d’être amélioré afin d’assurer un fonctionnement plus stable, plus professionnel et plus fiable.
+Le restaurant sera également fermé le 21 mai afin de poursuivre certaines améliorations internes et optimisations du système.
 
-Quelques ajustements techniques et optimisations ont été effectués dans le cadre du développement continu du système.
+Le système d’emails automatiques et de notifications continue d’être amélioré pour garantir un fonctionnement plus stable, plus professionnel et plus fiable.
+
+Merci pour votre compréhension et votre confiance.
 
 ---
 
 ✨ تحديث داخلي — Yamani Food
 
-لا يزال نظام الإيميلات والإشعارات التلقائية داخل الموقع قيد التطوير والتحسين ليصبح أكثر استقرارًا واحترافية واعتمادية.
+سيبقى المطعم مغلقًا أيضًا يوم 21 مايو من أجل استكمال بعض التحسينات الداخلية والتطويرات التقنية للنظام.
 
-تم إجراء بعض التحسينات والتعديلات التقنية ضمن عملية التطوير المستمرة للنظام.
+كما يستمر العمل على تحسين نظام الإيميلات والإشعارات التلقائية لضمان أداء أكثر استقرارًا واحترافية واعتمادية.
+
+شكرًا لتفهمكم وثقتكم.

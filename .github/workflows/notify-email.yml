@@ -48,10 +48,9 @@ jobs:
             echo ""
             echo "Bonjour 👋 | مرحبًا 👋"
             echo ""
-            echo "Une nouvelle amélioration interne a été appliquée avec succès sur le site Yamani Food."
-            echo "تم تطبيق تحديث داخلي جديد بنجاح على موقع Yamani Food."
+            echo "Une nouvelle mise à jour a été appliquée avec succès sur le site Yamani Food."
+            echo "تم تطبيق تحديث جديد بنجاح على موقع Yamani Food."
             echo ""
-            echo "📢 Détails de la mise à jour | تفاصيل التحديث"
             echo "━━━━━━━━━━━━━━━━━━"
             echo ""
 
