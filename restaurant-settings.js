@@ -8,11 +8,7 @@
     "Vous pouvez revenir plus tard."
   ],
 
-  closedDates: [
-    "2026-05-19",
-    "2026-05-20",
-    "2026-05-21"
-  ],
+  closedDates: [],
 
   closedDatesTitle: "✨ Yamani Food revient très bientôt",
 
@@ -21,6 +17,19 @@
     "💛 Merci sincèrement pour votre confiance et votre fidélité.",
     "📅 Vous pouvez déjà planifier votre prochaine commande.",
     "🍛 L’expérience Yamani Food revient très bientôt."
+  ],
+
+  
+  blockedLunchDates: [
+    "2026-05-23",
+    "2026-05-24"
+  ],
+
+  blockedLunchTitle: "Creneau du midi indisponible",
+  blockedLunchLines: [
+    "Le creneau 13h -> 14h n'est pas disponible les 23 et 24 mai.",
+    "Les commandes du soir restent disponibles.",
+    "Merci pour votre comprehension."
   ],
 
   showAnnouncement: false,

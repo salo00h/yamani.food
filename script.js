@@ -1491,6 +1491,18 @@ function isDeliveryTimeValid(time) {
   return (t >= 13 && t <= 14) || (t >= 19 && t <= 22);
 }
 
+
+function isLunchBlockedDate(selectedDate) {
+  return RESTAURANT_SETTINGS.blockedLunchDates?.includes(selectedDate);
+}
+
+function showBlockedLunchPopup() {
+  showInlineOrderStatusMessage(
+    RESTAURANT_SETTINGS.blockedLunchTitle,
+    RESTAURANT_SETTINGS.blockedLunchLines
+  );
+}
+
 function updateTimeSlotsByOrderType() {
   const orderType = document.querySelector('input[name="orderType"]:checked')?.value || "pickup";
   const today = getTodayLocalDateString();
@@ -1499,26 +1511,34 @@ function updateTimeSlotsByOrderType() {
 
   const selectedDate = isPlanningMode ? dateCmd.value : today;
   const isToday = selectedDate === today;
+  const lunchBlocked = isLunchBlockedDate(selectedDate);
 
   document.querySelectorAll(".time-btn").forEach(btn => {
     const text = btn.textContent.trim();
 
     btn.style.display = "flex";
 
-    // ✅ إذا الطلب لنس اليوم بعد 11:00، اخ 13h → 14h
-    if (isToday && currentHour >= 11) {
+    if (lunchBlocked && text.includes("13") && text.includes("14")) {
+      btn.style.display = "none";
+      btn.classList.remove("active");
+    }
+
+    if (!lunchBlocked && isToday && currentHour >= 11) {
       if (text.includes("13") && text.includes("14")) {
         btn.style.display = "none";
         btn.classList.remove("active");
       }
     }
 
-    // ✅ إذا توصيل، اخ 19h → 20h قط إذا موجود كزر مستقل
     if (orderType === "delivery" && text.includes("19") && text.includes("20")) {
       btn.style.display = "none";
       btn.classList.remove("active");
     }
   });
+
+  if (lunchBlocked) {
+    showBlockedLunchPopup();
+  }
 }
 
 orderTypeInputs.forEach(input => {

@@ -1,17 +1,24 @@
 ✨ Mise à jour interne — Yamani Food
 
-Le restaurant sera également fermé le 21 mai afin de poursuivre certaines améliorations internes et optimisations du système.
+Suite à votre demande, les créneaux du midi (13h → 14h) des 23 et 24 mai ont été temporairement désactivés.
 
-Le système d’emails automatiques et de notifications continue d’être amélioré pour garantir un fonctionnement plus stable, plus professionnel et plus fiable.
+Les commandes du soir restent disponibles normalement.
 
-Merci pour votre compréhension et votre confiance.
+Quelques ajustements internes et optimisations techniques ont également été appliqués afin d’améliorer la stabilité générale du système et l’expérience utilisateur.
+
+(commit: update lunch slot availability on 23 and 24 may)
+
+Merci pour votre confiance et votre compréhension.
 
 ---
 
 ✨ تحديث داخلي — Yamani Food
 
-سيبقى المطعم مغلقًا أيضًا يوم 21 مايو من أجل استكمال بعض التحسينات الداخلية والتطويرات التقنية للنظام.
+تم تعديل أوقات الطلبات حسب طلبكم، حيث تم إيقاف فترة الظهر (13 → 14) مؤقتًا يومي 23 و24 مايو.
 
-كما يستمر العمل على تحسين نظام الإيميلات والإشعارات التلقائية لضمان أداء أكثر استقرارًا واحترافية واعتمادية.
+طلبات المساء ما زالت متوفرة بشكل طبيعي.
 
-شكرًا لتفهمكم وثقتكم.
+كما تم تطبيق بعض التحسينات الداخلية والتقنية لتحسين استقرار النظام وتجربة الاستخدام بشكل عام.
+
+
+شكرًا لثقتكم وتفهمكم.
