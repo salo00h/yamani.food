@@ -25,11 +25,11 @@
     "2026-05-24"
   ],
 
-  blockedLunchTitle: "Information Yamani Food",
+  blockedLunchTitle: "? Information Yamani Food",
   blockedLunchLines: [
-    "Afin de garantir une experience optimale et un service de qualite, le creneau 13h -> 14h des 23 et 24 mai sera exceptionnellement indisponible.",
-    "Les commandes du soir restent ouvertes normalement.",
-    "Merci pour votre fidelite et votre confiance."
+    "?? Afin de garantir une experience optimale, le creneau 13h -> 14h des 23 et 24 mai sera exceptionnellement indisponible.",
+    "?? Les commandes du soir restent disponibles normalement.",
+    "?? Merci pour votre fidelite et votre confiance."
   ],
 
   showAnnouncement: false,
