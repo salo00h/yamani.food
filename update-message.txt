@@ -1,24 +1,13 @@
 ✨ Mise à jour interne — Yamani Food
 
-Suite à votre demande, les créneaux du midi (13h → 14h) des 23 et 24 mai ont été temporairement désactivés.
+Le popup d’information du site a été amélioré avec une présentation plus claire, plus moderne et de nouvelles améliorations visuelles.
 
-Les commandes du soir restent disponibles normalement.
-
-Quelques ajustements internes et optimisations techniques ont également été appliqués afin d’améliorer la stabilité générale du système et l’expérience utilisateur.
-
-(commit: update lunch slot availability on 23 and 24 may)
-
-Merci pour votre confiance et votre compréhension.
+Merci pour votre confiance.
 
 ---
 
 ✨ تحديث داخلي — Yamani Food
 
-تم تعديل أوقات الطلبات حسب طلبكم، حيث تم إيقاف فترة الظهر (13 → 14) مؤقتًا يومي 23 و24 مايو.
+تم تحسين نافذة التنبيه داخل الموقع لتصبح أوضح وأكثر حداثة مع بعض التحسينات البصرية الجديدة.
 
-طلبات المساء ما زالت متوفرة بشكل طبيعي.
-
-كما تم تطبيق بعض التحسينات الداخلية والتقنية لتحسين استقرار النظام وتجربة الاستخدام بشكل عام.
-
-
-شكرًا لثقتكم وتفهمكم.
+شكرًا لثقتكم.

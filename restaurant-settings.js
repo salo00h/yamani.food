@@ -19,17 +19,17 @@
     "🍛 L’expérience Yamani Food revient très bientôt."
   ],
 
-  
+
   blockedLunchDates: [
     "2026-05-23",
     "2026-05-24"
   ],
 
-  blockedLunchTitle: "? Information Yamani Food",
+  blockedLunchTitle: "✨ Information Yamani Food",
   blockedLunchLines: [
-    "?? Afin de garantir une experience optimale, le creneau 13h -> 14h des 23 et 24 mai sera exceptionnellement indisponible.",
-    "?? Les commandes du soir restent disponibles normalement.",
-    "?? Merci pour votre fidelite et votre confiance."
+    "🍛 Afin de garantir une expérience optimale, le créneau 13h → 14h des 23 et 24 mai sera exceptionnellement indisponible.",
+    "🌙 Les commandes du soir restent disponibles normalement.",
+    "💛 Merci pour votre fidélité et votre confiance."
   ],
 
   showAnnouncement: false,
