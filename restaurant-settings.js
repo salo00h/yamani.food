@@ -1,43 +1,44 @@
 ﻿const RESTAURANT_SETTINGS = {
   forceClosed: false,
 
-  forceClosedTitle: "Commandes fermées temporairement",
+  forceClosedTitle: "🚫 Yamani Food fermé temporairement",
   forceClosedLines: [
-    "Nous ne prenons pas de commandes pour le moment.",
-    "Merci pour votre compréhension.",
-    "Vous pouvez revenir plus tard."
+    "🎉 En raison de l’Aïd Al-Kabir et du très grand nombre de commandes,",
+    "nous avons atteint notre capacité maximale.",
+    "📅 Le restaurant est fermé les 25, 26 et 27 mai.",
+    "💛 Merci infiniment pour votre confiance et votre soutien.",
+    "🍛 Yamani Food reviendra très bientôt."
   ],
 
-  closedDates: [],
+  closedDates: [
+    "2026-05-25",
+    "2026-05-26",
+    "2026-05-27"
+  ],
 
-  closedDatesTitle: "✨ Yamani Food revient très bientôt",
+  closedDatesTitle: "🚫 Yamani Food fermé temporairement",
 
   closedDatesLines: [
-    "🔥 Nos cuisines sont temporairement fermées les 19, 20 et 21 mai.",
-    "💛 Merci sincèrement pour votre confiance et votre fidélité.",
-    "📅 Vous pouvez déjà planifier votre prochaine commande.",
-    "🍛 L’expérience Yamani Food revient très bientôt."
+    "🎉 En raison de l’Aïd Al-Kabir et du très grand nombre de commandes,",
+    "nous avons atteint notre capacité maximale.",
+    "📅 Le restaurant est fermé les 25, 26 et 27 mai.",
+    "💛 Merci infinement pour votre confiance et votre soutien.",
+    "🍛 Yamani Food reviendra très bientôt."
   ],
 
+  blockedLunchDates: [],
 
-  blockedLunchDates: [
-    "2026-05-23",
-    "2026-05-24"
-  ],
+  blockedLunchTitle: "Information Yamani Food",
+  blockedLunchLines: [],
 
-  blockedLunchTitle: "✨ Information Yamani Food",
-  blockedLunchLines: [
-    "🍛 Afin de garantir une expérience optimale, le créneau 13h → 14h des 23 et 24 mai sera exceptionnellement indisponible.",
-    "🌙 Les commandes du soir restent disponibles normalement.",
-    "💛 Merci pour votre fidélité et votre confiance."
-  ],
+  showAnnouncement: true,
 
-  showAnnouncement: false,
+  announcementTitle: "🚫 Restaurant temporairement fermé",
 
-  announcementTitle: "Information Yamani Food",
   announcementLines: [
-    "Yamani Food fonctionne à pleine capacité.",
-    "Pensez à planifier votre prochaine commande.",
-    "Merci pour votre confiance."
+    "🎉 Capacité maximale atteinte pour l’Aïd Al-Kabir.",
+    "📅 Fermeture exceptionnelle : 25, 26 et 27 mai.",
+    "💛 Merci pour votre confiance et votre fidélité.",
+    "🍛 Yamani Food revient très bientôt."
   ]
 };
