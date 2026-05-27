@@ -1,22 +1,9 @@
-✨ Mise à jour interne — Yamani Food
-
-Le restaurant a été temporairement fermé du 25 au 27 mai selon votre demande.
-
-Un nouveau message d’information et un popup spécial ont été ajoutés sur le site afin d’informer les clients que la capacité maximale de commandes a été atteinte à l’occasion de l’Aïd Al-Kabir.
-
-Quelques ajustements visuels et améliorations internes ont également été appliqués pour rendre l’expérience plus claire et plus professionnelle.
-
-Merci pour votre confiance.
-
----
-
 ✨ تحديث داخلي — Yamani Food
 
-تم إغلاق المطعم مؤقتًا من 25 إلى 27 مايو حسب طلبكم.
+تم أيضًا إغلاق يوم 28 مايو حسب طلبكم.
 
-كما تمت إضافة رسالة تنبيه ونافذة خاصة داخل الموقع لإبلاغ العملاء بأنه تم الوصول إلى الحد الأقصى للطلبات بمناسبة العيد الكبير.
+كما تم تحديث رسالة التنبيه والنافذة الخاصة داخل الموقع لإبلاغ العملاء بأنه تم الوصول إلى الحد الأقصى للطلبات بمناسبة العيد الكبير.
 
 وتم كذلك تطبيق بعض التحسينات البصرية والداخلية لجعل التجربة أوضح وأكثر احترافية.
 
 شكرًا لثقتكم.
-
