@@ -5,7 +5,7 @@
   forceClosedLines: [
     "🎉 En raison de l’Aïd Al-Kabir et du très grand nombre de commandes,",
     "nous avons atteint notre capacité maximale.",
-    "📅 Le restaurant est fermé du 25 au 30 mai inclus.",
+    "📅 Le restaurant est fermé du 25 au 31 mai inclus.",
     "💛 Merci infiniment pour votre confiance et votre soutien.",
     "🍛 Yamani Food reviendra très bientôt."
   ],
@@ -16,7 +16,8 @@
     "2026-05-27",
     "2026-05-28",
     "2026-05-29",
-    "2026-05-30"
+    "2026-05-30",
+    "2026-05-31"
   ],
 
   closedDatesTitle: "🚫 Yamani Food fermé temporairement",
@@ -24,7 +25,7 @@
   closedDatesLines: [
     "🎉 En raison de l’Aïd Al-Kabir et du très grand nombre de commandes,",
     "nous avons atteint notre capacité maximale.",
-    "📅 Le restaurant est fermé du 25 au 30 mai inclus.",
+    "📅 Le restaurant est fermé du 25 au 31 mai inclus.",
     "💛 Merci infiniment pour votre confiance et votre soutien.",
     "🍛 Yamani Food reviendra très bientôt."
   ],
@@ -40,7 +41,7 @@
 
   announcementLines: [
     "🎉 Capacité maximale atteinte pour l’Aïd Al-Kabir.",
-    "📅 Fermeture exceptionnelle du 25 au 30 mai inclus.",
+    "📅 Fermeture exceptionnelle du 25 au 31 mai inclus.",
     "💛 Merci pour votre confiance et votre fidélité.",
     "🍛 Yamani Food revient très bientôt."
   ]
