@@ -3,25 +3,27 @@
 
   forceClosedTitle: "🛠️ Yamani Food en maintenance",
   forceClosedLines: [
-    "🛠️ Notre restaurant est exceptionnellement fermé aujourd’hui.",
-    "📅 Fermeture temporaire : 1er juin.",
-    "✨ Nous effectuons une maintenance et quelques améliorations internes",
-    "afin de vous offrir une expérience plus fluide, plus stable et plus professionnelle.",
+    "🛠️ Notre restaurant est exceptionnellement fermé.",
+    "📅 Fermeture temporaire du 1er au 3 juin inclus.",
+    "✨ Nous effectuons une maintenance et plusieurs améliorations internes.",
+    "🚀 Ces optimisations visent à améliorer la stabilité, la rapidité et l’expérience utilisateur.",
     "💛 Merci pour votre compréhension et votre confiance.",
     "🍛 Yamani Food revient très bientôt."
   ],
 
   closedDates: [
-    "2026-06-01"
+    "2026-06-01",
+    "2026-06-02",
+    "2026-06-03"
   ],
 
   closedDatesTitle: "🛠️ Yamani Food en maintenance",
 
   closedDatesLines: [
-    "🛠️ Notre restaurant est exceptionnellement fermé aujourd’hui.",
-    "📅 Fermeture temporaire : 1er juin.",
-    "✨ Nous effectuons une maintenance et quelques améliorations internes",
-    "afin de vous offrir une expérience plus fluide, plus stable et plus professionnelle.",
+    "🛠️ Notre restaurant est exceptionnellement fermé.",
+    "📅 Fermeture temporaire du 1er au 3 juin inclus.",
+    "✨ Nous effectuons une maintenance et plusieurs améliorations internes.",
+    "🚀 Ces optimisations visent à améliorer la stabilité, la rapidité et l’expérience utilisateur.",
     "💛 Merci pour votre compréhension et votre confiance.",
     "🍛 Yamani Food revient très bientôt."
   ],
@@ -36,9 +38,9 @@
   announcementTitle: "🛠️ Maintenance exceptionnelle",
 
   announcementLines: [
-    "🛠️ Yamani Food est fermé aujourd’hui, 1er juin.",
-    "✨ Une maintenance et des améliorations internes sont en cours.",
-    "💛 Merci pour votre compréhension et votre confiance.",
-    "🍛 Nous revenons très bientôt avec une meilleure expérience."
+    "🛠️ Yamani Food est temporairement fermé du 1er au 3 juin.",
+    "✨ Des améliorations techniques et visuelles sont en cours.",
+    "🚀 Nous préparons une expérience encore meilleure.",
+    "💛 Merci pour votre compréhension et votre fidélité."
   ]
 };
