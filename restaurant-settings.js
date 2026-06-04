@@ -4,7 +4,7 @@
   forceClosedTitle: "🛠️ Yamani Food en maintenance",
   forceClosedLines: [
     "🛠️ Notre restaurant est exceptionnellement fermé.",
-    "📅 Fermeture temporaire du 1er au 3 juin inclus.",
+    "📅 Fermeture temporaire du 1er au 8 juin inclus.",
     "✨ Nous effectuons une maintenance et plusieurs améliorations internes.",
     "🚀 Ces optimisations visent à améliorer la stabilité, la rapidité et l’expérience utilisateur.",
     "💛 Merci pour votre compréhension et votre confiance.",
@@ -14,14 +14,19 @@
   closedDates: [
     "2026-06-01",
     "2026-06-02",
-    "2026-06-03"
+    "2026-06-03",
+    "2026-06-04",
+    "2026-06-05",
+    "2026-06-06",
+    "2026-06-07",
+    "2026-06-08"
   ],
 
   closedDatesTitle: "🛠️ Yamani Food en maintenance",
 
   closedDatesLines: [
     "🛠️ Notre restaurant est exceptionnellement fermé.",
-    "📅 Fermeture temporaire du 1er au 3 juin inclus.",
+    "📅 Fermeture temporaire du 1er au 8 juin inclus.",
     "✨ Nous effectuons une maintenance et plusieurs améliorations internes.",
     "🚀 Ces optimisations visent à améliorer la stabilité, la rapidité et l’expérience utilisateur.",
     "💛 Merci pour votre compréhension et votre confiance.",
@@ -38,7 +43,7 @@
   announcementTitle: "🛠️ Maintenance exceptionnelle",
 
   announcementLines: [
-    "🛠️ Yamani Food est temporairement fermé du 1er au 3 juin.",
+    "🛠️ Yamani Food est temporairement fermé du 1er au 8 juin.",
     "✨ Des améliorations techniques et visuelles sont en cours.",
     "🚀 Nous préparons une expérience encore meilleure.",
     "💛 Merci pour votre compréhension et votre fidélité."
